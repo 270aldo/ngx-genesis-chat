@@ -145,6 +145,60 @@
   .pulse-ring {
     animation: pulse-ring 2s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
   }
+
+  /* Rainbow Button Effect */
+  .rainbow-button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 32px;
+    font-weight: 600;
+    font-size: 18px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%);
+    background-size: 300% 300%;
+    animation: rainbow-animation 3s ease infinite;
+    color: white;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .rainbow-button::before {
+    content: '';
+    position: absolute;
+    inset: 1px;
+    background: rgba(10, 10, 10, 0.9);
+    border-radius: 11px;
+    z-index: 1;
+    transition: all 0.3s ease;
+  }
+
+  .rainbow-button:hover::before {
+    background: rgba(10, 10, 10, 0.7);
+  }
+
+  .rainbow-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  }
+
+  .rainbow-button span {
+    position: relative;
+    z-index: 2;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%);
+    background-size: 300% 300%;
+    animation: rainbow-animation 3s ease infinite;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .rainbow-button:hover span {
+    -webkit-text-fill-color: white;
+  }
 }
 
 @keyframes typing-premium {
@@ -195,6 +249,15 @@
   }
   100% {
     transform: translateX(100%);
+  }
+}
+
+@keyframes rainbow-animation {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
   }
 }
 

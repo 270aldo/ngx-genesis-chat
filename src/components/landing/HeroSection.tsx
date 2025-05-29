@@ -53,24 +53,19 @@ export const HeroSection: React.FC = () => {
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
           <Link to="/chat">
-            <Button 
-              size="lg" 
-              className="premium-button glass-premium border border-blue-500/20 text-white px-8 py-4 text-lg glow-primary hover:scale-105 transition-all duration-300"
-            >
-              <Sparkles className="w-5 h-5 mr-2" />
-              Start Conversation
-            </Button>
+            <button className="rainbow-button">
+              <Sparkles className="w-5 h-5 mr-2 relative z-2" />
+              <span>Start Conversation</span>
+            </button>
           </Link>
           
-          <Button 
-            variant="ghost" 
-            size="lg"
-            className="text-white/70 hover:text-white px-8 py-4 text-lg border border-white/10 hover:border-white/20 transition-all duration-300"
+          <button 
+            className="rainbow-button"
             onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
           >
-            Explore Features
-            <ArrowDown className="w-5 h-5 ml-2" />
-          </Button>
+            <span>Explore Features</span>
+            <ArrowDown className="w-5 h-5 ml-2 relative z-2" />
+          </button>
         </div>
       </div>
 
