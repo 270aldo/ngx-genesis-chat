@@ -1,5 +1,7 @@
+
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { useAuthStore } from './authStore';
 
 export interface Message {
   id: string;
@@ -42,6 +44,7 @@ interface ChatState {
   setVoiceMode: (isVoiceMode: boolean) => void;
   toggleSidebar: () => void;
   getCurrentConversation: () => Conversation | null;
+  canSendMessage: () => boolean;
 }
 
 export const useChatStore = create<ChatState>()(
@@ -84,6 +87,16 @@ export const useChatStore = create<ChatState>()(
       },
 
       addMessage: (conversationId: string, message) => {
+        // Check if user has tokens for user messages
+        if (message.role === 'user') {
+          const { useTokens } = useAuthStore.getState();
+          const hasTokens = useTokens(1); // Cost 1 token per message
+          
+          if (!hasTokens) {
+            throw new Error('Insufficient tokens to send message');
+          }
+        }
+
         const newMessage: Message = {
           ...message,
           id: crypto.randomUUID(),
@@ -151,6 +164,11 @@ export const useChatStore = create<ChatState>()(
       getCurrentConversation: () => {
         const state = get();
         return state.conversations.find((conv) => conv.id === state.currentConversationId) || null;
+      },
+
+      canSendMessage: () => {
+        const { getTokens } = useAuthStore.getState();
+        return getTokens() > 0;
       },
     }),
     {

@@ -2,7 +2,8 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
-import { MessageSquare, BarChart3, Zap, TrendingUp } from 'lucide-react';
+import { MessageSquare, BarChart3, Coins, TrendingUp } from 'lucide-react';
+import { useAuthStore } from '@/store/authStore';
 
 interface StatsCardsProps {
   stats: {
@@ -14,6 +15,8 @@ interface StatsCardsProps {
 }
 
 export const StatsCards: React.FC<StatsCardsProps> = ({ stats }) => {
+  const { user } = useAuthStore();
+  const currentTokens = user?.tokens ?? 0;
   const tokensPercentage = (stats.tokensUsed / stats.tokensLimit) * 100;
 
   const cards = [
@@ -30,11 +33,11 @@ export const StatsCards: React.FC<StatsCardsProps> = ({ stats }) => {
       description: 'This month',
     },
     {
-      title: 'Tokens Used',
-      value: `${stats.tokensUsed.toLocaleString()}`,
-      icon: Zap,
-      description: `of ${stats.tokensLimit.toLocaleString()} limit`,
-      progress: tokensPercentage,
+      title: 'Available Tokens',
+      value: `${currentTokens.toLocaleString()}`,
+      icon: Coins,
+      description: 'Ready to use',
+      tokenBalance: true,
     },
     {
       title: 'Efficiency',
@@ -54,10 +57,20 @@ export const StatsCards: React.FC<StatsCardsProps> = ({ stats }) => {
               <CardTitle className="text-sm font-medium text-white/60">
                 {card.title}
               </CardTitle>
-              <Icon className="h-4 w-4 text-blue-400" />
+              <Icon className={`h-4 w-4 ${card.tokenBalance ? 'text-yellow-400' : 'text-blue-400'}`} />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-white mb-1">{card.value}</div>
+              <div className={`text-2xl font-bold mb-1 ${
+                card.tokenBalance 
+                  ? currentTokens < 10 
+                    ? 'text-red-400' 
+                    : currentTokens < 50 
+                    ? 'text-yellow-400' 
+                    : 'text-green-400'
+                  : 'text-white'
+              }`}>
+                {card.value}
+              </div>
               <p className="text-xs text-white/40">{card.description}</p>
               {card.progress && (
                 <div className="mt-3">
@@ -65,6 +78,11 @@ export const StatsCards: React.FC<StatsCardsProps> = ({ stats }) => {
                     value={card.progress} 
                     className="h-2 bg-white/10"
                   />
+                </div>
+              )}
+              {card.tokenBalance && currentTokens < 10 && (
+                <div className="mt-2 text-xs text-red-400">
+                  ⚠️ Low balance
                 </div>
               )}
             </CardContent>

@@ -7,6 +7,7 @@ import { ProfileSection } from '@/components/dashboard/ProfileSection';
 import { StatsCards } from '@/components/dashboard/StatsCards';
 import { RecentActivity } from '@/components/dashboard/RecentActivity';
 import { QuickActions } from '@/components/dashboard/QuickActions';
+import { TokenBalance } from '@/components/tokens/TokenBalance';
 
 const Dashboard: React.FC = () => {
   const { user } = useAuthStore();
@@ -42,6 +43,7 @@ const Dashboard: React.FC = () => {
         {isMobile ? (
           // Mobile: Stack everything vertically
           <div className="space-y-6">
+            <TokenBalance />
             <QuickActions />
             <StatsCards stats={stats} />
             <ProfileSection user={user} />
@@ -58,6 +60,7 @@ const Dashboard: React.FC = () => {
 
             {/* Right Column */}
             <div className="space-y-6 lg:space-y-8">
+              <TokenBalance />
               <ProfileSection user={user} />
               <QuickActions />
             </div>

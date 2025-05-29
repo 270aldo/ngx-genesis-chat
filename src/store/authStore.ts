@@ -9,6 +9,7 @@ export interface User {
   avatar?: string;
   createdAt: Date;
   subscription?: 'free' | 'pro' | 'enterprise';
+  tokens: number;
 }
 
 interface AuthState {
@@ -21,6 +22,9 @@ interface AuthState {
   logout: () => void;
   updateProfile: (updates: Partial<User>) => void;
   setLoading: (loading: boolean) => void;
+  addTokens: (amount: number) => void;
+  useTokens: (amount: number) => boolean;
+  getTokens: () => number;
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -31,7 +35,12 @@ export const useAuthStore = create<AuthState>()(
       isLoading: false,
 
       setUser: (user: User) => {
-        set({ user, isAuthenticated: true });
+        // Ensure tokens field exists, default to 100 for new users
+        const userWithTokens = {
+          ...user,
+          tokens: user.tokens ?? 100
+        };
+        set({ user: userWithTokens, isAuthenticated: true });
       },
 
       logout: () => {
@@ -47,6 +56,35 @@ export const useAuthStore = create<AuthState>()(
 
       setLoading: (loading: boolean) => {
         set({ isLoading: loading });
+      },
+
+      addTokens: (amount: number) => {
+        const currentUser = get().user;
+        if (currentUser) {
+          const updatedUser = {
+            ...currentUser,
+            tokens: currentUser.tokens + amount
+          };
+          set({ user: updatedUser });
+        }
+      },
+
+      useTokens: (amount: number) => {
+        const currentUser = get().user;
+        if (currentUser && currentUser.tokens >= amount) {
+          const updatedUser = {
+            ...currentUser,
+            tokens: currentUser.tokens - amount
+          };
+          set({ user: updatedUser });
+          return true;
+        }
+        return false;
+      },
+
+      getTokens: () => {
+        const currentUser = get().user;
+        return currentUser?.tokens ?? 0;
       },
     }),
     {
