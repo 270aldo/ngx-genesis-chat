@@ -1,32 +1,39 @@
 
 import React from 'react';
-import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import { Sparkles } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 export const LandingHeader: React.FC = () => {
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 glass-ultra border-b border-white/10">
-      <div className="container mx-auto px-6 py-4 flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-3 group">
-          <div className="w-10 h-10 rounded-xl glass-premium border border-blue-500/20 flex items-center justify-center glow-subtle">
-            <Sparkles className="w-5 h-5 text-blue-400" />
+    <header className="absolute top-0 left-0 right-0 z-50 p-6">
+      <nav className="container mx-auto flex items-center justify-between">
+        <div className="flex items-center space-x-2">
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+            <span className="text-white font-bold text-sm">N</span>
           </div>
-          <span className="text-xl font-semibold text-white">NGX Agents</span>
-        </Link>
+          <span className="text-white font-semibold text-xl">NGX Agents</span>
+        </div>
         
-        <nav className="hidden md:flex items-center gap-8">
-          <a href="#features" className="text-white/70 hover:text-white transition-colors">Features</a>
-          <a href="#demo" className="text-white/70 hover:text-white transition-colors">Demo</a>
-          <a href="#about" className="text-white/70 hover:text-white transition-colors">About</a>
-        </nav>
-
-        <Link to="/chat">
-          <Button className="premium-button glass-premium border border-blue-500/20 text-white hover:bg-blue-500/10 glow-subtle">
-            Launch App
-          </Button>
-        </Link>
-      </div>
+        <div className="hidden md:flex items-center space-x-8">
+          <a href="#features" className="text-white/70 hover:text-white transition-colors">
+            Features
+          </a>
+          <a href="#demo" className="text-white/70 hover:text-white transition-colors">
+            Demo
+          </a>
+          <Link to="/sign-in" className="text-white/70 hover:text-white transition-colors">
+            Sign In
+          </Link>
+          <Link to="/sign-up">
+            <Button 
+              variant="outline" 
+              className="glass-premium border-white/20 text-white hover:bg-white/10"
+            >
+              Get Started
+            </Button>
+          </Link>
+        </div>
+      </nav>
     </header>
   );
 };
