@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -95,13 +94,10 @@ export const DemoSection: React.FC = () => {
 
           <div className="text-center mt-12">
             <Link to="/chat">
-              <Button 
-                size="lg"
-                className="premium-button glass-premium border border-blue-500/20 text-white px-8 py-4 text-lg glow-primary hover:scale-105 transition-all duration-300"
-              >
-                Try NGX Agents Now
+              <button className="premium-glow-button">
+                <span>Try NGX Agents Now</span>
                 <ArrowUp className="w-5 h-5 ml-2 rotate-45" />
-              </Button>
+              </button>
             </Link>
           </div>
         </div>
