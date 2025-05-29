@@ -4,6 +4,7 @@ import { Sidebar } from './Sidebar';
 import { ChatArea } from '../chat/ChatArea';
 import { ChatInput } from '../chat/ChatInput';
 import { useChatStore } from '@/store/chatStore';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 
 export const ChatLayout: React.FC = () => {
@@ -13,7 +14,18 @@ export const ChatLayout: React.FC = () => {
     setTyping,
     getCurrentConversation,
     currentConversationId,
+    sidebarOpen,
+    toggleSidebar,
   } = useChatStore();
+  
+  const isMobile = useIsMobile();
+
+  // Auto-collapse sidebar on mobile
+  React.useEffect(() => {
+    if (isMobile && sidebarOpen) {
+      toggleSidebar();
+    }
+  }, [isMobile]);
 
   const handleSendMessage = async (content: string) => {
     let conversationId = currentConversationId;
@@ -80,14 +92,29 @@ export const ChatLayout: React.FC = () => {
       {/* Subtle background effects */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-purple-500/5 pointer-events-none"></div>
       
+      {/* Mobile Overlay for Sidebar */}
+      {isMobile && sidebarOpen && (
+        <div 
+          className="absolute inset-0 bg-black/50 z-40 lg:hidden"
+          onClick={toggleSidebar}
+        />
+      )}
+      
       {/* Sidebar */}
-      <Sidebar />
+      <div className={cn(
+        "relative z-50",
+        isMobile && !sidebarOpen && "hidden"
+      )}>
+        <Sidebar />
+      </div>
       
       {/* Main Chat Area */}
       <div className="flex-1 flex flex-col min-w-0 relative">
         <div className="absolute inset-0 bg-gradient-to-t from-background/50 via-transparent to-transparent pointer-events-none"></div>
         <ChatArea />
-        <ChatInput onSendMessage={handleSendMessage} />
+        <div className="px-4 pb-4 sm:px-6 sm:pb-6">
+          <ChatInput onSendMessage={handleSendMessage} />
+        </div>
       </div>
     </div>
   );

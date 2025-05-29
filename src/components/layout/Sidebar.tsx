@@ -3,6 +3,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useChatStore } from '@/store/chatStore';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 import { Link } from 'react-router-dom';
 import { 
@@ -13,7 +14,8 @@ import {
   User,
   ChevronLeft,
   Brain,
-  LayoutDashboard
+  LayoutDashboard,
+  Menu
 } from 'lucide-react';
 
 export const Sidebar: React.FC = () => {
@@ -26,27 +28,41 @@ export const Sidebar: React.FC = () => {
     deleteConversation,
     toggleSidebar,
   } = useChatStore();
+  
+  const isMobile = useIsMobile();
 
   const handleNewConversation = () => {
     createConversation();
+    // Auto-close sidebar on mobile after creating conversation
+    if (isMobile) {
+      toggleSidebar();
+    }
   };
 
   const handleSelectConversation = (id: string) => {
     setCurrentConversation(id);
+    // Auto-close sidebar on mobile after selecting conversation
+    if (isMobile) {
+      toggleSidebar();
+    }
   };
 
   return (
     <div
       className={cn(
         'h-full bg-sidebar border-r border-sidebar-border transition-all duration-300 ease-in-out flex flex-col',
-        sidebarOpen ? 'w-80' : 'w-16'
+        isMobile ? (
+          sidebarOpen ? 'w-80 absolute left-0 top-0 z-50' : 'w-0'
+        ) : (
+          sidebarOpen ? 'w-80' : 'w-16'
+        )
       )}
     >
       {/* Header */}
       <div className="p-4 border-b border-sidebar-border">
         <div className="flex items-center justify-between">
-          {sidebarOpen && (
-            <div className="flex items-center gap-3">
+          {(sidebarOpen || !isMobile) && (
+            <div className={cn("flex items-center gap-3", !sidebarOpen && !isMobile && "hidden")}>
               <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-600 to-navy-600 flex items-center justify-center">
                 <Brain className="w-4 h-4 text-white" />
               </div>
@@ -60,9 +76,13 @@ export const Sidebar: React.FC = () => {
             variant="ghost"
             size="icon"
             onClick={toggleSidebar}
-            className="h-8 w-8 text-sidebar-foreground/60 hover:text-sidebar-foreground"
+            className="h-8 w-8 text-sidebar-foreground/60 hover:text-sidebar-foreground flex-shrink-0"
           >
-            <ChevronLeft className={cn("h-4 w-4 transition-transform", !sidebarOpen && "rotate-180")} />
+            {isMobile ? (
+              <Menu className="h-4 w-4" />
+            ) : (
+              <ChevronLeft className={cn("h-4 w-4 transition-transform", !sidebarOpen && "rotate-180")} />
+            )}
           </Button>
         </div>
       </div>
@@ -73,11 +93,11 @@ export const Sidebar: React.FC = () => {
           onClick={handleNewConversation}
           className={cn(
             "w-full bg-sidebar-primary hover:bg-sidebar-primary/80 text-sidebar-primary-foreground",
-            sidebarOpen ? "justify-start gap-2" : "justify-center px-2"
+            (sidebarOpen || isMobile) ? "justify-start gap-2" : "justify-center px-2"
           )}
         >
-          <Plus className="h-4 w-4" />
-          {sidebarOpen && <span>New Chat</span>}
+          <Plus className="h-4 w-4 flex-shrink-0" />
+          {(sidebarOpen || isMobile) && <span>New Chat</span>}
         </Button>
       </div>
 
@@ -95,7 +115,7 @@ export const Sidebar: React.FC = () => {
               onClick={() => handleSelectConversation(conversation.id)}
             >
               <MessageSquare className="h-4 w-4 flex-shrink-0 text-sidebar-foreground/60" />
-              {sidebarOpen && (
+              {(sidebarOpen || isMobile) && (
                 <>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm truncate text-sidebar-foreground">
@@ -112,7 +132,7 @@ export const Sidebar: React.FC = () => {
                       e.stopPropagation();
                       deleteConversation(conversation.id);
                     }}
-                    className="h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity text-sidebar-foreground/60 hover:text-red-400"
+                    className="h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity text-sidebar-foreground/60 hover:text-red-400 flex-shrink-0"
                   >
                     <Trash2 className="h-3 w-3" />
                   </Button>
@@ -131,11 +151,11 @@ export const Sidebar: React.FC = () => {
               variant="ghost"
               className={cn(
                 "w-full text-sidebar-foreground/60 hover:text-sidebar-foreground hover:bg-sidebar-accent",
-                sidebarOpen ? "justify-start gap-2" : "justify-center px-2"
+                (sidebarOpen || isMobile) ? "justify-start gap-2" : "justify-center px-2"
               )}
             >
-              <LayoutDashboard className="h-4 w-4" />
-              {sidebarOpen && <span>Dashboard</span>}
+              <LayoutDashboard className="h-4 w-4 flex-shrink-0" />
+              {(sidebarOpen || isMobile) && <span>Dashboard</span>}
             </Button>
           </Link>
           <Link to="/settings">
@@ -143,22 +163,22 @@ export const Sidebar: React.FC = () => {
               variant="ghost"
               className={cn(
                 "w-full text-sidebar-foreground/60 hover:text-sidebar-foreground hover:bg-sidebar-accent",
-                sidebarOpen ? "justify-start gap-2" : "justify-center px-2"
+                (sidebarOpen || isMobile) ? "justify-start gap-2" : "justify-center px-2"
               )}
             >
-              <Settings className="h-4 w-4" />
-              {sidebarOpen && <span>Settings</span>}
+              <Settings className="h-4 w-4 flex-shrink-0" />
+              {(sidebarOpen || isMobile) && <span>Settings</span>}
             </Button>
           </Link>
           <Button
             variant="ghost"
             className={cn(
               "w-full text-sidebar-foreground/60 hover:text-sidebar-foreground hover:bg-sidebar-accent",
-              sidebarOpen ? "justify-start gap-2" : "justify-center px-2"
+              (sidebarOpen || isMobile) ? "justify-start gap-2" : "justify-center px-2"
             )}
           >
-            <User className="h-4 w-4" />
-            {sidebarOpen && <span>Profile</span>}
+            <User className="h-4 w-4 flex-shrink-0" />
+            {(sidebarOpen || isMobile) && <span>Profile</span>}
           </Button>
         </div>
       </div>

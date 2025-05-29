@@ -25,65 +25,65 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
   return (
     <div
       className={cn(
-        'flex gap-6 group message-fade-in',
+        'flex gap-3 sm:gap-6 group message-fade-in px-4 sm:px-0',
         isUser && 'flex-row-reverse',
-        'hover:bg-white/[0.02] transition-all duration-300 rounded-2xl p-4 -mx-4'
+        'hover:bg-white/[0.02] transition-all duration-300 rounded-xl sm:rounded-2xl p-2 sm:p-4 -mx-2 sm:-mx-4'
       )}
     >
       {/* Avatar */}
       <div
         className={cn(
-          'flex-shrink-0 w-12 h-12 rounded-2xl flex items-center justify-center relative',
+          'flex-shrink-0 w-8 h-8 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center relative',
           isUser
             ? 'glass-premium border border-white/10'
             : 'glass-premium border border-blue-500/20 glow-subtle'
         )}
       >
         {isUser ? (
-          <User className="w-5 h-5 text-white/80" />
+          <User className="w-3 h-3 sm:w-5 sm:h-5 text-white/80" />
         ) : (
           <>
-            <Bot className="w-5 h-5 text-blue-400" />
-            <Sparkles className="w-3 h-3 text-blue-300 absolute -top-1 -right-1" />
+            <Bot className="w-3 h-3 sm:w-5 sm:h-5 text-blue-400" />
+            <Sparkles className="w-2 h-2 sm:w-3 sm:h-3 text-blue-300 absolute -top-0.5 -right-0.5 sm:-top-1 sm:-right-1" />
           </>
         )}
       </div>
 
       {/* Message Content */}
-      <div className={cn('flex-1 space-y-3 max-w-4xl', isUser && 'flex flex-col items-end')}>
+      <div className={cn('flex-1 space-y-2 sm:space-y-3 max-w-full sm:max-w-4xl', isUser && 'flex flex-col items-end')}>
         {/* Message Bubble */}
         <div
           className={cn(
-            'inline-block max-w-full rounded-2xl relative overflow-hidden',
+            'inline-block max-w-full rounded-xl sm:rounded-2xl relative overflow-hidden',
             isUser
-              ? 'glass-premium border border-white/10 px-6 py-4'
-              : 'glass-ultra border border-blue-500/10 px-6 py-4',
+              ? 'glass-premium border border-white/10 px-3 py-2 sm:px-6 sm:py-4'
+              : 'glass-ultra border border-blue-500/10 px-3 py-2 sm:px-6 sm:py-4',
             'backdrop-blur-xl'
           )}
         >
           {message.isTyping ? (
-            <div className="flex items-center gap-2 py-2">
+            <div className="flex items-center gap-2 py-1 sm:py-2">
               <div className="flex gap-1">
                 <div className="typing-dot-premium"></div>
                 <div className="typing-dot-premium"></div>
                 <div className="typing-dot-premium"></div>
               </div>
-              <span className="text-sm text-muted-foreground ml-2">NGX Agent is thinking...</span>
+              <span className="text-xs sm:text-sm text-muted-foreground ml-2">NGX Agent is thinking...</span>
             </div>
           ) : (
             <div className="relative">
               {isAssistant ? (
-                <MarkdownRenderer content={message.content} />
+                <MarkdownRenderer content={message.content} className="text-sm sm:text-base" />
               ) : (
-                <div className="text-sm leading-relaxed whitespace-pre-wrap font-light text-white/90">
+                <div className="text-xs sm:text-sm leading-relaxed whitespace-pre-wrap font-light text-white/90">
                   {message.content}
                 </div>
               )}
               
-              {/* Message Actions */}
+              {/* Message Actions - Hidden on mobile unless menu is opened */}
               <div className={cn(
-                'absolute top-2 opacity-0 group-hover:opacity-100 transition-opacity',
-                isUser ? 'left-2' : 'right-2'
+                'absolute top-1 sm:top-2 opacity-0 group-hover:opacity-100 transition-opacity hidden sm:block',
+                isUser ? 'left-1 sm:left-2' : 'right-1 sm:right-2'
               )}>
                 <MessageActions
                   message={message}
@@ -100,9 +100,21 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
           )}
         </div>
 
+        {/* Mobile Message Actions */}
+        <div className={cn(
+          'flex sm:hidden',
+          isUser ? 'justify-end' : 'justify-start'
+        )}>
+          <MessageActions
+            message={message}
+            onEdit={onEditMessage}
+            onDelete={onDeleteMessage}
+          />
+        </div>
+
         {/* Metadata */}
         {message.metadata && !message.isTyping && (
-          <div className={cn('text-xs text-muted-foreground/50 space-x-4', isUser && 'text-right')}>
+          <div className={cn('text-xs text-muted-foreground/50 space-x-2 sm:space-x-4', isUser && 'text-right')}>
             {message.metadata.confidence && (
               <span className="inline-flex items-center gap-1">
                 <div className="w-1 h-1 rounded-full bg-green-400"></div>
