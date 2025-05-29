@@ -4,19 +4,18 @@ import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useAgentStore } from '@/store/agentStore';
 import { cn } from '@/lib/utils';
-import { Brain, Dumbbell, Apple, Activity, Zap, TrendingUp, RotateCcw, Shield, Plug, Heart } from 'lucide-react';
+import { Circle, Target, Leaf, BarChart3, Lightbulb, TrendingUp, RotateCcw, Zap, Users } from 'lucide-react';
 
 const iconMap = {
-  Brain,
-  Dumbbell,
-  Apple,
-  Activity,
-  Zap,
+  Circle,
+  Target,
+  Leaf,
+  BarChart3,
+  Lightbulb,
   TrendingUp,
   RotateCcw,
-  Shield,
-  Plug,
-  Heart
+  Zap,
+  Users
 };
 
 export const AgentSelector: React.FC = () => {
@@ -24,7 +23,7 @@ export const AgentSelector: React.FC = () => {
   const activeAgent = getActiveAgent();
 
   const getIcon = (iconName: string) => {
-    const IconComponent = iconMap[iconName as keyof typeof iconMap] || Brain;
+    const IconComponent = iconMap[iconName as keyof typeof iconMap] || Circle;
     return IconComponent;
   };
 

@@ -49,7 +49,7 @@ const FITNESS_AGENTS: Agent[] = [
     avatar: '🧠',
     color: 'from-purple-500 to-indigo-600',
     accentColor: 'purple-500',
-    icon: 'Brain',
+    icon: 'Circle',
     capabilities: ['Intent Analysis', 'Agent Routing', 'Context Management', 'Response Synthesis'],
     personality: 'analytical'
   },
@@ -62,7 +62,7 @@ const FITNESS_AGENTS: Agent[] = [
     avatar: '💪',
     color: 'from-red-500 to-orange-600',
     accentColor: 'red-500',
-    icon: 'Dumbbell',
+    icon: 'Target',
     capabilities: ['Workout Plans', 'Periodization', 'Exercise Selection', 'Progressive Overload'],
     personality: 'motivational'
   },
@@ -75,7 +75,7 @@ const FITNESS_AGENTS: Agent[] = [
     avatar: '🍎',
     color: 'from-green-500 to-emerald-600',
     accentColor: 'green-500',
-    icon: 'Apple',
+    icon: 'Leaf',
     capabilities: ['Meal Planning', 'Macro Calculation', 'Food Analysis', 'Supplement Advice'],
     personality: 'supportive'
   },
@@ -88,7 +88,7 @@ const FITNESS_AGENTS: Agent[] = [
     avatar: '📊',
     color: 'from-blue-500 to-cyan-600',
     accentColor: 'blue-500',
-    icon: 'Activity',
+    icon: 'BarChart3',
     capabilities: ['HRV Analysis', 'Sleep Tracking', 'Recovery Monitoring', 'Trend Detection'],
     personality: 'analytical'
   },
@@ -101,7 +101,7 @@ const FITNESS_AGENTS: Agent[] = [
     avatar: '🧠',
     color: 'from-yellow-500 to-amber-600',
     accentColor: 'yellow-500',
-    icon: 'Zap',
+    icon: 'Lightbulb',
     capabilities: ['Habit Design', 'Motivation Techniques', 'Barrier Removal', 'Goal Setting'],
     personality: 'empathetic'
   },
@@ -132,32 +132,6 @@ const FITNESS_AGENTS: Agent[] = [
     personality: 'technical'
   },
   {
-    id: 'security-guardian',
-    name: 'Security Compliance Guardian',
-    title: 'Privacy Specialist',
-    specialty: 'Data Security & Compliance',
-    description: 'Ensures your health data is secure and compliant with regulations',
-    avatar: '🔒',
-    color: 'from-gray-500 to-slate-600',
-    accentColor: 'gray-500',
-    icon: 'Shield',
-    capabilities: ['Data Encryption', 'Privacy Controls', 'HIPAA Compliance', 'Access Management'],
-    personality: 'technical'
-  },
-  {
-    id: 'integration-ops',
-    name: 'Systems Integration Ops',
-    title: 'Integration Specialist',
-    specialty: 'Wearable & App Connectivity',
-    description: 'Manages connections to your fitness devices and health apps',
-    avatar: '🔌',
-    color: 'from-cyan-500 to-blue-600',
-    accentColor: 'cyan-500',
-    icon: 'Plug',
-    capabilities: ['Device Sync', 'API Management', 'Data Normalization', 'Connection Monitoring'],
-    personality: 'technical'
-  },
-  {
     id: 'biohacking-innovator',
     name: 'Biohacking Innovator',
     title: 'Optimization Expert',
@@ -179,7 +153,7 @@ const FITNESS_AGENTS: Agent[] = [
     avatar: '🤝',
     color: 'from-emerald-500 to-teal-600',
     accentColor: 'emerald-500',
-    icon: 'Heart',
+    icon: 'Users',
     capabilities: ['Check-ins', 'Success Planning', 'Feedback Analysis', 'Experience Optimization'],
     personality: 'supportive'
   }
