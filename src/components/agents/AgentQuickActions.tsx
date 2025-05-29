@@ -3,6 +3,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { useAgentStore } from '@/store/agentStore';
 import { useChatStore } from '@/store/chatStore';
+import { cn } from '@/lib/utils';
 import { 
   Dumbbell, 
   Calendar, 
