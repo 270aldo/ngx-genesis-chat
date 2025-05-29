@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Sparkles, Shield, ArrowUp } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const features = [
   {
@@ -24,38 +25,56 @@ const features = [
 ];
 
 export const FeatureCards: React.FC = () => {
+  const isMobile = useIsMobile();
+
   return (
-    <section id="features" className="py-32 relative">
-      <div className="container mx-auto px-6">
-        <div className="text-center mb-20">
-          <h2 className="text-4xl md:text-6xl font-light mb-6 text-white">
+    <section id="features" className="py-16 sm:py-24 lg:py-32 relative px-4">
+      <div className="container mx-auto">
+        <div className="text-center mb-12 sm:mb-16 lg:mb-20">
+          <h2 className={`font-light mb-4 sm:mb-6 text-white ${
+            isMobile ? 'text-3xl' : 'text-4xl md:text-6xl'
+          }`}>
             Cutting-Edge
             <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"> Features</span>
           </h2>
-          <p className="text-xl text-white/60 max-w-2xl mx-auto">
+          <p className={`text-white/60 max-w-2xl mx-auto px-4 ${
+            isMobile ? 'text-base' : 'text-xl'
+          }`}>
             Experience the next generation of AI interaction with our premium feature set
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className={`grid gap-6 sm:gap-8 max-w-6xl mx-auto ${
+          isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
+        }`}>
           {features.map((feature, index) => (
             <div
               key={feature.title}
               className="group relative"
               style={{ animationDelay: `${index * 200}ms` }}
             >
-              <div className="glass-ultra border border-white/10 p-8 rounded-3xl hover:border-blue-500/30 transition-all duration-500 hover:scale-105 relative overflow-hidden">
+              <div className={`glass-ultra border border-white/10 rounded-2xl sm:rounded-3xl hover:border-blue-500/30 transition-all duration-500 hover:scale-105 relative overflow-hidden ${
+                isMobile ? 'p-6' : 'p-8'
+              }`}>
                 {/* Gradient background */}
                 <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></div>
                 
                 {/* Content */}
                 <div className="relative z-10">
-                  <div className="w-16 h-16 glass-premium border border-blue-500/20 rounded-2xl flex items-center justify-center mb-6 glow-subtle group-hover:glow-primary transition-all duration-300">
-                    <feature.icon className="w-8 h-8 text-blue-400" />
+                  <div className={`glass-premium border border-blue-500/20 rounded-xl sm:rounded-2xl flex items-center justify-center mb-4 sm:mb-6 glow-subtle group-hover:glow-primary transition-all duration-300 ${
+                    isMobile ? 'w-12 h-12' : 'w-16 h-16'
+                  }`}>
+                    <feature.icon className={`text-blue-400 ${
+                      isMobile ? 'w-6 h-6' : 'w-8 h-8'
+                    }`} />
                   </div>
                   
-                  <h3 className="text-2xl font-semibold mb-4 text-white">{feature.title}</h3>
-                  <p className="text-white/70 leading-relaxed">{feature.description}</p>
+                  <h3 className={`font-semibold mb-3 sm:mb-4 text-white ${
+                    isMobile ? 'text-xl' : 'text-2xl'
+                  }`}>{feature.title}</h3>
+                  <p className={`text-white/70 leading-relaxed ${
+                    isMobile ? 'text-sm' : 'text-base'
+                  }`}>{feature.description}</p>
                 </div>
 
                 {/* Shimmer effect */}

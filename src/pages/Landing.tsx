@@ -12,9 +12,11 @@ const Landing: React.FC = () => {
     <div className="min-h-screen bg-background relative overflow-hidden">
       <ParticleBackground />
       <LandingHeader />
-      <HeroSection />
-      <FeatureCards />
-      <DemoSection />
+      <main>
+        <HeroSection />
+        <FeatureCards />
+        <DemoSection />
+      </main>
       <LandingFooter />
     </div>
   );
