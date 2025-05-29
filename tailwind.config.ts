@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,6 +62,38 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				// NGX Agents custom colors
+				navy: {
+					50: '#f0f1ff',
+					100: '#e4e6ff', 
+					200: '#cdd0ff',
+					300: '#a8afff',
+					400: '#7c87ff',
+					500: '#5562ff',
+					600: '#3b44f7',
+					700: '#2a31e3',
+					800: '#232bb9',
+					900: '#0a0638',
+					950: '#050322'
+				},
+				purple: {
+					50: '#faf5ff',
+					100: '#f3e8ff',
+					200: '#e9d5ff',
+					300: '#d8b4fe',
+					400: '#c084fc',
+					500: '#a855f7',
+					600: '#9333ea',
+					700: '#7c3aed',
+					800: '#6d28d9',
+					900: '#6d00ff',
+					950: '#4a0080'
+				},
+				glass: {
+					light: 'rgba(255, 255, 255, 0.1)',
+					medium: 'rgba(255, 255, 255, 0.2)',
+					dark: 'rgba(0, 0, 0, 0.3)'
 				}
 			},
 			borderRadius: {
@@ -84,11 +117,66 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'fade-in': {
+					'0%': {
+						opacity: '0',
+						transform: 'translateY(10px)'
+					},
+					'100%': {
+						opacity: '1',
+						transform: 'translateY(0)'
+					}
+				},
+				'scale-in': {
+					'0%': {
+						transform: 'scale(0.95)',
+						opacity: '0'
+					},
+					'100%': {
+						transform: 'scale(1)',
+						opacity: '1'
+					}
+				},
+				'typing': {
+					'0%, 60%, 100%': {
+						transform: 'translateY(0px)'
+					},
+					'30%': {
+						transform: 'translateY(-10px)'
+					}
+				},
+				'pulse-glow': {
+					'0%, 100%': {
+						boxShadow: '0 0 5px rgba(168, 85, 247, 0.4)'
+					},
+					'50%': {
+						boxShadow: '0 0 20px rgba(168, 85, 247, 0.8)'
+					}
+				},
+				'shimmer': {
+					'0%': {
+						transform: 'translateX(-100%)'
+					},
+					'100%': {
+						transform: 'translateX(100%)'
+					}
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'fade-in': 'fade-in 0.3s ease-out',
+				'scale-in': 'scale-in 0.2s ease-out',
+				'typing': 'typing 1.4s infinite ease-in-out',
+				'pulse-glow': 'pulse-glow 2s infinite',
+				'shimmer': 'shimmer 2s infinite'
+			},
+			fontFamily: {
+				sans: ['Inter', 'system-ui', 'sans-serif'],
+			},
+			backdropBlur: {
+				xs: '2px',
 			}
 		}
 	},
