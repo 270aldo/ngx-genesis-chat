@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Message } from '@/store/chatStore';
+import { useAgentStore } from '@/store/agentStore';
 import { cn } from '@/lib/utils';
 import { Bot, User, Sparkles } from 'lucide-react';
 import { MarkdownRenderer } from './MarkdownRenderer';
@@ -19,8 +20,15 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
   onEditMessage,
   onDeleteMessage
 }) => {
+  const { getAgent } = useAgentStore();
   const isUser = message.role === 'user';
   const isAssistant = message.role === 'assistant';
+  
+  // Get agent information for this message
+  const agent = message.agentId ? getAgent(message.agentId) : null;
+  const agentAvatar = agent?.avatar || '🤖';
+  const agentName = agent?.name || 'NGX Agent';
+  const agentColor = agent?.color || 'from-blue-500 to-purple-600';
 
   return (
     <div
@@ -36,28 +44,36 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
           'flex-shrink-0 w-8 h-8 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center relative',
           isUser
             ? 'glass-premium border border-white/10'
-            : 'glass-premium border border-blue-500/20 glow-subtle'
+            : `glass-premium border border-white/10 bg-gradient-to-br ${agentColor} glow-subtle`
         )}
       >
         {isUser ? (
           <User className="w-3 h-3 sm:w-5 sm:h-5 text-white/80" />
         ) : (
           <>
-            <Bot className="w-3 h-3 sm:w-5 sm:h-5 text-blue-400" />
-            <Sparkles className="w-2 h-2 sm:w-3 sm:h-3 text-blue-300 absolute -top-0.5 -right-0.5 sm:-top-1 sm:-right-1" />
+            <span className="text-sm sm:text-lg">{agentAvatar}</span>
+            <Sparkles className="w-2 h-2 sm:w-3 sm:h-3 text-white absolute -top-0.5 -right-0.5 sm:-top-1 sm:-right-1" />
           </>
         )}
       </div>
 
       {/* Message Content */}
       <div className={cn('flex-1 space-y-2 sm:space-y-3 max-w-full sm:max-w-4xl', isUser && 'flex flex-col items-end')}>
+        {/* Agent Name (for assistant messages) */}
+        {isAssistant && agent && (
+          <div className="flex items-center gap-2">
+            <span className="text-xs sm:text-sm font-medium text-white/80">{agentName}</span>
+            <span className="text-xs text-white/40">{agent.specialty}</span>
+          </div>
+        )}
+        
         {/* Message Bubble */}
         <div
           className={cn(
             'inline-block max-w-full rounded-xl sm:rounded-2xl relative overflow-hidden',
             isUser
               ? 'glass-premium border border-white/10 px-3 py-2 sm:px-6 sm:py-4'
-              : 'glass-ultra border border-blue-500/10 px-3 py-2 sm:px-6 sm:py-4',
+              : `glass-ultra border border-white/10 px-3 py-2 sm:px-6 sm:py-4 bg-gradient-to-br ${agentColor}/10`,
             'backdrop-blur-xl'
           )}
         >
@@ -68,7 +84,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
                 <div className="typing-dot-premium"></div>
                 <div className="typing-dot-premium"></div>
               </div>
-              <span className="text-xs sm:text-sm text-muted-foreground ml-2">NGX Agent is thinking...</span>
+              <span className="text-xs sm:text-sm text-muted-foreground ml-2">{agentName} is thinking...</span>
             </div>
           ) : (
             <div className="relative">

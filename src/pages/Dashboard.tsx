@@ -8,6 +8,7 @@ import { StatsCards } from '@/components/dashboard/StatsCards';
 import { RecentActivity } from '@/components/dashboard/RecentActivity';
 import { QuickActions } from '@/components/dashboard/QuickActions';
 import { TokenBalance } from '@/components/tokens/TokenBalance';
+import { AgentInsights } from '@/components/dashboard/AgentInsights';
 
 const Dashboard: React.FC = () => {
   const { user } = useAuthStore();
@@ -35,7 +36,7 @@ const Dashboard: React.FC = () => {
             Welcome back, {user?.name || 'User'}
           </h1>
           <p className="text-sm sm:text-base text-white/60">
-            Here's what's happening with your NGX Agents today.
+            Your NGX Agents team is ready to optimize your fitness journey.
           </p>
         </div>
 
@@ -44,6 +45,7 @@ const Dashboard: React.FC = () => {
           // Mobile: Stack everything vertically
           <div className="space-y-6">
             <TokenBalance />
+            <AgentInsights />
             <QuickActions />
             <StatsCards stats={stats} />
             <ProfileSection user={user} />
@@ -61,6 +63,7 @@ const Dashboard: React.FC = () => {
             {/* Right Column */}
             <div className="space-y-6 lg:space-y-8">
               <TokenBalance />
+              <AgentInsights />
               <ProfileSection user={user} />
               <QuickActions />
             </div>
