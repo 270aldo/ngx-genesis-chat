@@ -23,6 +23,19 @@ export const AgentSelector: React.FC = () => {
   const activeAgent = getActiveAgent();
   const [isExpanded, setIsExpanded] = React.useState(false);
 
+  // Scroll chat area up when expanded
+  React.useEffect(() => {
+    if (isExpanded) {
+      const chatArea = document.querySelector('.chat-scroll-area');
+      if (chatArea) {
+        chatArea.scrollBy({
+          top: -200,
+          behavior: 'smooth'
+        });
+      }
+    }
+  }, [isExpanded]);
+
   const getIcon = (iconName: string) => {
     const IconComponent = iconMap[iconName as keyof typeof iconMap] || Circle;
     return IconComponent;
@@ -62,7 +75,7 @@ export const AgentSelector: React.FC = () => {
             className="text-white/60 hover:text-white hover:bg-white/10 p-2"
           >
             <ChevronDown className={cn(
-              "w-4 h-4 transition-transform duration-200",
+              "w-4 h-4 transition-transform duration-300",
               isExpanded && "rotate-180"
             )} />
           </Button>

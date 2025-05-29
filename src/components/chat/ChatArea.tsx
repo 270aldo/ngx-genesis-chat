@@ -63,7 +63,7 @@ export const ChatArea: React.FC = () => {
 
   if (!conversation) {
     return (
-      <div className="flex-1 flex items-center justify-center relative overflow-hidden">
+      <div className="flex-1 flex items-center justify-center relative overflow-hidden chat-scroll-area">
         <ChatSearch isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
         
         {/* Floating particles background */}
@@ -128,7 +128,7 @@ export const ChatArea: React.FC = () => {
   }
 
   return (
-    <div className="flex-1 overflow-y-auto relative">
+    <div className="flex-1 overflow-y-auto relative chat-scroll-area">
       <ChatSearch isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
       
       <div className="max-w-5xl mx-auto px-6">
