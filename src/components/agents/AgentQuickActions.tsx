@@ -15,7 +15,14 @@ import {
   Activity,
   Moon,
   Zap,
-  Heart
+  Heart,
+  Shield,
+  Wind,
+  Snowflake,
+  Sun,
+  Trophy,
+  Map,
+  CheckCircle
 } from 'lucide-react';
 
 const agentActions = {
@@ -43,6 +50,28 @@ const agentActions = {
     { label: 'Progress Report', icon: BarChart3, prompt: 'Show me my progress report' },
     { label: 'Goal Timeline', icon: Calendar, prompt: 'When will I reach my goals?' },
     { label: 'Photo Comparison', icon: Camera, prompt: 'Compare my progress photos' }
+  ],
+  'recovery-corrective': [
+    { label: 'Recovery Assessment', icon: Activity, prompt: 'Analyze my current recovery status based on sleep, HRV, and fatigue levels' },
+    { label: 'Mobility Plan', icon: Dumbbell, prompt: 'Create a personalized mobility and stretching routine for me' },
+    { label: 'Injury Prevention', icon: Shield, prompt: 'Identify my injury risk factors and create prevention strategies' },
+    { label: 'Sleep Optimization', icon: Moon, prompt: 'Help me optimize my sleep for better recovery' },
+    { label: 'Stress Management', icon: Heart, prompt: 'Teach me techniques to manage physical and mental stress' }
+  ],
+  'biohacking-innovator': [
+    { label: 'Cold Therapy', icon: Snowflake, prompt: 'Design a progressive cold exposure routine for recovery and resilience' },
+    { label: 'Breathwork', icon: Wind, prompt: 'Teach me advanced breathing techniques for performance and recovery' },
+    { label: 'Supplement Stack', icon: Apple, prompt: 'Create a personalized supplement protocol based on my goals' },
+    { label: 'Fasting Protocol', icon: Clock, prompt: 'Design a safe and effective intermittent fasting schedule for me' },
+    { label: 'Circadian Rhythm', icon: Sun, prompt: 'Help me optimize my body clock for better sleep and energy' }
+  ],
+  'success-liaison': [
+    { label: 'Weekly Check-in', icon: Calendar, prompt: 'Let\'s do a weekly check-in to review my progress and adjust my plan' },
+    { label: 'Goal Review', icon: Target, prompt: 'Help me evaluate and refine my fitness goals based on my progress' },
+    { label: 'Motivation Boost', icon: Heart, prompt: 'I need some personalized encouragement to overcome mental barriers' },
+    { label: 'Success Planning', icon: Map, prompt: 'Create a comprehensive roadmap for achieving my fitness goals' },
+    { label: 'Habit Tracker', icon: CheckCircle, prompt: 'Help me track and optimize my daily wellness habits' },
+    { label: 'Celebrate Wins', icon: Trophy, prompt: 'Let\'s acknowledge my achievements and plan some rewards' }
   ]
 };
 
@@ -69,11 +98,22 @@ export const AgentQuickActions: React.FC = () => {
 
   if (actions.length === 0) return null;
 
+  // Show more actions for specialized agents
+  const maxActions = ['recovery-corrective', 'biohacking-innovator', 'success-liaison'].includes(activeAgent?.id || '') ? 6 : 3;
+
   return (
     <div className="px-4 py-3 border-b border-white/10">
-      <p className="text-xs text-white/60 mb-3">Quick Actions</p>
-      <div className="grid grid-cols-3 gap-2">
-        {actions.map((action, index) => {
+      <div className="flex items-center justify-between mb-3">
+        <p className="text-xs text-white/60">Quick Actions</p>
+        {actions.length > maxActions && (
+          <p className="text-xs text-white/40">{actions.length} available</p>
+        )}
+      </div>
+      <div className={cn(
+        "grid gap-2",
+        maxActions === 6 ? "grid-cols-2 sm:grid-cols-3" : "grid-cols-3"
+      )}>
+        {actions.slice(0, maxActions).map((action, index) => {
           const Icon = action.icon;
           return (
             <Button
@@ -81,14 +121,23 @@ export const AgentQuickActions: React.FC = () => {
               variant="ghost"
               size="sm"
               onClick={() => handleQuickAction(action.prompt)}
-              className="flex flex-col gap-1 h-16 text-xs text-white/70 hover:text-white hover:bg-white/10 p-2"
+              className="flex flex-col gap-1.5 h-auto py-3 text-xs text-white/70 hover:text-white hover:bg-white/10 p-2 rounded-xl border border-transparent hover:border-white/10 transition-all duration-200"
             >
               <Icon className="w-4 h-4" />
-              <span className="leading-tight text-center">{action.label}</span>
+              <span className="leading-tight text-center font-medium">{action.label}</span>
             </Button>
           );
         })}
       </div>
+      
+      {/* Show overflow indicator */}
+      {actions.length > maxActions && (
+        <div className="mt-2 text-center">
+          <span className="text-xs text-white/40">
+            +{actions.length - maxActions} more actions available in chat
+          </span>
+        </div>
+      )}
     </div>
   );
 };

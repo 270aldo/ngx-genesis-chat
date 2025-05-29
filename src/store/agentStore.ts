@@ -1,4 +1,3 @@
-
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
@@ -14,6 +13,15 @@ export interface Agent {
   icon: string;
   capabilities: string[];
   personality: 'motivational' | 'analytical' | 'empathetic' | 'technical' | 'supportive';
+  actions?: AgentAction[];
+}
+
+export interface AgentAction {
+  id: string;
+  label: string;
+  description: string;
+  icon: string;
+  category: 'assessment' | 'plan' | 'analysis' | 'guidance' | 'tracking';
 }
 
 export interface AgentMessage {
@@ -129,7 +137,44 @@ const FITNESS_AGENTS: Agent[] = [
     accentColor: 'teal-500',
     icon: 'RotateCcw',
     capabilities: ['Recovery Protocols', 'Mobility Work', 'Injury Prevention', 'Movement Analysis'],
-    personality: 'technical'
+    personality: 'technical',
+    actions: [
+      {
+        id: 'recovery-assessment',
+        label: 'Recovery Assessment',
+        description: 'Analyze your current recovery status based on sleep, HRV, and fatigue levels',
+        icon: 'Activity',
+        category: 'assessment'
+      },
+      {
+        id: 'mobility-plan',
+        label: 'Mobility Plan',
+        description: 'Create a personalized mobility and stretching routine',
+        icon: 'Stretch',
+        category: 'plan'
+      },
+      {
+        id: 'injury-prevention',
+        label: 'Injury Prevention',
+        description: 'Identify risk factors and create prevention strategies',
+        icon: 'Shield',
+        category: 'guidance'
+      },
+      {
+        id: 'sleep-optimization',
+        label: 'Sleep Optimization',
+        description: 'Optimize your sleep for better recovery',
+        icon: 'Moon',
+        category: 'guidance'
+      },
+      {
+        id: 'stress-management',
+        label: 'Stress Management',
+        description: 'Learn techniques to manage physical and mental stress',
+        icon: 'Brain',
+        category: 'guidance'
+      }
+    ]
   },
   {
     id: 'biohacking-innovator',
@@ -142,7 +187,51 @@ const FITNESS_AGENTS: Agent[] = [
     accentColor: 'pink-500',
     icon: 'Zap',
     capabilities: ['Biohacking Protocols', 'Supplement Stacks', 'Cold Therapy', 'Breathwork'],
-    personality: 'technical'
+    personality: 'technical',
+    actions: [
+      {
+        id: 'cold-therapy',
+        label: 'Cold Therapy Protocol',
+        description: 'Design a progressive cold exposure routine for recovery and resilience',
+        icon: 'Snowflake',
+        category: 'plan'
+      },
+      {
+        id: 'breathwork-session',
+        label: 'Breathwork Session',
+        description: 'Learn advanced breathing techniques for performance and recovery',
+        icon: 'Wind',
+        category: 'guidance'
+      },
+      {
+        id: 'supplement-stack',
+        label: 'Supplement Stack',
+        description: 'Create a personalized supplement protocol based on your goals',
+        icon: 'Pill',
+        category: 'plan'
+      },
+      {
+        id: 'fasting-protocol',
+        label: 'Intermittent Fasting',
+        description: 'Design a safe and effective fasting schedule',
+        icon: 'Clock',
+        category: 'plan'
+      },
+      {
+        id: 'circadian-optimization',
+        label: 'Circadian Rhythm',
+        description: 'Optimize your body clock for better sleep and energy',
+        icon: 'Sun',
+        category: 'guidance'
+      },
+      {
+        id: 'heat-therapy',
+        label: 'Heat Therapy',
+        description: 'Sauna and heat exposure protocols for health benefits',
+        icon: 'Flame',
+        category: 'plan'
+      }
+    ]
   },
   {
     id: 'success-liaison',
@@ -155,7 +244,51 @@ const FITNESS_AGENTS: Agent[] = [
     accentColor: 'emerald-500',
     icon: 'Users',
     capabilities: ['Check-ins', 'Success Planning', 'Feedback Analysis', 'Experience Optimization'],
-    personality: 'supportive'
+    personality: 'supportive',
+    actions: [
+      {
+        id: 'weekly-checkin',
+        label: 'Weekly Check-in',
+        description: 'Review your progress and adjust your plan for the upcoming week',
+        icon: 'Calendar',
+        category: 'tracking'
+      },
+      {
+        id: 'goal-review',
+        label: 'Goal Review',
+        description: 'Evaluate and refine your fitness goals based on progress',
+        icon: 'Target',
+        category: 'assessment'
+      },
+      {
+        id: 'motivation-boost',
+        label: 'Motivation Boost',
+        description: 'Get personalized encouragement and overcome mental barriers',
+        icon: 'Heart',
+        category: 'guidance'
+      },
+      {
+        id: 'success-planning',
+        label: 'Success Planning',
+        description: 'Create a comprehensive roadmap for achieving your goals',
+        icon: 'Map',
+        category: 'plan'
+      },
+      {
+        id: 'habit-tracker',
+        label: 'Habit Tracker',
+        description: 'Track and optimize your daily wellness habits',
+        icon: 'CheckCircle',
+        category: 'tracking'
+      },
+      {
+        id: 'celebration',
+        label: 'Celebrate Wins',
+        description: 'Acknowledge your achievements and plan rewards',
+        icon: 'Trophy',
+        category: 'guidance'
+      }
+    ]
   }
 ];
 
