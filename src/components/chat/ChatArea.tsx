@@ -3,6 +3,7 @@ import React, { useRef, useEffect } from 'react';
 import { ChatMessage } from './ChatMessage';
 import { useChatStore } from '@/store/chatStore';
 import { cn } from '@/lib/utils';
+import { Sparkles } from 'lucide-react';
 
 export const ChatArea: React.FC = () => {
   const { getCurrentConversation } = useChatStore();
@@ -19,29 +20,53 @@ export const ChatArea: React.FC = () => {
 
   if (!conversation) {
     return (
-      <div className="flex-1 flex items-center justify-center">
-        <div className="text-center space-y-4 max-w-md mx-auto p-8">
-          <div className="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-purple-600/20 to-navy-600/20 flex items-center justify-center glass">
-            <div className="text-3xl">🤖</div>
+      <div className="flex-1 flex items-center justify-center relative overflow-hidden">
+        {/* Floating particles background */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {[...Array(6)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute w-1 h-1 bg-blue-500/20 rounded-full floating-animation"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 3}s`,
+                animationDuration: `${3 + Math.random() * 2}s`
+              }}
+            />
+          ))}
+        </div>
+
+        <div className="text-center space-y-8 max-w-2xl mx-auto p-8 relative z-10">
+          {/* Main icon with premium effects */}
+          <div className="relative mx-auto w-20 h-20">
+            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-500/20 to-purple-500/20 pulse-ring"></div>
+            <div className="relative w-20 h-20 rounded-full glass-premium flex items-center justify-center glow-subtle">
+              <Sparkles className="w-8 h-8 text-blue-400" />
+            </div>
           </div>
-          <div className="space-y-2">
-            <h2 className="text-2xl font-semibold bg-gradient-to-r from-purple-400 to-navy-400 bg-clip-text text-transparent">
-              Welcome to NGX Agents
-            </h2>
-            <p className="text-muted-foreground">
-              Start a conversation to experience the power of advanced AI agents.
+
+          {/* Title and description */}
+          <div className="space-y-4">
+            <h1 className="text-4xl font-light tracking-tight bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent">
+              NGX Agents
+            </h1>
+            <p className="text-lg text-muted-foreground font-light max-w-md mx-auto leading-relaxed">
+              Experience the future of AI conversation with advanced agent intelligence.
             </p>
           </div>
-          <div className="flex flex-wrap gap-2 justify-center mt-6">
+
+          {/* Suggestion pills */}
+          <div className="flex flex-wrap gap-3 justify-center mt-12">
             {[
-              "What can you help me with?",
+              "What can you create?",
               "Explain quantum computing",
-              "Write a Python function",
-              "Plan a trip to Japan"
+              "Write efficient code",
+              "Plan my next project"
             ].map((suggestion, index) => (
               <button
                 key={index}
-                className="px-3 py-2 text-sm rounded-full glass hover:bg-white/10 transition-colors border border-border/50"
+                className="px-6 py-3 text-sm font-medium rounded-full glass-ultra hover:glass-premium transition-all duration-300 border border-white/5 hover:border-white/10 hover:scale-105 shimmer-premium"
               >
                 {suggestion}
               </button>
@@ -53,22 +78,22 @@ export const ChatArea: React.FC = () => {
   }
 
   return (
-    <div className="flex-1 overflow-y-auto">
-      <div className="max-w-4xl mx-auto">
+    <div className="flex-1 overflow-y-auto relative">
+      <div className="max-w-5xl mx-auto px-6">
         {conversation.messages.length === 0 ? (
-          <div className="flex items-center justify-center h-full">
-            <div className="text-center space-y-4 p-8">
-              <div className="text-6xl mb-4">💭</div>
-              <h3 className="text-xl font-medium text-muted-foreground">
-                Start the conversation
+          <div className="flex items-center justify-center min-h-full">
+            <div className="text-center space-y-6 p-8">
+              <div className="text-6xl mb-6 opacity-30">💭</div>
+              <h3 className="text-2xl font-light text-white/80">
+                Ready to begin
               </h3>
-              <p className="text-sm text-muted-foreground/80">
-                Ask anything and I'll help you explore ideas and solve problems.
+              <p className="text-sm text-muted-foreground/60 font-light">
+                Start a conversation and explore endless possibilities
               </p>
             </div>
           </div>
         ) : (
-          <div className="space-y-1">
+          <div className="space-y-6 py-8">
             {conversation.messages.map((message, index) => (
               <ChatMessage
                 key={message.id}

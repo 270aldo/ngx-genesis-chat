@@ -61,27 +61,31 @@ export const ChatLayout: React.FC = () => {
       }
       
       setTyping(false);
-    }, 1500 + Math.random() * 1000);
+    }, 2000 + Math.random() * 1500);
   };
 
   const generateMockResponse = (userMessage: string): string => {
     const responses = [
-      "I understand your question about " + userMessage.toLowerCase() + ". This is a fascinating topic that involves multiple considerations. Let me break this down for you systematically.",
-      "That's an excellent question! Based on my analysis, there are several key points to consider regarding " + userMessage.toLowerCase() + ".",
-      "I can help you with that. The topic of " + userMessage.toLowerCase() + " is quite complex, so let me provide you with a comprehensive overview.",
-      "Thank you for your inquiry. This relates to several important concepts that I'd be happy to explain in detail.",
+      `I understand you're asking about "${userMessage.toLowerCase()}". This is a fascinating topic that requires a nuanced approach. Let me provide you with a comprehensive analysis based on the latest developments and best practices in the field.`,
+      `That's an excellent question regarding "${userMessage.toLowerCase()}". Based on my advanced processing capabilities, I can offer several key insights that will help you understand this complex subject matter.`,
+      `Your inquiry about "${userMessage.toLowerCase()}" touches on several important concepts. Allow me to break this down systematically, providing you with actionable insights and practical solutions.`,
+      `Thank you for bringing up "${userMessage.toLowerCase()}". This topic involves multiple interconnected elements that I'd be happy to explore with you in detail, offering both theoretical foundations and practical applications.`,
     ];
     
     return responses[Math.floor(Math.random() * responses.length)];
   };
 
   return (
-    <div className="h-screen flex bg-background">
+    <div className="h-screen flex bg-background relative overflow-hidden">
+      {/* Subtle background effects */}
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-purple-500/5 pointer-events-none"></div>
+      
       {/* Sidebar */}
       <Sidebar />
       
       {/* Main Chat Area */}
-      <div className="flex-1 flex flex-col min-w-0">
+      <div className="flex-1 flex flex-col min-w-0 relative">
+        <div className="absolute inset-0 bg-gradient-to-t from-background/50 via-transparent to-transparent pointer-events-none"></div>
         <ChatArea />
         <ChatInput onSendMessage={handleSendMessage} />
       </div>

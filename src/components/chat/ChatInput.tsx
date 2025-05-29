@@ -2,7 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Send, Mic, MicOff, Paperclip, Square } from 'lucide-react';
+import { Send, Mic, MicOff, Paperclip, Square, Sparkles } from 'lucide-react';
 import { useChatStore } from '@/store/chatStore';
 import { cn } from '@/lib/utils';
 
@@ -14,6 +14,7 @@ interface ChatInputProps {
 export const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, disabled }) => {
   const [input, setInput] = useState('');
   const [isRecording, setIsRecording] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const { isVoiceMode, setVoiceMode, isTyping } = useChatStore();
 
@@ -47,19 +48,34 @@ export const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, disabled })
   };
 
   return (
-    <div className="border-t border-border/50 bg-background/80 backdrop-blur-md p-4">
-      <div className="max-w-4xl mx-auto">
-        <div className="relative glass rounded-2xl border border-border/50 overflow-hidden">
+    <div className="border-t border-white/5 bg-background/80 backdrop-blur-xl p-6">
+      <div className="max-w-5xl mx-auto">
+        <div className={cn(
+          "relative glass-ultra rounded-3xl border transition-all duration-300",
+          isFocused 
+            ? "border-blue-500/30 glow-subtle" 
+            : "border-white/10",
+          "overflow-hidden"
+        )}>
+          
+          {/* Animated border effect */}
+          <div className={cn(
+            "absolute inset-0 rounded-3xl transition-opacity duration-300",
+            isFocused ? "opacity-100" : "opacity-0"
+          )}>
+            <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-blue-500/20 blur-sm"></div>
+          </div>
+
           {/* Input Area */}
-          <div className="flex items-end gap-2 p-4">
+          <div className="relative flex items-end gap-3 p-4">
             {/* Attachment Button */}
             <Button
               variant="ghost"
               size="icon"
-              className="shrink-0 h-10 w-10 text-muted-foreground hover:text-foreground transition-colors"
+              className="shrink-0 h-10 w-10 text-white/40 hover:text-white/60 hover:bg-white/5 transition-all duration-200 rounded-xl"
               disabled={disabled}
             >
-              <Paperclip className="h-5 w-5" />
+              <Paperclip className="h-4 w-4" />
             </Button>
 
             {/* Text Input */}
@@ -69,26 +85,30 @@ export const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, disabled })
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyPress={handleKeyPress}
-                placeholder={isTyping ? "NGX Agent is thinking..." : "Type your message..."}
+                onFocus={() => setIsFocused(true)}
+                onBlur={() => setIsFocused(false)}
+                placeholder={isTyping ? "NGX Agent is responding..." : "Type your message..."}
                 disabled={disabled || isTyping}
                 className={cn(
-                  "min-h-[44px] max-h-[120px] resize-none border-0 bg-transparent",
-                  "focus-visible:ring-0 focus-visible:ring-offset-0 px-0 py-2",
-                  "placeholder:text-muted-foreground/60"
+                  "min-h-[48px] max-h-[120px] resize-none border-0 bg-transparent",
+                  "focus-visible:ring-0 focus-visible:ring-offset-0 px-0 py-3",
+                  "placeholder:text-white/30 text-white/90 font-light text-base",
+                  "scrollbar-none"
                 )}
                 rows={1}
               />
               
               {/* Typing Indicator Overlay */}
               {isTyping && (
-                <div className="absolute inset-0 flex items-center justify-center bg-background/50 backdrop-blur-sm rounded-lg">
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <div className="absolute inset-0 flex items-center justify-center glass-premium rounded-xl backdrop-blur-sm">
+                  <div className="flex items-center gap-3 text-sm text-white/60">
                     <div className="flex gap-1">
-                      <div className="typing-dot"></div>
-                      <div className="typing-dot"></div>
-                      <div className="typing-dot"></div>
+                      <div className="typing-dot-premium"></div>
+                      <div className="typing-dot-premium"></div>
+                      <div className="typing-dot-premium"></div>
                     </div>
-                    <span>NGX Agent is responding...</span>
+                    <Sparkles className="w-4 h-4 text-blue-400" />
+                    <span className="font-light">Generating response...</span>
                   </div>
                 </div>
               )}
@@ -101,16 +121,16 @@ export const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, disabled })
               onClick={toggleRecording}
               disabled={disabled}
               className={cn(
-                "shrink-0 h-10 w-10 transition-all duration-200",
+                "shrink-0 h-10 w-10 transition-all duration-300 rounded-xl premium-button",
                 isRecording
-                  ? "text-red-400 hover:text-red-300 animate-pulse-glow"
-                  : "text-muted-foreground hover:text-foreground"
+                  ? "text-red-400 hover:text-red-300 glow-primary"
+                  : "text-white/40 hover:text-white/60 hover:bg-white/5"
               )}
             >
               {isRecording ? (
-                <MicOff className="h-5 w-5" />
+                <MicOff className="h-4 w-4" />
               ) : (
-                <Mic className="h-5 w-5" />
+                <Mic className="h-4 w-4" />
               )}
             </Button>
 
@@ -120,27 +140,27 @@ export const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, disabled })
               disabled={(!input.trim() && !isTyping) || disabled}
               size="icon"
               className={cn(
-                "shrink-0 h-10 w-10 rounded-xl transition-all duration-200",
+                "shrink-0 h-10 w-10 rounded-xl transition-all duration-300 premium-button",
                 isTyping
-                  ? "bg-red-600 hover:bg-red-700"
-                  : "bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800",
-                "disabled:opacity-50 disabled:cursor-not-allowed",
-                !disabled && (input.trim() || isTyping) && "glow-hover"
+                  ? "bg-red-500/20 hover:bg-red-500/30 border border-red-500/30"
+                  : "bg-gradient-to-r from-blue-500/20 to-purple-500/20 hover:from-blue-500/30 hover:to-purple-500/30 border border-blue-500/30",
+                "disabled:opacity-30 disabled:cursor-not-allowed",
+                !disabled && (input.trim() || isTyping) && "glow-subtle shadow-lg"
               )}
             >
               {isTyping ? (
-                <Square className="h-4 w-4" />
+                <Square className="h-4 w-4 text-white/80" />
               ) : (
-                <Send className="h-4 w-4" />
+                <Send className="h-4 w-4 text-white/80" />
               )}
             </Button>
           </div>
 
           {/* Voice Mode Indicator */}
           {isVoiceMode && (
-            <div className="px-4 pb-3">
-              <div className="flex items-center gap-2 text-xs text-purple-400">
-                <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
+            <div className="px-6 pb-4">
+              <div className="flex items-center gap-2 text-xs text-blue-400/80 font-light">
+                <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
                 <span>Voice mode active</span>
               </div>
             </div>
@@ -148,8 +168,8 @@ export const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, disabled })
         </div>
 
         {/* Quick Actions */}
-        <div className="flex items-center justify-center gap-2 mt-3 text-xs text-muted-foreground">
-          <span>Press Enter to send, Shift+Enter for new line</span>
+        <div className="flex items-center justify-center gap-2 mt-4 text-xs text-white/30 font-light">
+          <span>Press Enter to send • Shift+Enter for new line</span>
         </div>
       </div>
     </div>
