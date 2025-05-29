@@ -53,8 +53,7 @@ export const HeroSection: React.FC = () => {
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
           <Link to="/chat">
-            <button className="rainbow-button">
-              <Sparkles className="w-5 h-5 mr-2 relative z-2" />
+            <button className="premium-glow-button">
               <span>Start Conversation</span>
             </button>
           </Link>
@@ -64,7 +63,6 @@ export const HeroSection: React.FC = () => {
             onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
           >
             <span>Explore Features</span>
-            <ArrowDown className="w-5 h-5 ml-2 relative z-2" />
           </button>
         </div>
       </div>
