@@ -1,4 +1,3 @@
-
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
@@ -38,6 +37,7 @@ interface ChatState {
   setCurrentConversation: (id: string) => void;
   addMessage: (conversationId: string, message: Omit<Message, 'id' | 'timestamp'>) => void;
   updateMessage: (conversationId: string, messageId: string, updates: Partial<Message>) => void;
+  deleteMessage: (conversationId: string, messageId: string) => void;
   setTyping: (isTyping: boolean) => void;
   setVoiceMode: (isVoiceMode: boolean) => void;
   toggleSidebar: () => void;
@@ -115,6 +115,20 @@ export const useChatStore = create<ChatState>()(
                   messages: conv.messages.map((msg) =>
                     msg.id === messageId ? { ...msg, ...updates } : msg
                   ),
+                  updatedAt: new Date(),
+                }
+              : conv
+          ),
+        }));
+      },
+
+      deleteMessage: (conversationId: string, messageId: string) => {
+        set((state) => ({
+          conversations: state.conversations.map((conv) =>
+            conv.id === conversationId
+              ? {
+                  ...conv,
+                  messages: conv.messages.filter((msg) => msg.id !== messageId),
                   updatedAt: new Date(),
                 }
               : conv

@@ -1,13 +1,18 @@
 
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { ChatMessage } from './ChatMessage';
+import { ChatSearch } from './ChatSearch';
 import { useChatStore } from '@/store/chatStore';
+import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { Sparkles } from 'lucide-react';
 
 export const ChatArea: React.FC = () => {
-  const { getCurrentConversation } = useChatStore();
+  const { getCurrentConversation, deleteMessage, updateMessage } = useChatStore();
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [editingMessageId, setEditingMessageId] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const { toast } = useToast();
   const conversation = getCurrentConversation();
 
   const scrollToBottom = () => {
@@ -18,9 +23,49 @@ export const ChatArea: React.FC = () => {
     scrollToBottom();
   }, [conversation?.messages]);
 
+  // Handle keyboard shortcuts
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.ctrlKey || event.metaKey) {
+        if (event.key === 'f') {
+          event.preventDefault();
+          setIsSearchOpen(true);
+        }
+      }
+      if (event.key === 'Escape') {
+        setIsSearchOpen(false);
+        setEditingMessageId(null);
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  const handleEditMessage = (messageId: string) => {
+    setEditingMessageId(messageId);
+    // TODO: Implement edit functionality
+    toast({
+      title: "Edit functionality",
+      description: "Message editing will be implemented in the next iteration.",
+    });
+  };
+
+  const handleDeleteMessage = (messageId: string) => {
+    if (conversation) {
+      deleteMessage(conversation.id, messageId);
+      toast({
+        title: "Message deleted",
+        description: "The message has been removed from the conversation.",
+      });
+    }
+  };
+
   if (!conversation) {
     return (
       <div className="flex-1 flex items-center justify-center relative overflow-hidden">
+        <ChatSearch isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
+        
         {/* Floating particles background */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           {[...Array(6)].map((_, i) => (
@@ -56,6 +101,11 @@ export const ChatArea: React.FC = () => {
             </p>
           </div>
 
+          {/* Search hint */}
+          <div className="text-xs text-white/30 font-light">
+            Press Ctrl+F to search conversations
+          </div>
+
           {/* Suggestion pills */}
           <div className="flex flex-wrap gap-3 justify-center mt-12">
             {[
@@ -79,6 +129,8 @@ export const ChatArea: React.FC = () => {
 
   return (
     <div className="flex-1 overflow-y-auto relative">
+      <ChatSearch isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
+      
       <div className="max-w-5xl mx-auto px-6">
         {conversation.messages.length === 0 ? (
           <div className="flex items-center justify-center min-h-full">
@@ -90,6 +142,9 @@ export const ChatArea: React.FC = () => {
               <p className="text-sm text-muted-foreground/60 font-light">
                 Start a conversation and explore endless possibilities
               </p>
+              <div className="text-xs text-white/30 font-light mt-4">
+                Press Ctrl+F to search conversations
+              </div>
             </div>
           </div>
         ) : (
@@ -99,6 +154,8 @@ export const ChatArea: React.FC = () => {
                 key={message.id}
                 message={message}
                 isLast={index === conversation.messages.length - 1}
+                onEditMessage={handleEditMessage}
+                onDeleteMessage={handleDeleteMessage}
               />
             ))}
             <div ref={messagesEndRef} />

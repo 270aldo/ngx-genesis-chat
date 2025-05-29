@@ -3,13 +3,22 @@ import React from 'react';
 import { Message } from '@/store/chatStore';
 import { cn } from '@/lib/utils';
 import { Bot, User, Sparkles } from 'lucide-react';
+import { MarkdownRenderer } from './MarkdownRenderer';
+import { MessageActions } from './MessageActions';
 
 interface ChatMessageProps {
   message: Message;
   isLast?: boolean;
+  onEditMessage?: (messageId: string) => void;
+  onDeleteMessage?: (messageId: string) => void;
 }
 
-export const ChatMessage: React.FC<ChatMessageProps> = ({ message, isLast }) => {
+export const ChatMessage: React.FC<ChatMessageProps> = ({ 
+  message, 
+  isLast,
+  onEditMessage,
+  onDeleteMessage
+}) => {
   const isUser = message.role === 'user';
   const isAssistant = message.role === 'assistant';
 
@@ -62,8 +71,26 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ message, isLast }) => 
               <span className="text-sm text-muted-foreground ml-2">NGX Agent is thinking...</span>
             </div>
           ) : (
-            <div className="text-sm leading-relaxed whitespace-pre-wrap font-light text-white/90">
-              {message.content}
+            <div className="relative">
+              {isAssistant ? (
+                <MarkdownRenderer content={message.content} />
+              ) : (
+                <div className="text-sm leading-relaxed whitespace-pre-wrap font-light text-white/90">
+                  {message.content}
+                </div>
+              )}
+              
+              {/* Message Actions */}
+              <div className={cn(
+                'absolute top-2 opacity-0 group-hover:opacity-100 transition-opacity',
+                isUser ? 'left-2' : 'right-2'
+              )}>
+                <MessageActions
+                  message={message}
+                  onEdit={onEditMessage}
+                  onDelete={onDeleteMessage}
+                />
+              </div>
             </div>
           )}
 
