@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useChatStore } from '@/store/chatStore';
 import { cn } from '@/lib/utils';
+import { Link } from 'react-router-dom';
 import { 
   Plus, 
   MessageSquare, 
@@ -11,7 +12,8 @@ import {
   Trash2, 
   User,
   ChevronLeft,
-  Brain
+  Brain,
+  LayoutDashboard
 } from 'lucide-react';
 
 export const Sidebar: React.FC = () => {
@@ -124,16 +126,30 @@ export const Sidebar: React.FC = () => {
       {/* Footer */}
       <div className="p-3 border-t border-sidebar-border">
         <div className="space-y-1">
-          <Button
-            variant="ghost"
-            className={cn(
-              "w-full text-sidebar-foreground/60 hover:text-sidebar-foreground hover:bg-sidebar-accent",
-              sidebarOpen ? "justify-start gap-2" : "justify-center px-2"
-            )}
-          >
-            <Settings className="h-4 w-4" />
-            {sidebarOpen && <span>Settings</span>}
-          </Button>
+          <Link to="/dashboard">
+            <Button
+              variant="ghost"
+              className={cn(
+                "w-full text-sidebar-foreground/60 hover:text-sidebar-foreground hover:bg-sidebar-accent",
+                sidebarOpen ? "justify-start gap-2" : "justify-center px-2"
+              )}
+            >
+              <LayoutDashboard className="h-4 w-4" />
+              {sidebarOpen && <span>Dashboard</span>}
+            </Button>
+          </Link>
+          <Link to="/settings">
+            <Button
+              variant="ghost"
+              className={cn(
+                "w-full text-sidebar-foreground/60 hover:text-sidebar-foreground hover:bg-sidebar-accent",
+                sidebarOpen ? "justify-start gap-2" : "justify-center px-2"
+              )}
+            >
+              <Settings className="h-4 w-4" />
+              {sidebarOpen && <span>Settings</span>}
+            </Button>
+          </Link>
           <Button
             variant="ghost"
             className={cn(
