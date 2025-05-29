@@ -72,14 +72,6 @@ export const StatsCards: React.FC<StatsCardsProps> = ({ stats }) => {
                 {card.value}
               </div>
               <p className="text-xs text-white/40">{card.description}</p>
-              {card.progress && (
-                <div className="mt-3">
-                  <Progress 
-                    value={card.progress} 
-                    className="h-2 bg-white/10"
-                  />
-                </div>
-              )}
               {card.tokenBalance && currentTokens < 10 && (
                 <div className="mt-2 text-xs text-red-400">
                   ⚠️ Low balance
