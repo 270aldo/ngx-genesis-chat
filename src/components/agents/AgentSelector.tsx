@@ -40,7 +40,7 @@ export const AgentSelector: React.FC = () => {
                   "w-10 h-10 rounded-xl flex items-center justify-center text-white shadow-lg",
                   `bg-gradient-to-br ${activeAgent.color}`
                 )}>
-                  <span className="text-xl">{activeAgent.avatar}</span>
+                  {React.createElement(getIcon(activeAgent.icon), { className: "w-5 h-5" })}
                 </div>
                 <div className="flex-1 min-w-0">
                   <h3 className="text-base font-semibold text-white truncate">{activeAgent.name}</h3>
@@ -101,12 +101,11 @@ export const AgentSelector: React.FC = () => {
                     {isExpanded ? (
                       <>
                         <div className="flex items-center gap-2 w-full">
-                          <span className="text-lg flex-shrink-0">{agent.avatar}</span>
-                          <div className="flex-1 min-w-0 text-left">
-                            <p className="text-sm font-medium truncate">{agent.name.split(' ')[0]}</p>
-                            <p className="text-xs opacity-80 truncate">{agent.title}</p>
-                          </div>
                           <Icon className="w-4 h-4 flex-shrink-0" />
+                          <div className="flex-1 min-w-0 text-left">
+                            <p className="text-sm font-medium truncate">{agent.title}</p>
+                            <p className="text-xs opacity-80 truncate">{agent.name.split(' ')[0]} {agent.name.split(' ')[1]}</p>
+                          </div>
                         </div>
                         {agent.actions && (
                           <div className="w-full">
@@ -130,9 +129,9 @@ export const AgentSelector: React.FC = () => {
                       </>
                     ) : (
                       <>
-                        <span className="text-base">{agent.avatar}</span>
+                        <Icon className="w-4 h-4" />
                         <span className="text-xs font-medium leading-none truncate">
-                          {agent.name.split(' ')[0]}
+                          {agent.title}
                         </span>
                         {agent.actions && (
                           <div className="w-1.5 h-1.5 rounded-full bg-current opacity-60 mt-0.5" />

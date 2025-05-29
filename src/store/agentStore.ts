@@ -59,7 +59,30 @@ const FITNESS_AGENTS: Agent[] = [
     accentColor: 'purple-500',
     icon: 'Circle',
     capabilities: ['Intent Analysis', 'Agent Routing', 'Context Management', 'Response Synthesis'],
-    personality: 'analytical'
+    personality: 'analytical',
+    actions: [
+      {
+        id: 'intent-analysis',
+        label: 'Intent Analysis',
+        description: 'Analyze your message and route to the best specialist',
+        icon: 'Brain',
+        category: 'analysis'
+      },
+      {
+        id: 'agent-coordination',
+        label: 'Agent Coordination',
+        description: 'Coordinate multiple agents for complex requests',
+        icon: 'Network',
+        category: 'guidance'
+      },
+      {
+        id: 'context-summary',
+        label: 'Context Summary',
+        description: 'Summarize conversation context and progress',
+        icon: 'FileText',
+        category: 'analysis'
+      }
+    ]
   },
   {
     id: 'training-strategist',
@@ -72,7 +95,37 @@ const FITNESS_AGENTS: Agent[] = [
     accentColor: 'red-500',
     icon: 'Target',
     capabilities: ['Workout Plans', 'Periodization', 'Exercise Selection', 'Progressive Overload'],
-    personality: 'motivational'
+    personality: 'motivational',
+    actions: [
+      {
+        id: 'workout-plan',
+        label: 'Custom Workout',
+        description: 'Create a personalized workout plan for your goals',
+        icon: 'Dumbbell',
+        category: 'plan'
+      },
+      {
+        id: 'exercise-library',
+        label: 'Exercise Library',
+        description: 'Browse exercises with proper form instructions',
+        icon: 'BookOpen',
+        category: 'guidance'
+      },
+      {
+        id: 'progression-tracker',
+        label: 'Progression Track',
+        description: 'Track your strength and performance improvements',
+        icon: 'TrendingUp',
+        category: 'tracking'
+      },
+      {
+        id: 'form-analysis',
+        label: 'Form Check',
+        description: 'Analyze exercise form and provide corrections',
+        icon: 'Eye',
+        category: 'assessment'
+      }
+    ]
   },
   {
     id: 'nutrition-architect',
@@ -85,7 +138,37 @@ const FITNESS_AGENTS: Agent[] = [
     accentColor: 'green-500',
     icon: 'Leaf',
     capabilities: ['Meal Planning', 'Macro Calculation', 'Food Analysis', 'Supplement Advice'],
-    personality: 'supportive'
+    personality: 'supportive',
+    actions: [
+      {
+        id: 'meal-planning',
+        label: 'Meal Planning',
+        description: 'Create personalized meal plans for your goals',
+        icon: 'Utensils',
+        category: 'plan'
+      },
+      {
+        id: 'macro-calculator',
+        label: 'Macro Calculator',
+        description: 'Calculate optimal macronutrient ratios',
+        icon: 'Calculator',
+        category: 'analysis'
+      },
+      {
+        id: 'food-scanner',
+        label: 'Food Analysis',
+        description: 'Analyze food photos for nutritional content',
+        icon: 'Scan',
+        category: 'assessment'
+      },
+      {
+        id: 'supplement-guide',
+        label: 'Supplement Guide',
+        description: 'Get personalized supplement recommendations',
+        icon: 'Pill',
+        category: 'guidance'
+      }
+    ]
   },
   {
     id: 'biometrics-engine',
@@ -98,7 +181,37 @@ const FITNESS_AGENTS: Agent[] = [
     accentColor: 'blue-500',
     icon: 'BarChart3',
     capabilities: ['HRV Analysis', 'Sleep Tracking', 'Recovery Monitoring', 'Trend Detection'],
-    personality: 'analytical'
+    personality: 'analytical',
+    actions: [
+      {
+        id: 'hrv-analysis',
+        label: 'HRV Analysis',
+        description: 'Analyze heart rate variability trends',
+        icon: 'Heart',
+        category: 'analysis'
+      },
+      {
+        id: 'sleep-insights',
+        label: 'Sleep Insights',
+        description: 'Get detailed sleep quality analysis',
+        icon: 'Moon',
+        category: 'analysis'
+      },
+      {
+        id: 'recovery-score',
+        label: 'Recovery Score',
+        description: 'Calculate your daily recovery readiness',
+        icon: 'Battery',
+        category: 'assessment'
+      },
+      {
+        id: 'data-trends',
+        label: 'Data Trends',
+        description: 'Identify patterns in your health metrics',
+        icon: 'TrendingUp',
+        category: 'analysis'
+      }
+    ]
   },
   {
     id: 'motivation-coach',
@@ -111,7 +224,37 @@ const FITNESS_AGENTS: Agent[] = [
     accentColor: 'yellow-500',
     icon: 'Lightbulb',
     capabilities: ['Habit Design', 'Motivation Techniques', 'Barrier Removal', 'Goal Setting'],
-    personality: 'empathetic'
+    personality: 'empathetic',
+    actions: [
+      {
+        id: 'habit-builder',
+        label: 'Habit Builder',
+        description: 'Design sustainable fitness habits',
+        icon: 'Repeat',
+        category: 'plan'
+      },
+      {
+        id: 'motivation-boost',
+        label: 'Motivation Boost',
+        description: 'Get personalized motivational strategies',
+        icon: 'Zap',
+        category: 'guidance'
+      },
+      {
+        id: 'barrier-analysis',
+        label: 'Barrier Analysis',
+        description: 'Identify and overcome mental obstacles',
+        icon: 'Shield',
+        category: 'assessment'
+      },
+      {
+        id: 'goal-setting',
+        label: 'Smart Goals',
+        description: 'Set realistic and achievable fitness goals',
+        icon: 'Target',
+        category: 'plan'
+      }
+    ]
   },
   {
     id: 'progress-tracker',
@@ -124,7 +267,37 @@ const FITNESS_AGENTS: Agent[] = [
     accentColor: 'indigo-500',
     icon: 'TrendingUp',
     capabilities: ['Progress Analysis', 'Prediction Modeling', 'Goal Tracking', 'Achievement Recognition'],
-    personality: 'analytical'
+    personality: 'analytical',
+    actions: [
+      {
+        id: 'progress-report',
+        label: 'Progress Report',
+        description: 'Generate comprehensive progress analysis',
+        icon: 'FileBarChart',
+        category: 'analysis'
+      },
+      {
+        id: 'photo-comparison',
+        label: 'Photo Compare',
+        description: 'Compare progress photos over time',
+        icon: 'Images',
+        category: 'assessment'
+      },
+      {
+        id: 'milestone-tracker',
+        label: 'Milestones',
+        description: 'Track achievement of fitness milestones',
+        icon: 'Flag',
+        category: 'tracking'
+      },
+      {
+        id: 'prediction-model',
+        label: 'Goal Timeline',
+        description: 'Predict when you\'ll reach your goals',
+        icon: 'Clock',
+        category: 'analysis'
+      }
+    ]
   },
   {
     id: 'recovery-corrective',
