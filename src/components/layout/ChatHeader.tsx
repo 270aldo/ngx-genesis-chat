@@ -20,8 +20,12 @@ export const ChatHeader: React.FC<ChatHeaderProps> = ({
           <AgentSelector />
         </div>
         <div className="ml-4 flex-shrink-0 flex items-center gap-3">
-          <QuickActionsButton />
-          <ExportOptions />
+          {!showBiometrics && (
+            <>
+              <QuickActionsButton />
+              <ExportOptions />
+            </>
+          )}
         </div>
       </div>
     </div>

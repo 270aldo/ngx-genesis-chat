@@ -7,6 +7,7 @@ import { ChatFooter } from './ChatFooter';
 import { KeyboardShortcutsHelp } from './KeyboardShortcutsHelp';
 import { useChatMessageHandlers } from './ChatMessageHandlers';
 import { useChatStore } from '@/store/chatStore';
+import { useAgentStore } from '@/store/agentStore';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useChatShortcuts } from '@/hooks/useKeyboardShortcuts';
 import { toastSuccess } from '@/components/ui/enhanced-toast';
@@ -19,9 +20,17 @@ export const ChatLayout: React.FC = () => {
     toggleSidebar,
   } = useChatStore();
   
+  const { activeAgentId } = useAgentStore();
   const isMobile = useIsMobile();
   const [showBiometrics, setShowBiometrics] = useState(false);
   const { handleSendMessage } = useChatMessageHandlers();
+
+  // Hide biometrics dashboard when agent changes (unless it's biometrics-engine)
+  React.useEffect(() => {
+    if (activeAgentId && activeAgentId !== 'biometrics-engine') {
+      setShowBiometrics(false);
+    }
+  }, [activeAgentId]);
 
   // Keyboard shortcuts
   useChatShortcuts({
@@ -87,7 +96,7 @@ export const ChatLayout: React.FC = () => {
           {/* Chat Content Area */}
           <div className="flex-1 flex flex-col min-h-0">
             <ChatMainContent showBiometrics={showBiometrics} />
-            <ChatFooter onSendMessage={onSendMessage} />
+            {!showBiometrics && <ChatFooter onSendMessage={onSendMessage} />}
           </div>
         </div>
 
