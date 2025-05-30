@@ -1,9 +1,9 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { useAgentStore } from '@/store/agentStore';
 import { useChatStore } from '@/store/chatStore';
 import { cn } from '@/lib/utils';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { 
   Dumbbell, 
   Calendar, 
@@ -79,6 +79,7 @@ const agentActions = {
 export const AgentQuickActions: React.FC = () => {
   const { getActiveAgent } = useAgentStore();
   const { addMessage, getCurrentConversation, createConversation } = useChatStore();
+  const isMobile = useIsMobile();
   
   const activeAgent = getActiveAgent();
   const actions = activeAgent ? agentActions[activeAgent.id as keyof typeof agentActions] || [] : [];
@@ -99,20 +100,33 @@ export const AgentQuickActions: React.FC = () => {
 
   if (actions.length === 0) return null;
 
-  // Show more actions for specialized agents
-  const maxActions = ['recovery-corrective', 'biohacking-innovator', 'success-liaison'].includes(activeAgent?.id || '') ? 6 : 3;
+  // Responsive action limits
+  const getMaxActions = () => {
+    if (isMobile) {
+      return ['recovery-corrective', 'biohacking-innovator', 'success-liaison'].includes(activeAgent?.id || '') ? 4 : 3;
+    }
+    return ['recovery-corrective', 'biohacking-innovator', 'success-liaison'].includes(activeAgent?.id || '') ? 6 : 3;
+  };
+
+  const maxActions = getMaxActions();
 
   return (
-    <div className="px-4 py-3 border-b border-white/10">
+    <div className="px-4 sm:px-6 py-3">
       <div className="flex items-center justify-between mb-3">
-        <p className="text-xs text-white/60">Quick Actions</p>
+        <p className="text-xs font-medium text-white/60">Quick Actions</p>
         {actions.length > maxActions && (
           <p className="text-xs text-white/40">{actions.length} available</p>
         )}
       </div>
+      
+      {/* Improved responsive grid */}
       <div className={cn(
         "grid gap-2",
-        maxActions === 6 ? "grid-cols-2 sm:grid-cols-3" : "grid-cols-3"
+        // Mobile: always 2 columns for better space usage
+        isMobile ? "grid-cols-2" : (
+          // Desktop: 3 columns for standard agents, 3 for specialized
+          maxActions === 6 ? "grid-cols-3" : "grid-cols-3"
+        )
       )}>
         {actions.slice(0, maxActions).map((action, index) => {
           const Icon = action.icon;
@@ -122,18 +136,27 @@ export const AgentQuickActions: React.FC = () => {
               variant="ghost"
               size="sm"
               onClick={() => handleQuickAction(action.prompt)}
-              className="flex flex-col gap-1.5 h-auto py-3 text-xs text-white/70 hover:text-white hover:bg-white/10 p-2 rounded-xl border border-transparent hover:border-white/10 transition-all duration-200"
+              className={cn(
+                "flex flex-col gap-1.5 h-auto text-xs text-white/70 hover:text-white hover:bg-white/10 rounded-xl border border-transparent hover:border-white/10 transition-all duration-200",
+                // Responsive padding
+                isMobile ? "py-2.5 px-2" : "py-3 px-3"
+              )}
             >
-              <Icon className="w-4 h-4" />
-              <span className="leading-tight text-center font-medium">{action.label}</span>
+              <Icon className={cn("flex-shrink-0", isMobile ? "w-3.5 h-3.5" : "w-4 h-4")} />
+              <span className={cn(
+                "leading-tight text-center font-medium",
+                isMobile ? "text-[10px]" : "text-xs"
+              )}>
+                {action.label}
+              </span>
             </Button>
           );
         })}
       </div>
       
-      {/* Show overflow indicator */}
+      {/* Overflow indicator */}
       {actions.length > maxActions && (
-        <div className="mt-2 text-center">
+        <div className="mt-3 text-center">
           <span className="text-xs text-white/40">
             +{actions.length - maxActions} more actions available in chat
           </span>

@@ -140,20 +140,30 @@ export const ChatLayout: React.FC = () => {
       <div className="flex-1 flex flex-col min-w-0 relative">
         <div className="absolute inset-0 bg-gradient-to-t from-background/50 via-transparent to-transparent pointer-events-none"></div>
         
-        {/* Header with Agent Controls and Export */}
-        <div className="relative z-10">
-          <div className="flex items-center justify-between px-4 py-2 border-b border-white/5">
-            <div className="flex-1">
+        {/* Improved Header Layout */}
+        <div className="relative z-10 border-b border-white/5">
+          {/* Top Header Row - Agent Selector and Export */}
+          <div className="flex items-center justify-between px-4 sm:px-6 py-3">
+            <div className="flex-1 min-w-0">
               <AgentSelector />
             </div>
-            <ExportOptions />
+            <div className="ml-4 flex-shrink-0">
+              <ExportOptions />
+            </div>
           </div>
-          <AgentQuickActions />
+          
+          {/* Quick Actions Row - Now properly separated */}
+          <div className="border-t border-white/5">
+            <AgentQuickActions />
+          </div>
         </div>
         
-        <ChatArea />
-        <div className="px-4 pb-4 sm:px-6 sm:pb-6">
-          <ChatInput onSendMessage={handleSendMessage} />
+        {/* Chat Content Area */}
+        <div className="flex-1 flex flex-col min-h-0">
+          <ChatArea />
+          <div className="px-4 pb-4 sm:px-6 sm:pb-6">
+            <ChatInput onSendMessage={handleSendMessage} />
+          </div>
         </div>
       </div>
     </div>

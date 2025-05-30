@@ -1,4 +1,3 @@
-
 import React, { useRef, useEffect, useState } from 'react';
 import { ChatMessage } from './ChatMessage';
 import { ChatSearch } from './ChatSearch';
@@ -207,9 +206,10 @@ export const ChatArea: React.FC = () => {
     <div className="flex-1 overflow-y-auto relative chat-scroll-area">
       <ChatSearch isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
       
-      <div className="max-w-5xl mx-auto px-6">
+      {/* Improved padding to prevent header interference */}
+      <div className="max-w-5xl mx-auto px-4 sm:px-6">
         {conversation.messages.length === 0 ? (
-          <div className="flex items-center justify-center min-h-full">
+          <div className="flex items-center justify-center min-h-full py-12">
             <div className="text-center space-y-6 p-8">
               <div className="text-6xl mb-6 opacity-30">{activeAgent?.avatar || '💭'}</div>
               <h3 className="text-2xl font-light text-white/80">
@@ -224,7 +224,7 @@ export const ChatArea: React.FC = () => {
             </div>
           </div>
         ) : (
-          <div className="space-y-6 py-8">
+          <div className="space-y-6 py-6">
             {conversation.messages.map((message, index) => (
               <ChatMessage
                 key={message.id}
