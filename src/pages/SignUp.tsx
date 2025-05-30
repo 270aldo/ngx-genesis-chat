@@ -30,10 +30,10 @@ const SignUp: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background relative overflow-hidden flex items-center justify-center">
-      {/* Background Effects */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/5 to-pink-500/10"></div>
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,_rgba(255,255,255,0.15)_1px,_transparent_0)] [background-size:20px_20px] opacity-20"></div>
+    <div className="min-h-screen bg-gradient-to-br from-black via-purple-900/30 to-black relative overflow-hidden flex items-center justify-center">
+      {/* Background effects - Updated to match violet theme */}
+      <div className="absolute inset-0 bg-gradient-to-br from-purple-600/8 via-transparent to-violet-600/5 pointer-events-none"></div>
+      <div className="absolute inset-0 bg-gradient-to-t from-purple-900/5 via-transparent to-transparent pointer-events-none"></div>
 
       {/* Back to Home */}
       <Link 
@@ -45,8 +45,8 @@ const SignUp: React.FC = () => {
       </Link>
 
       {/* Main Content */}
-      <div className="w-full max-w-md px-6">
-        <div className="glass-ultra border border-white/10 rounded-3xl p-8 relative overflow-hidden">
+      <div className="w-full max-w-md px-6 relative z-10">
+        <div className="bg-white/5 backdrop-blur-xl border border-purple-500/20 rounded-3xl p-8 relative overflow-hidden">
           {/* Header */}
           <div className="text-center mb-8">
             <h1 className="text-3xl font-light text-white mb-2">
@@ -71,7 +71,7 @@ const SignUp: React.FC = () => {
                 value={formData.name}
                 onChange={handleInputChange}
                 placeholder="Enter your full name"
-                className="glass-premium border-white/10 bg-white/5 text-white placeholder:text-white/40 focus:border-blue-500/50"
+                className="glass-premium border-purple-500/20 bg-white/5 text-white placeholder:text-white/40 focus:border-purple-500/50"
                 required
               />
             </div>
@@ -88,7 +88,7 @@ const SignUp: React.FC = () => {
                 value={formData.email}
                 onChange={handleInputChange}
                 placeholder="Enter your email"
-                className="glass-premium border-white/10 bg-white/5 text-white placeholder:text-white/40 focus:border-blue-500/50"
+                className="glass-premium border-purple-500/20 bg-white/5 text-white placeholder:text-white/40 focus:border-purple-500/50"
                 required
               />
             </div>
@@ -106,7 +106,7 @@ const SignUp: React.FC = () => {
                   value={formData.password}
                   onChange={handleInputChange}
                   placeholder="Create a password"
-                  className="glass-premium border-white/10 bg-white/5 text-white placeholder:text-white/40 focus:border-blue-500/50 pr-12"
+                  className="glass-premium border-purple-500/20 bg-white/5 text-white placeholder:text-white/40 focus:border-purple-500/50 pr-12"
                   required
                 />
                 <button
@@ -132,7 +132,7 @@ const SignUp: React.FC = () => {
                   value={formData.confirmPassword}
                   onChange={handleInputChange}
                   placeholder="Confirm your password"
-                  className="glass-premium border-white/10 bg-white/5 text-white placeholder:text-white/40 focus:border-blue-500/50 pr-12"
+                  className="glass-premium border-purple-500/20 bg-white/5 text-white placeholder:text-white/40 focus:border-purple-500/50 pr-12"
                   required
                 />
                 <button
@@ -148,26 +148,26 @@ const SignUp: React.FC = () => {
             {/* Terms */}
             <div className="text-sm text-white/60">
               By creating an account, you agree to our{' '}
-              <a href="#" className="text-blue-400 hover:text-blue-300 transition-colors">
+              <a href="#" className="text-purple-400 hover:text-purple-300 transition-colors">
                 Terms of Service
               </a>{' '}
               and{' '}
-              <a href="#" className="text-blue-400 hover:text-blue-300 transition-colors">
+              <a href="#" className="text-purple-400 hover:text-purple-300 transition-colors">
                 Privacy Policy
               </a>
             </div>
 
             {/* Sign Up Button */}
-            <button type="submit" className="premium-glow-button w-full">
+            <button type="submit" className="w-full bg-gradient-to-r from-purple-500 to-violet-600 hover:from-purple-600 hover:to-violet-700 text-white font-medium py-3 px-4 rounded-xl transition-all duration-200 shadow-lg shadow-purple-500/25">
               <span>Create Account</span>
             </button>
           </form>
 
           {/* Divider */}
           <div className="my-8 flex items-center">
-            <div className="flex-1 h-px bg-white/10"></div>
+            <div className="flex-1 h-px bg-purple-500/20"></div>
             <span className="px-4 text-white/40 text-sm">or</span>
-            <div className="flex-1 h-px bg-white/10"></div>
+            <div className="flex-1 h-px bg-purple-500/20"></div>
           </div>
 
           {/* Sign In Link */}
@@ -176,7 +176,7 @@ const SignUp: React.FC = () => {
               Already have an account?{' '}
               <Link 
                 to="/sign-in" 
-                className="text-blue-400 hover:text-blue-300 transition-colors font-medium"
+                className="text-purple-400 hover:text-purple-300 transition-colors font-medium"
               >
                 Sign in here
               </Link>

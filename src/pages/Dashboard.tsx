@@ -27,17 +27,18 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-purple-900/30 to-black">
-      {/* Background effects */}
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-violet-500/5 pointer-events-none"></div>
+    <div className="min-h-screen bg-gradient-to-br from-black via-purple-900/30 to-black relative overflow-hidden">
+      {/* Background effects - Updated to match violet theme */}
+      <div className="absolute inset-0 bg-gradient-to-br from-purple-600/8 via-transparent to-violet-600/5 pointer-events-none"></div>
+      <div className="absolute inset-0 bg-gradient-to-t from-purple-900/5 via-transparent to-transparent pointer-events-none"></div>
       
       {/* Header */}
-      <div className="border-b border-white/10 bg-background/80 backdrop-blur-xl sticky top-0 z-40">
+      <div className="border-b border-purple-500/20 bg-background/80 backdrop-blur-xl sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-4">
               <Link to="/chat">
-                <Button variant="ghost" size="icon" className="text-white/60 hover:text-white/80">
+                <Button variant="ghost" size="icon" className="text-white/60 hover:text-white/80 hover:bg-purple-500/10">
                   <ArrowLeft className="h-5 w-5" />
                 </Button>
               </Link>
@@ -49,17 +50,17 @@ const Dashboard: React.FC = () => {
             
             <div className="flex items-center gap-3">
               <Link to="/dashboard/progress">
-                <Button variant="outline" size="sm" className="border-white/20 text-white/80 hover:bg-white/5">
+                <Button variant="outline" size="sm" className="border-purple-500/20 text-white/80 hover:bg-purple-500/10 hover:border-purple-400/30">
                   <Calendar className="h-4 w-4 mr-2" />
                   Progress
                 </Button>
               </Link>
-              <Button variant="outline" size="sm" className="border-white/20 text-white/80 hover:bg-white/5">
+              <Button variant="outline" size="sm" className="border-purple-500/20 text-white/80 hover:bg-purple-500/10 hover:border-purple-400/30">
                 <Download className="h-4 w-4 mr-2" />
                 Export
               </Button>
               <Link to="/settings">
-                <Button variant="outline" size="sm" className="border-white/20 text-white/80 hover:bg-white/5">
+                <Button variant="outline" size="sm" className="border-purple-500/20 text-white/80 hover:bg-purple-500/10 hover:border-purple-400/30">
                   <Settings className="h-4 w-4 mr-2" />
                   Settings
                 </Button>
@@ -88,7 +89,7 @@ const Dashboard: React.FC = () => {
         </div>
 
         {/* Stats Footer */}
-        <div className="mt-12 pt-8 border-t border-white/10">
+        <div className="mt-12 pt-8 border-t border-purple-500/20">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             <div className="text-center">
               <div className="text-2xl font-bold text-white">{conversations.length}</div>

@@ -18,10 +18,10 @@ const ForgotPassword: React.FC = () => {
 
   if (isSubmitted) {
     return (
-      <div className="min-h-screen bg-background relative overflow-hidden flex items-center justify-center">
-        {/* Background Effects */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/5 to-pink-500/10"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,_rgba(255,255,255,0.15)_1px,_transparent_0)] [background-size:20px_20px] opacity-20"></div>
+      <div className="min-h-screen bg-gradient-to-br from-black via-purple-900/30 to-black relative overflow-hidden flex items-center justify-center">
+        {/* Background effects - Updated to match violet theme */}
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-600/8 via-transparent to-violet-600/5 pointer-events-none"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-purple-900/5 via-transparent to-transparent pointer-events-none"></div>
 
         {/* Back to Sign In */}
         <Link 
@@ -33,8 +33,8 @@ const ForgotPassword: React.FC = () => {
         </Link>
 
         {/* Success Message */}
-        <div className="w-full max-w-md px-6">
-          <div className="glass-ultra border border-white/10 rounded-3xl p-8 text-center">
+        <div className="w-full max-w-md px-6 relative z-10">
+          <div className="bg-white/5 backdrop-blur-xl border border-purple-500/20 rounded-3xl p-8 text-center">
             <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-green-500/20 flex items-center justify-center">
               <CheckCircle className="w-8 h-8 text-green-400" />
             </div>
@@ -53,7 +53,7 @@ const ForgotPassword: React.FC = () => {
 
             <button 
               onClick={() => setIsSubmitted(false)}
-              className="premium-glow-button w-full"
+              className="w-full bg-gradient-to-r from-purple-500 to-violet-600 hover:from-purple-600 hover:to-violet-700 text-white font-medium py-3 px-4 rounded-xl transition-all duration-200 shadow-lg shadow-purple-500/25"
             >
               <span>Try Again</span>
             </button>
@@ -64,10 +64,10 @@ const ForgotPassword: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background relative overflow-hidden flex items-center justify-center">
-      {/* Background Effects */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/5 to-pink-500/10"></div>
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,_rgba(255,255,255,0.15)_1px,_transparent_0)] [background-size:20px_20px] opacity-20"></div>
+    <div className="min-h-screen bg-gradient-to-br from-black via-purple-900/30 to-black relative overflow-hidden flex items-center justify-center">
+      {/* Background effects - Updated to match violet theme */}
+      <div className="absolute inset-0 bg-gradient-to-br from-purple-600/8 via-transparent to-violet-600/5 pointer-events-none"></div>
+      <div className="absolute inset-0 bg-gradient-to-t from-purple-900/5 via-transparent to-transparent pointer-events-none"></div>
 
       {/* Back to Sign In */}
       <Link 
@@ -79,12 +79,12 @@ const ForgotPassword: React.FC = () => {
       </Link>
 
       {/* Main Content */}
-      <div className="w-full max-w-md px-6">
-        <div className="glass-ultra border border-white/10 rounded-3xl p-8 relative overflow-hidden">
+      <div className="w-full max-w-md px-6 relative z-10">
+        <div className="bg-white/5 backdrop-blur-xl border border-purple-500/20 rounded-3xl p-8 relative overflow-hidden">
           {/* Header */}
           <div className="text-center mb-8">
-            <div className="w-16 h-16 mx-auto mb-6 rounded-full glass-premium border border-blue-500/20 flex items-center justify-center">
-              <Mail className="w-8 h-8 text-blue-400" />
+            <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-white/5 backdrop-blur-xl border border-purple-500/20 flex items-center justify-center">
+              <Mail className="w-8 h-8 text-purple-400" />
             </div>
             
             <h1 className="text-3xl font-light text-white mb-2">
@@ -109,13 +109,13 @@ const ForgotPassword: React.FC = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email"
-                className="glass-premium border-white/10 bg-white/5 text-white placeholder:text-white/40 focus:border-blue-500/50"
+                className="glass-premium border-purple-500/20 bg-white/5 text-white placeholder:text-white/40 focus:border-purple-500/50"
                 required
               />
             </div>
 
             {/* Submit Button */}
-            <button type="submit" className="premium-glow-button w-full">
+            <button type="submit" className="w-full bg-gradient-to-r from-purple-500 to-violet-600 hover:from-purple-600 hover:to-violet-700 text-white font-medium py-3 px-4 rounded-xl transition-all duration-200 shadow-lg shadow-purple-500/25">
               <span>Send Reset Link</span>
             </button>
           </form>
@@ -126,7 +126,7 @@ const ForgotPassword: React.FC = () => {
               Remember your password?{' '}
               <Link 
                 to="/sign-in" 
-                className="text-blue-400 hover:text-blue-300 transition-colors font-medium"
+                className="text-purple-400 hover:text-purple-300 transition-colors font-medium"
               >
                 Sign in here
               </Link>
