@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { AgentSelector } from '../agents/AgentSelector';
-import { QuickActionsButton } from '../chat/QuickActionsButton';
 import { ExportOptions } from '../chat/ExportOptions';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
@@ -30,11 +29,8 @@ export const ChatHeader: React.FC<ChatHeaderProps> = ({
           "flex-shrink-0 flex items-center",
           isMobile ? "ml-2 gap-1" : "ml-4 gap-3"
         )}>
-          {!showBiometrics && (
-            <>
-              <QuickActionsButton />
-              {!isMobile && <ExportOptions />}
-            </>
+          {!showBiometrics && !isMobile && (
+            <ExportOptions />
           )}
         </div>
       </div>
