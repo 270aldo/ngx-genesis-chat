@@ -1,22 +1,13 @@
+
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { useAuthStore } from './authStore';
-import { useAgentStore } from './agentStore';
 
 export interface Message {
   id: string;
   content: string;
-  role: 'user' | 'assistant' | 'system';
+  role: 'user' | 'assistant';
   timestamp: Date;
-  isTyping?: boolean;
   agentId?: string;
-  metadata?: {
-    confidence?: number;
-    processingTime?: number;
-    tokens?: number;
-    agentName?: string;
-    agentAvatar?: string;
-  };
 }
 
 export interface Conversation {
@@ -30,91 +21,64 @@ export interface Conversation {
 
 interface ChatState {
   conversations: Conversation[];
-  currentConversationId: string | null;
-  isTyping: boolean;
-  isVoiceMode: boolean;
+  activeConversationId: string | null;
   sidebarOpen: boolean;
-  
+  isVoiceMode: boolean;
+  isTyping: boolean;
+
   // Actions
-  createConversation: () => string;
-  deleteConversation: (id: string) => void;
-  setCurrentConversation: (id: string) => void;
-  addMessage: (conversationId: string, message: Omit<Message, 'id' | 'timestamp'>) => { id: string };
+  createConversation: (agentId?: string) => string;
+  setActiveConversation: (id: string) => void;
+  addMessage: (conversationId: string, message: Omit<Message, 'id' | 'timestamp'>) => void;
   updateMessage: (conversationId: string, messageId: string, updates: Partial<Message>) => void;
   deleteMessage: (conversationId: string, messageId: string) => void;
-  setTyping: (isTyping: boolean) => void;
-  setVoiceMode: (isVoiceMode: boolean) => void;
-  toggleSidebar: () => void;
+  deleteConversation: (id: string) => void;
   getCurrentConversation: () => Conversation | null;
-  canSendMessage: () => boolean;
+  getConversationsByAgent: (agentId: string) => Conversation[];
+  toggleSidebar: () => void;
+  setSidebarOpen: (open: boolean) => void;
+  setVoiceMode: (enabled: boolean) => void;
+  setTyping: (typing: boolean) => void;
+  updateConversationTitle: (id: string, title: string) => void;
 }
 
 export const useChatStore = create<ChatState>()(
   persist(
     (set, get) => ({
       conversations: [],
-      currentConversationId: null,
-      isTyping: false,
-      isVoiceMode: false,
+      activeConversationId: null,
       sidebarOpen: true,
+      isVoiceMode: false,
+      isTyping: false,
 
-      createConversation: () => {
-        const { getActiveAgent } = useAgentStore.getState();
-        const activeAgent = getActiveAgent();
-        
-        const id = crypto.randomUUID();
+      createConversation: (agentId?: string) => {
+        const id = Date.now().toString();
         const newConversation: Conversation = {
           id,
-          title: `New Chat with ${activeAgent?.name || 'NGX Agent'}`,
+          title: 'New Conversation',
           messages: [],
           createdAt: new Date(),
           updatedAt: new Date(),
-          agentId: activeAgent?.id
+          agentId,
         };
 
         set((state) => ({
           conversations: [newConversation, ...state.conversations],
-          currentConversationId: id,
+          activeConversationId: id,
         }));
 
         return id;
       },
 
-      deleteConversation: (id: string) => {
-        set((state) => ({
-          conversations: state.conversations.filter((conv) => conv.id !== id),
-          currentConversationId: 
-            state.currentConversationId === id ? null : state.currentConversationId,
-        }));
+      setActiveConversation: (id: string) => {
+        set({ activeConversationId: id });
       },
 
-      setCurrentConversation: (id: string) => {
-        set({ currentConversationId: id });
-      },
-
-      addMessage: (conversationId: string, message) => {
-        // Check if user has tokens for user messages
-        if (message.role === 'user') {
-          const { useTokens } = useAuthStore.getState();
-          const hasTokens = useTokens(1); // Cost 1 token per message
-          
-          if (!hasTokens) {
-            throw new Error('Insufficient tokens to send message');
-          }
-        }
-
-        const { getAgent } = useAgentStore.getState();
-        const agent = message.agentId ? getAgent(message.agentId) : null;
-
+      addMessage: (conversationId: string, message: Omit<Message, 'id' | 'timestamp'>) => {
         const newMessage: Message = {
           ...message,
-          id: crypto.randomUUID(),
+          id: Date.now().toString(),
           timestamp: new Date(),
-          metadata: {
-            ...message.metadata,
-            agentName: agent?.name,
-            agentAvatar: agent?.avatar
-          }
         };
 
         set((state) => ({
@@ -124,25 +88,23 @@ export const useChatStore = create<ChatState>()(
                   ...conv,
                   messages: [...conv.messages, newMessage],
                   updatedAt: new Date(),
-                  title: conv.messages.length === 0 && message.role === 'user' 
-                    ? message.content.slice(0, 50) + (message.content.length > 50 ? '...' : '')
-                    : conv.title,
+                  title: conv.messages.length === 0 ? message.content.slice(0, 50) + '...' : conv.title,
                 }
               : conv
           ),
         }));
-
-        return { id: newMessage.id };
       },
 
-      updateMessage: (conversationId: string, messageId: string, updates) => {
+      updateMessage: (conversationId: string, messageId: string, updates: Partial<Message>) => {
         set((state) => ({
           conversations: state.conversations.map((conv) =>
             conv.id === conversationId
               ? {
                   ...conv,
                   messages: conv.messages.map((msg) =>
-                    msg.id === messageId ? { ...msg, ...updates } : msg
+                    msg.id === messageId
+                      ? { ...msg, ...updates }
+                      : msg
                   ),
                   updatedAt: new Date(),
                 }
@@ -165,33 +127,54 @@ export const useChatStore = create<ChatState>()(
         }));
       },
 
-      setTyping: (isTyping: boolean) => {
-        set({ isTyping });
+      deleteConversation: (id: string) => {
+        set((state) => ({
+          conversations: state.conversations.filter((conv) => conv.id !== id),
+          activeConversationId: state.activeConversationId === id ? null : state.activeConversationId,
+        }));
       },
 
-      setVoiceMode: (isVoiceMode: boolean) => {
-        set({ isVoiceMode });
+      getCurrentConversation: () => {
+        const state = get();
+        return state.conversations.find((conv) => conv.id === state.activeConversationId) || null;
+      },
+
+      getConversationsByAgent: (agentId: string) => {
+        const state = get();
+        return state.conversations.filter((conv) => conv.agentId === agentId);
       },
 
       toggleSidebar: () => {
         set((state) => ({ sidebarOpen: !state.sidebarOpen }));
       },
 
-      getCurrentConversation: () => {
-        const state = get();
-        return state.conversations.find((conv) => conv.id === state.currentConversationId) || null;
+      setSidebarOpen: (open: boolean) => {
+        set({ sidebarOpen: open });
       },
 
-      canSendMessage: () => {
-        const { getTokens } = useAuthStore.getState();
-        return getTokens() > 0;
+      setVoiceMode: (enabled: boolean) => {
+        set({ isVoiceMode: enabled });
+      },
+
+      setTyping: (typing: boolean) => {
+        set({ isTyping: typing });
+      },
+
+      updateConversationTitle: (id: string, title: string) => {
+        set((state) => ({
+          conversations: state.conversations.map((conv) =>
+            conv.id === id
+              ? { ...conv, title, updatedAt: new Date() }
+              : conv
+          ),
+        }));
       },
     }),
     {
       name: 'ngx-agents-chat',
       partialize: (state) => ({
         conversations: state.conversations,
-        currentConversationId: state.currentConversationId,
+        activeConversationId: state.activeConversationId,
         sidebarOpen: state.sidebarOpen,
       }),
     }

@@ -30,10 +30,17 @@ export const SidebarFooter: React.FC<SidebarFooterProps> = ({
     }
   };
 
+  const handleNavigation = () => {
+    // Auto-close sidebar on mobile after navigating
+    if (isMobile) {
+      toggleSidebar();
+    }
+  };
+
   return (
     <div className="p-3 border-t border-sidebar-border">
       <div className="space-y-1">
-        <Link to="/dashboard/progress">
+        <Link to="/dashboard/progress" onClick={handleNavigation}>
           <Button
             variant="ghost"
             className={cn(
@@ -45,7 +52,7 @@ export const SidebarFooter: React.FC<SidebarFooterProps> = ({
             {(sidebarOpen || isMobile) && <span>Progress Dashboard</span>}
           </Button>
         </Link>
-        <Link to="/dashboard/nutrition">
+        <Link to="/dashboard/nutrition" onClick={handleNavigation}>
           <Button
             variant="ghost"
             className={cn(
@@ -57,7 +64,7 @@ export const SidebarFooter: React.FC<SidebarFooterProps> = ({
             {(sidebarOpen || isMobile) && <span>Nutrition</span>}
           </Button>
         </Link>
-        <Link to="/dashboard/training">
+        <Link to="/dashboard/training" onClick={handleNavigation}>
           <Button
             variant="ghost"
             className={cn(
@@ -81,7 +88,7 @@ export const SidebarFooter: React.FC<SidebarFooterProps> = ({
           <Activity className="h-4 w-4 flex-shrink-0" />
           {(sidebarOpen || isMobile) && <span>Biometrics</span>}
         </Button>
-        <Link to="/settings">
+        <Link to="/settings" onClick={handleNavigation}>
           <Button
             variant="ghost"
             className={cn(
@@ -93,16 +100,18 @@ export const SidebarFooter: React.FC<SidebarFooterProps> = ({
             {(sidebarOpen || isMobile) && <span>Settings</span>}
           </Button>
         </Link>
-        <Button
-          variant="ghost"
-          className={cn(
-            "w-full text-sidebar-foreground/60 hover:text-sidebar-foreground hover:bg-sidebar-accent",
-            (sidebarOpen || isMobile) ? "justify-start gap-2" : "justify-center px-2"
-          )}
-        >
-          <User className="h-4 w-4 flex-shrink-0" />
-          {(sidebarOpen || isMobile) && <span>Profile</span>}
-        </Button>
+        <Link to="/profile" onClick={handleNavigation}>
+          <Button
+            variant="ghost"
+            className={cn(
+              "w-full text-sidebar-foreground/60 hover:text-sidebar-foreground hover:bg-sidebar-accent",
+              (sidebarOpen || isMobile) ? "justify-start gap-2" : "justify-center px-2"
+            )}
+          >
+            <User className="h-4 w-4 flex-shrink-0" />
+            {(sidebarOpen || isMobile) && <span>Profile</span>}
+          </Button>
+        </Link>
       </div>
     </div>
   );

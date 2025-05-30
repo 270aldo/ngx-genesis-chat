@@ -9,7 +9,7 @@ import { useAgentStore } from '@/store/agentStore';
 import { useToast } from '@/hooks/use-toast';
 
 export const ChatArea: React.FC = () => {
-  const { getCurrentConversation, deleteMessage } = useChatStore();
+  const { getCurrentConversation, deleteMessage, updateMessage } = useChatStore();
   const { getActiveAgent } = useAgentStore();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [editingMessageId, setEditingMessageId] = useState<string | null>(null);
@@ -38,19 +38,32 @@ export const ChatArea: React.FC = () => {
 
   const handleEditMessage = (messageId: string) => {
     setEditingMessageId(messageId);
-    toast({
-      title: "Edit functionality",
-      description: "Message editing will be implemented in the next iteration.",
-    });
+    
+    // Find the message to edit
+    const message = conversation?.messages.find(m => m.id === messageId);
+    if (message && message.role === 'user') {
+      const newContent = prompt('Edit your message:', message.content);
+      if (newContent !== null && newContent.trim() !== '' && conversation) {
+        updateMessage(conversation.id, messageId, { content: newContent.trim() });
+        toast({
+          title: "Message updated",
+          description: "Your message has been edited successfully.",
+        });
+      }
+    }
+    setEditingMessageId(null);
   };
 
   const handleDeleteMessage = (messageId: string) => {
     if (conversation) {
-      deleteMessage(conversation.id, messageId);
-      toast({
-        title: "Message deleted",
-        description: "The message has been removed from the conversation.",
-      });
+      const confirmDelete = window.confirm('Are you sure you want to delete this message?');
+      if (confirmDelete) {
+        deleteMessage(conversation.id, messageId);
+        toast({
+          title: "Message deleted",
+          description: "The message has been removed from the conversation.",
+        });
+      }
     }
   };
 
