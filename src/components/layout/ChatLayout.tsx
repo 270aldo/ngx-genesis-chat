@@ -65,18 +65,14 @@ export const ChatLayout: React.FC = () => {
       )}
       
       {/* Sidebar */}
-      <div className={cn(
-        "relative z-50 flex-shrink-0",
-        isMobile && !sidebarOpen && "hidden"
-      )}>
-        <Sidebar />
-      </div>
+      <Sidebar />
       
       {/* Main Chat Area */}
       <div className={cn(
-        "flex-1 flex flex-col min-w-0 relative",
-        !isMobile && !sidebarOpen && "ml-16", // Add margin when sidebar is collapsed on desktop
-        !isMobile && sidebarOpen && "ml-0" // No extra margin when sidebar is open
+        "flex-1 flex flex-col min-w-0 relative transition-all duration-300",
+        !isMobile && sidebarOpen && "ml-80",
+        !isMobile && !sidebarOpen && "ml-16",
+        isMobile && "ml-0"
       )}>
         <div className="absolute inset-0 bg-gradient-to-t from-background/50 via-transparent to-transparent pointer-events-none"></div>
         
