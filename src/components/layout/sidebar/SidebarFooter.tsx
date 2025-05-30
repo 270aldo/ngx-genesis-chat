@@ -3,6 +3,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { useChatStore } from '@/store/chatStore';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useAgentNavigation } from '@/hooks/useAgentNavigation';
 import { cn } from '@/lib/utils';
 import { Link } from 'react-router-dom';
 import { Settings, User, TrendingUp, Activity, Utensils, Dumbbell } from 'lucide-react';
@@ -18,10 +19,12 @@ export const SidebarFooter: React.FC<SidebarFooterProps> = ({
 }) => {
   const { sidebarOpen, toggleSidebar } = useChatStore();
   const isMobile = useIsMobile();
+  const { navigateToAgent } = useAgentNavigation();
 
-  const handleBiometricsToggle = () => {
-    setShowBiometrics(!showBiometrics);
-    // Auto-close sidebar on mobile after toggling biometrics
+  const handleBiometricsClick = () => {
+    navigateToAgent('biometrics-engine');
+    setShowBiometrics(true);
+    // Auto-close sidebar on mobile after navigating
     if (isMobile) {
       toggleSidebar();
     }
@@ -68,7 +71,7 @@ export const SidebarFooter: React.FC<SidebarFooterProps> = ({
         </Link>
         <Button
           variant="ghost"
-          onClick={handleBiometricsToggle}
+          onClick={handleBiometricsClick}
           className={cn(
             "w-full text-sidebar-foreground/60 hover:text-sidebar-foreground hover:bg-sidebar-accent",
             (sidebarOpen || isMobile) ? "justify-start gap-2" : "justify-center px-2",
