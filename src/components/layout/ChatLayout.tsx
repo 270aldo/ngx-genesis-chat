@@ -4,9 +4,7 @@ import { ChatArea } from '../chat/ChatArea';
 import { ChatInput } from '../chat/ChatInput';
 import { AgentSelector } from '../agents/AgentSelector';
 import { AgentQuickActions } from '../agents/AgentQuickActions';
-import { QuickMessages } from '../chat/QuickMessages';
 import { ExportOptions } from '../chat/ExportOptions';
-import { useRealtimeTyping } from '@/hooks/useRealtimeTyping';
 import { useChatStore } from '@/store/chatStore';
 import { useAgentStore } from '@/store/agentStore';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -151,7 +149,6 @@ export const ChatLayout: React.FC = () => {
             <ExportOptions />
           </div>
           <AgentQuickActions />
-          <QuickMessages onSelectMessage={handleSendMessage} />
         </div>
         
         <ChatArea />

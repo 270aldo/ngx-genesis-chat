@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Send, Mic, MicOff, Paperclip, Square, Sparkles } from 'lucide-react';
 import { useChatStore } from '@/store/chatStore';
+import { useAgentStore } from '@/store/agentStore';
 import { cn } from '@/lib/utils';
 
 interface ChatInputProps {
@@ -17,6 +18,52 @@ export const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, disabled })
   const [isFocused, setIsFocused] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const { isVoiceMode, setVoiceMode, isTyping } = useChatStore();
+  const { getActiveAgent } = useAgentStore();
+
+  const activeAgent = getActiveAgent();
+
+  // Get quick messages for active agent
+  const getQuickMessages = () => {
+    if (!activeAgent) return [];
+
+    const commonMessages = [
+      "¿Cómo puedo empezar?",
+      "Dame una recomendación",
+      "Explícame los fundamentos"
+    ];
+
+    const agentSpecificMessages = {
+      'training-strategist': [
+        "Diseña un plan de entrenamiento",
+        "¿Cómo mejoro mi fuerza?",
+        "Rutina para ganar músculo",
+        "Ejercicios para quemar grasa"
+      ],
+      'nutrition-architect': [
+        "Calcula mis macros diarios",
+        "Plan de comidas saludable",
+        "¿Qué suplementos necesito?",
+        "Recetas rápidas y nutritivas"
+      ],
+      'biometrics-engine': [
+        "Analiza mis métricas de sueño",
+        "¿Cómo mejorar mi recuperación?",
+        "Interpreta mi variabilidad cardíaca",
+        "Optimiza mis horarios"
+      ],
+      'orchestrator': [
+        "Crea un plan integral",
+        "Coordina mis objetivos",
+        "¿Qué agente necesito?",
+        "Análisis completo"
+      ]
+    };
+
+    const specific = agentSpecificMessages[activeAgent.id as keyof typeof agentSpecificMessages] || [];
+    return [...commonMessages, ...specific];
+  };
+
+  const quickMessages = getQuickMessages();
 
   useEffect(() => {
     if (textareaRef.current) {
@@ -47,9 +94,44 @@ export const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, disabled })
     setVoiceMode(!isVoiceMode);
   };
 
+  const handleQuickMessage = (message: string) => {
+    onSendMessage(message);
+  };
+
   return (
     <div className="border-t border-white/5 bg-background/80 backdrop-blur-xl p-6">
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-5xl mx-auto space-y-4">
+        
+        {/* Quick Messages */}
+        {quickMessages.length > 0 && (
+          <div className="space-y-3">
+            <div className="flex items-center gap-2 text-sm text-white/60">
+              <Sparkles className="w-4 h-4" />
+              <span>Mensajes rápidos para {activeAgent?.name}</span>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {quickMessages.slice(0, 8).map((message, index) => (
+                <Button
+                  key={index}
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => handleQuickMessage(message)}
+                  disabled={disabled || isTyping}
+                  className={cn(
+                    "h-9 px-4 py-2 text-sm font-light rounded-full transition-all duration-200",
+                    "bg-white/5 hover:bg-white/10 text-white/70 hover:text-white",
+                    "border border-white/10 hover:border-white/20",
+                    "disabled:opacity-30 disabled:cursor-not-allowed"
+                  )}
+                >
+                  <span className="truncate max-w-[200px]">{message}</span>
+                </Button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Input Area */}
         <div className={cn(
           "relative glass-ultra rounded-3xl border transition-all duration-300",
           isFocused 
