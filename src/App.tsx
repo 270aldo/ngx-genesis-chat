@@ -15,6 +15,7 @@ import Profile from './pages/Profile';
 import ProgressDashboard from './pages/ProgressDashboard';
 import TrainingDashboard from './pages/TrainingDashboard';
 import NutritionDashboard from './pages/NutritionDashboard';
+import QuickActions from './pages/QuickActions';
 import { ChatLayout } from './components/layout/ChatLayout';
 
 // Mock user for development
@@ -90,6 +91,12 @@ const App: React.FC = () => {
           <Route path="/dashboard/nutrition" element={
             <ProtectedRoute>
               <NutritionDashboard />
+            </ProtectedRoute>
+          } />
+          
+          <Route path="/quick-actions" element={
+            <ProtectedRoute>
+              <QuickActions />
             </ProtectedRoute>
           } />
           

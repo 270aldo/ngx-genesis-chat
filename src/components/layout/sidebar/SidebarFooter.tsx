@@ -6,7 +6,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { useAgentNavigation } from '@/hooks/useAgentNavigation';
 import { cn } from '@/lib/utils';
 import { Link } from 'react-router-dom';
-import { Settings, User, TrendingUp, Activity, Utensils, Dumbbell } from 'lucide-react';
+import { Settings, User, TrendingUp, Activity, Utensils, Dumbbell, Zap } from 'lucide-react';
 
 interface SidebarFooterProps {
   showBiometrics: boolean;
@@ -40,6 +40,18 @@ export const SidebarFooter: React.FC<SidebarFooterProps> = ({
   return (
     <div className="p-3 border-t border-sidebar-border">
       <div className="space-y-1">
+        <Link to="/quick-actions" onClick={handleNavigation}>
+          <Button
+            variant="ghost"
+            className={cn(
+              "w-full text-sidebar-foreground/60 hover:text-sidebar-foreground hover:bg-sidebar-accent",
+              (sidebarOpen || isMobile) ? "justify-start gap-2" : "justify-center px-2"
+            )}
+          >
+            <Zap className="h-4 w-4 flex-shrink-0" />
+            {(sidebarOpen || isMobile) && <span>Quick Actions</span>}
+          </Button>
+        </Link>
         <Link to="/dashboard/progress" onClick={handleNavigation}>
           <Button
             variant="ghost"
