@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useAgentStore } from '@/store/agentStore';
 import { useAgentNavigation } from '@/hooks/useAgentNavigation';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 import { Circle, Target, Leaf, BarChart3, Lightbulb, TrendingUp, RotateCcw, Zap, Users, ChevronDown } from 'lucide-react';
 
@@ -22,6 +23,7 @@ const iconMap = {
 export const AgentSelector: React.FC = () => {
   const { agents, activeAgentId, getActiveAgent } = useAgentStore();
   const { navigateToAgent } = useAgentNavigation();
+  const isMobile = useIsMobile();
   const activeAgent = getActiveAgent();
   const [isExpanded, setIsExpanded] = React.useState(false);
 
@@ -45,22 +47,35 @@ export const AgentSelector: React.FC = () => {
 
   return (
     <div className="border-b border-white/10 bg-white/5 backdrop-blur-xl">
-      <div className="px-4 py-3">
-        {/* Active Agent Header */}
+      <div className={cn("px-4 py-3", isMobile && "px-3 py-2")}>
+        {/* Active Agent Header - Optimized for mobile */}
         <div className="flex items-center justify-between mb-3">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 flex-1 min-w-0">
             {activeAgent && (
               <>
                 <div className={cn(
-                  "w-10 h-10 rounded-xl flex items-center justify-center text-white shadow-lg",
-                  `bg-gradient-to-br ${activeAgent.color}`
+                  "rounded-xl flex items-center justify-center text-white shadow-lg flex-shrink-0",
+                  `bg-gradient-to-br ${activeAgent.color}`,
+                  isMobile ? "w-8 h-8" : "w-10 h-10"
                 )}>
-                  {React.createElement(getIcon(activeAgent.icon), { className: "w-5 h-5" })}
+                  {React.createElement(getIcon(activeAgent.icon), { 
+                    className: isMobile ? "w-4 h-4" : "w-5 h-5" 
+                  })}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h3 className="text-base font-semibold text-white truncate">{activeAgent.name}</h3>
-                  <p className="text-xs text-white/70 truncate">{activeAgent.specialty}</p>
-                  {activeAgent.actions && (
+                  <h3 className={cn(
+                    "font-semibold text-white truncate",
+                    isMobile ? "text-sm" : "text-base"
+                  )}>
+                    {activeAgent.name}
+                  </h3>
+                  <p className={cn(
+                    "text-white/70 truncate",
+                    isMobile ? "text-xs" : "text-xs"
+                  )}>
+                    {activeAgent.specialty}
+                  </p>
+                  {activeAgent.actions && !isMobile && (
                     <p className="text-xs text-white/50 mt-1">
                       {activeAgent.actions.length} actions available
                     </p>
@@ -74,24 +89,30 @@ export const AgentSelector: React.FC = () => {
             variant="ghost"
             size="sm"
             onClick={() => setIsExpanded(!isExpanded)}
-            className="text-white/60 hover:text-white hover:bg-white/10 p-2"
+            className={cn(
+              "text-white/60 hover:text-white hover:bg-white/10",
+              isMobile ? "p-1.5" : "p-2"
+            )}
           >
             <ChevronDown className={cn(
-              "w-4 h-4 transition-transform duration-300",
-              isExpanded && "rotate-180"
+              "transition-transform duration-300",
+              isExpanded && "rotate-180",
+              isMobile ? "w-3.5 h-3.5" : "w-4 h-4"
             )} />
           </Button>
         </div>
         
-        {/* Agent Grid */}
+        {/* Agent Grid - Optimized for mobile */}
         <div className={cn(
           "transition-all duration-300 ease-in-out overflow-hidden",
-          isExpanded ? "max-h-96 opacity-100" : "max-h-20 opacity-100"
+          isExpanded ? "max-h-96 opacity-100" : (isMobile ? "max-h-16" : "max-h-20") + " opacity-100"
         )}>
           <div className="w-full">
             <div className={cn(
-              "grid gap-2 pb-2",
-              isExpanded ? "grid-cols-2 sm:grid-cols-3" : "flex overflow-x-auto"
+              "gap-2 pb-2",
+              isExpanded ? (
+                isMobile ? "grid grid-cols-2" : "grid grid-cols-3"
+              ) : "flex overflow-x-auto scrollbar-hide"
             )}>
               {agents.map((agent) => {
                 const Icon = getIcon(agent.icon);
@@ -105,9 +126,15 @@ export const AgentSelector: React.FC = () => {
                     onClick={() => navigateToAgent(agent.id)}
                     className={cn(
                       "transition-all duration-200 rounded-xl",
-                      isExpanded 
-                        ? "h-20 p-3 flex-col justify-center items-center gap-2" 
-                        : "flex-shrink-0 h-16 px-3 flex-col justify-center items-center gap-1",
+                      isExpanded ? (
+                        isMobile 
+                          ? "h-16 p-2 flex-col justify-center items-center gap-1" 
+                          : "h-20 p-3 flex-col justify-center items-center gap-2"
+                      ) : (
+                        isMobile
+                          ? "flex-shrink-0 h-12 px-2 flex-col justify-center items-center gap-0.5"
+                          : "flex-shrink-0 h-16 px-3 flex-col justify-center items-center gap-1"
+                      ),
                       isActive 
                         ? `bg-gradient-to-br ${agent.color} text-white shadow-lg border border-white/20` 
                         : "bg-white/5 hover:bg-white/10 text-white/70 hover:text-white border border-transparent hover:border-white/10"
@@ -116,26 +143,36 @@ export const AgentSelector: React.FC = () => {
                     {isExpanded ? (
                       <>
                         <div className="flex items-center gap-2 w-full">
-                          <Icon className="w-4 h-4 flex-shrink-0" />
+                          <Icon className={cn("flex-shrink-0", isMobile ? "w-3.5 h-3.5" : "w-4 h-4")} />
                           <div className="flex-1 min-w-0 text-left">
-                            <p className="text-sm font-medium truncate">{agent.title}</p>
-                            <p className="text-xs opacity-80 truncate">{agent.name.split(' ')[0]} {agent.name.split(' ')[1]}</p>
+                            <p className={cn("font-medium truncate", isMobile ? "text-xs" : "text-sm")}>
+                              {agent.title}
+                            </p>
+                            <p className={cn("opacity-80 truncate", isMobile ? "text-xs" : "text-xs")}>
+                              {agent.name.split(' ')[0]} {agent.name.split(' ')[1]}
+                            </p>
                           </div>
                         </div>
                         {agent.actions && (
                           <div className="w-full">
                             <div className="flex flex-wrap gap-1 mt-1">
-                              {agent.actions.slice(0, 2).map((action) => (
+                              {agent.actions.slice(0, isMobile ? 1 : 2).map((action) => (
                                 <span
                                   key={action.id}
-                                  className="text-xs px-1.5 py-0.5 rounded bg-white/10 truncate"
+                                  className={cn(
+                                    "px-1.5 py-0.5 rounded bg-white/10 truncate",
+                                    isMobile ? "text-xs" : "text-xs"
+                                  )}
                                 >
                                   {action.label}
                                 </span>
                               ))}
-                              {agent.actions.length > 2 && (
-                                <span className="text-xs px-1.5 py-0.5 rounded bg-white/10">
-                                  +{agent.actions.length - 2}
+                              {agent.actions.length > (isMobile ? 1 : 2) && (
+                                <span className={cn(
+                                  "px-1.5 py-0.5 rounded bg-white/10",
+                                  isMobile ? "text-xs" : "text-xs"
+                                )}>
+                                  +{agent.actions.length - (isMobile ? 1 : 2)}
                                 </span>
                               )}
                             </div>
@@ -144,8 +181,11 @@ export const AgentSelector: React.FC = () => {
                       </>
                     ) : (
                       <>
-                        <Icon className="w-4 h-4" />
-                        <span className="text-xs font-medium leading-none truncate">
+                        <Icon className={cn(isMobile ? "w-3.5 h-3.5" : "w-4 h-4")} />
+                        <span className={cn(
+                          "font-medium leading-none truncate text-center",
+                          isMobile ? "text-xs" : "text-xs"
+                        )}>
                           {agent.title}
                         </span>
                       </>
@@ -158,7 +198,7 @@ export const AgentSelector: React.FC = () => {
         </div>
 
         {/* Capabilities Preview - Only show when expanded and agent has actions */}
-        {isExpanded && activeAgent?.actions && (
+        {isExpanded && activeAgent?.actions && !isMobile && (
           <div className="mt-3 pt-3 border-t border-white/10">
             <p className="text-xs text-white/60 mb-2">Available Actions</p>
             <div className="flex flex-wrap gap-1.5">

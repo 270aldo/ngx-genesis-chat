@@ -5,6 +5,8 @@ import { InputField } from './InputField';
 import { InputActions } from './InputActions';
 import { useInputHandlers } from '@/hooks/useInputHandlers';
 import { useQuickMessageListener } from '@/hooks/useQuickMessageListener';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { cn } from '@/lib/utils';
 
 interface ChatInputProps {
   onSendMessage: (content: string) => void;
@@ -14,6 +16,7 @@ interface ChatInputProps {
 export const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, disabled }) => {
   const [isRecording, setIsRecording] = useState(false);
   const { isVoiceMode, setVoiceMode, isTyping } = useChatStore();
+  const isMobile = useIsMobile();
 
   const {
     input,
@@ -33,9 +36,12 @@ export const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, disabled })
   };
 
   return (
-    <div className="p-4">
+    <div className={cn("p-4", isMobile && "p-3 pb-safe")}>
       <div className="max-w-4xl mx-auto">
-        <div className="flex items-center gap-3 bg-black/40 backdrop-blur-sm rounded-2xl p-3 border border-white/20">
+        <div className={cn(
+          "flex items-end gap-3 bg-black/40 backdrop-blur-sm rounded-2xl border border-white/20",
+          isMobile ? "p-2.5" : "p-3"
+        )}>
           <InputField
             input={input}
             setInput={setInput}
