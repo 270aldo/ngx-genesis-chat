@@ -26,7 +26,8 @@ import {
   Apple, 
   Sun, 
   CheckCircle, 
-  Trophy 
+  Trophy,
+  Map
 } from 'lucide-react';
 
 const agentActions = {
@@ -177,6 +178,13 @@ export const QuickActionsButton: React.FC = () => {
   const [open, setOpen] = useState(false);
   const activeAgent = getActiveAgent();
   const actions = activeAgent ? agentActions[activeAgent.id as keyof typeof agentActions] || [] : [];
+  
+  // Solo mostrar si hay una conversación activa
+  const currentConversation = getCurrentConversation();
+  if (!currentConversation || actions.length === 0) {
+    return null;
+  }
+  
   const handleQuickAction = (prompt: string) => {
     let conversationId = getCurrentConversation()?.id;
     if (!conversationId) {
