@@ -27,22 +27,22 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-purple-900/30 to-black relative overflow-hidden">
-      {/* Enhanced Background effects */}
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-600/8 via-transparent to-violet-600/5 pointer-events-none"></div>
-      <div className="absolute inset-0 bg-gradient-to-t from-purple-900/5 via-transparent to-transparent pointer-events-none"></div>
+    <div className="min-h-screen bg-gradient-to-br from-black via-indigo-900/30 to-black relative overflow-hidden">
+      {/* Enhanced Background effects - Updated to dark violet theme */}
+      <div className="absolute inset-0 bg-gradient-to-br from-indigo-600/8 via-transparent to-violet-600/5 pointer-events-none"></div>
+      <div className="absolute inset-0 bg-gradient-to-t from-indigo-900/5 via-transparent to-transparent pointer-events-none"></div>
       
-      {/* Floating orbs for visual enhancement */}
-      <div className="absolute top-20 left-1/4 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
-      <div className="absolute bottom-20 right-1/4 w-40 h-40 bg-violet-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+      {/* Floating orbs for visual enhancement - Updated colors */}
+      <div className="absolute top-20 left-1/4 w-32 h-32 bg-indigo-500/10 rounded-full blur-3xl animate-pulse"></div>
+      <div className="absolute bottom-20 right-1/4 w-40 h-40 bg-violet-700/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
       
       {/* Enhanced Header */}
-      <div className="border-b border-purple-500/20 bg-background/80 backdrop-blur-xl sticky top-0 z-40">
+      <div className="border-b border-indigo-500/20 bg-background/80 backdrop-blur-xl sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-4">
               <Link to="/chat">
-                <Button variant="ghost" size="icon" className="text-white/60 hover:text-white/80 hover:bg-purple-500/10">
+                <Button variant="ghost" size="icon" className="text-white/60 hover:text-white/80 hover:bg-indigo-500/10">
                   <ArrowLeft className="h-5 w-5" />
                 </Button>
               </Link>
@@ -54,17 +54,17 @@ const Dashboard: React.FC = () => {
             
             <div className="flex items-center gap-2">
               <Link to="/dashboard/progress">
-                <Button variant="outline" size="sm" className="border-purple-500/20 text-white/80 hover:bg-purple-500/10 hover:border-purple-400/30">
+                <Button variant="outline" size="sm" className="border-indigo-500/20 text-white/80 hover:bg-indigo-500/10 hover:border-indigo-400/30">
                   <TrendingUp className="h-4 w-4 mr-2" />
                   Progress
                 </Button>
               </Link>
-              <Button variant="outline" size="sm" className="border-purple-500/20 text-white/80 hover:bg-purple-500/10 hover:border-purple-400/30">
+              <Button variant="outline" size="sm" className="border-indigo-500/20 text-white/80 hover:bg-indigo-500/10 hover:border-indigo-400/30">
                 <Download className="h-4 w-4 mr-2" />
                 Export
               </Button>
               <Link to="/settings">
-                <Button variant="outline" size="sm" className="border-purple-500/20 text-white/80 hover:bg-purple-500/10 hover:border-purple-400/30">
+                <Button variant="outline" size="sm" className="border-indigo-500/20 text-white/80 hover:bg-indigo-500/10 hover:border-indigo-400/30">
                   <Settings className="h-4 w-4 mr-2" />
                   Settings
                 </Button>
@@ -114,23 +114,23 @@ const Dashboard: React.FC = () => {
         </div>
 
         {/* Enhanced Stats Footer */}
-        <div className="mt-16 pt-8 border-t border-purple-500/20">
+        <div className="mt-16 pt-8 border-t border-indigo-500/20">
           <div className="text-center mb-6">
             <h3 className="text-xl font-semibold text-white mb-2">Performance Overview</h3>
             <p className="text-white/60">Your fitness journey at a glance</p>
           </div>
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <div className="text-center p-4 rounded-xl bg-white/5 border border-purple-500/20">
+            <div className="text-center p-4 rounded-xl bg-white/5 border border-indigo-500/20">
               <div className="flex items-center justify-center mb-2">
-                <Activity className="h-5 w-5 text-purple-400 mr-2" />
+                <Activity className="h-5 w-5 text-indigo-400 mr-2" />
                 <div className="text-2xl font-bold text-white">{conversations.length}</div>
               </div>
               <div className="text-sm text-white/60">Total Chats</div>
               <div className="text-xs text-green-400 mt-1">+15% this week</div>
             </div>
             
-            <div className="text-center p-4 rounded-xl bg-white/5 border border-purple-500/20">
+            <div className="text-center p-4 rounded-xl bg-white/5 border border-indigo-500/20">
               <div className="flex items-center justify-center mb-2">
                 <TrendingUp className="h-5 w-5 text-green-400 mr-2" />
                 <div className="text-2xl font-bold text-white">{user?.tokens || 0}</div>
@@ -139,16 +139,16 @@ const Dashboard: React.FC = () => {
               <div className="text-xs text-yellow-400 mt-1">Use wisely</div>
             </div>
             
-            <div className="text-center p-4 rounded-xl bg-white/5 border border-purple-500/20">
+            <div className="text-center p-4 rounded-xl bg-white/5 border border-indigo-500/20">
               <div className="flex items-center justify-center mb-2">
-                <Calendar className="h-5 w-5 text-blue-400 mr-2" />
+                <Calendar className="h-5 w-5 text-indigo-400 mr-2" />
                 <div className="text-2xl font-bold text-white">12</div>
               </div>
               <div className="text-sm text-white/60">Days Active</div>
-              <div className="text-xs text-blue-400 mt-1">Great streak!</div>
+              <div className="text-xs text-indigo-400 mt-1">Great streak!</div>
             </div>
             
-            <div className="text-center p-4 rounded-xl bg-white/5 border border-purple-500/20">
+            <div className="text-center p-4 rounded-xl bg-white/5 border border-indigo-500/20">
               <div className="flex items-center justify-center mb-2">
                 <Share2 className="h-5 w-5 text-violet-400 mr-2" />
                 <div className="text-2xl font-bold text-white">94%</div>

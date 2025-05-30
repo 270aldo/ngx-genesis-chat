@@ -8,19 +8,19 @@ const features = [
     icon: Sparkles,
     title: 'Advanced AI Agents',
     description: 'Multi-agent system with specialized capabilities for complex reasoning and task execution.',
-    gradient: 'from-blue-500/20 to-purple-500/20',
+    gradient: 'from-indigo-500/20 to-purple-500/20',
   },
   {
     icon: ArrowUp,
     title: 'Real-time Processing',
     description: 'Lightning-fast response times with streaming capabilities and instant feedback.',
-    gradient: 'from-purple-500/20 to-pink-500/20',
+    gradient: 'from-purple-500/20 to-violet-700/20',
   },
   {
     icon: Shield,
     title: 'Premium Interface',
     description: 'Sophisticated user experience with glassmorphism design and fluid animations.',
-    gradient: 'from-blue-500/20 to-cyan-500/20',
+    gradient: 'from-indigo-500/20 to-indigo-800/20',
   },
 ];
 
@@ -35,7 +35,7 @@ export const FeatureCards: React.FC = () => {
             isMobile ? 'text-3xl' : 'text-4xl md:text-6xl'
           }`}>
             Cutting-Edge
-            <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"> Features</span>
+            <span className="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent"> Features</span>
           </h2>
           <p className={`text-white/60 max-w-2xl mx-auto px-4 ${
             isMobile ? 'text-base' : 'text-xl'
@@ -53,7 +53,7 @@ export const FeatureCards: React.FC = () => {
               className="group relative"
               style={{ animationDelay: `${index * 200}ms` }}
             >
-              <div className={`glass-ultra border border-white/10 rounded-2xl sm:rounded-3xl hover:border-blue-500/30 transition-all duration-500 hover:scale-105 relative overflow-hidden ${
+              <div className={`glass-ultra border border-white/10 rounded-2xl sm:rounded-3xl hover:border-indigo-500/30 transition-all duration-500 hover:scale-105 relative overflow-hidden ${
                 isMobile ? 'p-6' : 'p-8'
               }`}>
                 {/* Gradient background */}
@@ -61,10 +61,10 @@ export const FeatureCards: React.FC = () => {
                 
                 {/* Content */}
                 <div className="relative z-10">
-                  <div className={`glass-premium border border-blue-500/20 rounded-xl sm:rounded-2xl flex items-center justify-center mb-4 sm:mb-6 glow-subtle group-hover:glow-primary transition-all duration-300 ${
+                  <div className={`glass-premium border border-indigo-500/20 rounded-xl sm:rounded-2xl flex items-center justify-center mb-4 sm:mb-6 glow-subtle group-hover:glow-primary transition-all duration-300 ${
                     isMobile ? 'w-12 h-12' : 'w-16 h-16'
                   }`}>
-                    <feature.icon className={`text-blue-400 ${
+                    <feature.icon className={`text-indigo-400 ${
                       isMobile ? 'w-6 h-6' : 'w-8 h-8'
                     }`} />
                   </div>

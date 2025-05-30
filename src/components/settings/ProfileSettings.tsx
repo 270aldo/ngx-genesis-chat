@@ -86,7 +86,7 @@ export const ProfileSettings: React.FC = () => {
           <div className="flex items-center gap-6">
             <Avatar className="w-20 h-20">
               <AvatarImage src={user?.avatar} />
-              <AvatarFallback className="bg-purple-500/20 text-purple-400 text-lg">
+              <AvatarFallback className="bg-indigo-500/20 text-indigo-400 text-lg">
                 {user?.name?.charAt(0) || 'U'}
               </AvatarFallback>
             </Avatar>
@@ -149,7 +149,7 @@ export const ProfileSettings: React.FC = () => {
             <Button 
               onClick={handleSave}
               disabled={!hasChanges || isLoading}
-              className="bg-gradient-to-r from-purple-500 to-violet-600 hover:from-purple-600 hover:to-violet-700 text-white disabled:opacity-50"
+              className="bg-gradient-to-r from-indigo-500 to-violet-600 hover:from-indigo-600 hover:to-violet-700 text-white disabled:opacity-50"
             >
               {isLoading ? (
                 <>

@@ -63,7 +63,7 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// NGX Agents custom colors
+				// NGX Agents custom colors - Updated to dark violet theme
 				navy: {
 					50: '#f0f1ff',
 					100: '#e4e6ff', 
@@ -87,13 +87,41 @@ export default {
 					600: '#9333ea',
 					700: '#7c3aed',
 					800: '#6d28d9',
-					900: '#6d00ff',
-					950: '#4a0080'
+					900: '#4c1d95',
+					950: '#2e1065'
+				},
+				// Enhanced indigo palette for darker theme
+				indigo: {
+					50: '#eef2ff',
+					100: '#e0e7ff',
+					200: '#c7d2fe',
+					300: '#a5b4fc',
+					400: '#818cf8',
+					500: '#6366f1',
+					600: '#4f46e5',
+					700: '#4338ca',
+					800: '#3730a3',
+					900: '#312e81',
+					950: '#1e1b4b'
+				},
+				// Dark violet custom colors
+				'dark-violet': {
+					50: '#f8f7ff',
+					100: '#f1efff',
+					200: '#e5e2ff',
+					300: '#d1cbff',
+					400: '#b8aaff',
+					500: '#9d82ff',
+					600: '#8b5cf6',
+					700: '#7c3aed',
+					800: '#6d28d9',
+					900: '#4c1d95',
+					950: '#0f0f23'
 				},
 				glass: {
-					light: 'rgba(255, 255, 255, 0.1)',
-					medium: 'rgba(255, 255, 255, 0.2)',
-					dark: 'rgba(0, 0, 0, 0.3)'
+					light: 'rgba(99, 102, 241, 0.05)',
+					medium: 'rgba(79, 70, 229, 0.1)',
+					dark: 'rgba(30, 27, 75, 0.3)'
 				}
 			},
 			borderRadius: {
@@ -148,10 +176,10 @@ export default {
 				},
 				'pulse-glow': {
 					'0%, 100%': {
-						boxShadow: '0 0 5px rgba(168, 85, 247, 0.4)'
+						boxShadow: '0 0 5px rgba(99, 102, 241, 0.4)'
 					},
 					'50%': {
-						boxShadow: '0 0 20px rgba(168, 85, 247, 0.8)'
+						boxShadow: '0 0 20px rgba(99, 102, 241, 0.8)'
 					}
 				},
 				'shimmer': {
