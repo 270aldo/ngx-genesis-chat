@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Textarea } from '@/components/ui/textarea';
-import { Sparkles, Brain } from 'lucide-react';
+import { Brain } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface InputFieldProps {
@@ -37,34 +37,28 @@ export const InputField: React.FC<InputFieldProps> = ({
         placeholder={isTyping ? "NGX Agent is thinking..." : "Ask me anything..."}
         disabled={disabled || isTyping}
         className={cn(
-          "min-h-[52px] max-h-[140px] resize-none border-0 bg-transparent",
-          "focus-visible:ring-0 focus-visible:ring-offset-0 px-0 py-4",
-          "placeholder:text-white/35 text-white/95 font-light text-base leading-relaxed",
-          "scrollbar-none transition-all duration-300",
-          isFocused && "placeholder:text-white/50"
+          "min-h-[52px] max-h-[140px] resize-none",
+          "border-0 bg-transparent shadow-none",
+          "focus-visible:ring-0 focus-visible:ring-offset-0",
+          "px-0 py-2 text-base",
+          "placeholder:text-white/40 text-white/90",
+          "transition-all duration-200"
         )}
         rows={1}
       />
       
-      {/* Enhanced Typing Indicator */}
+      {/* Clean Typing Indicator */}
       {isTyping && (
-        <div className="absolute inset-0 flex items-center justify-center rounded-xl">
-          <div className="flex items-center gap-4 px-6 py-3 rounded-xl bg-gradient-to-r from-purple-500/10 to-violet-500/10 backdrop-blur-sm border border-purple-500/20">
-            <div className="flex gap-1.5">
-              <div className="typing-dot-premium bg-gradient-to-r from-purple-400 to-violet-400"></div>
-              <div className="typing-dot-premium bg-gradient-to-r from-purple-400 to-violet-400"></div>
-              <div className="typing-dot-premium bg-gradient-to-r from-purple-400 to-violet-400"></div>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="flex items-center gap-3 px-4 py-2 rounded-lg bg-purple-500/10">
+            <div className="flex gap-1">
+              <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce"></div>
+              <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+              <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
             </div>
-            <Brain className="w-5 h-5 text-purple-400 animate-pulse" />
-            <span className="text-sm font-light text-white/80">Generating response...</span>
+            <Brain className="w-4 h-4 text-purple-400" />
+            <span className="text-sm text-white/70">Generating response...</span>
           </div>
-        </div>
-      )}
-
-      {/* Input Enhancement Indicator */}
-      {isFocused && !isTyping && (
-        <div className="absolute bottom-1 right-1 opacity-60">
-          <Sparkles className="w-3 h-3 text-purple-400/60" />
         </div>
       )}
     </div>
