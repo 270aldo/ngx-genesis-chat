@@ -77,9 +77,9 @@ export const EmptyState: React.FC<EmptyStateProps> = ({ activeAgent, onQuickMess
   const quickMessages = getQuickMessages();
 
   return (
-    <div className="flex-1 flex items-center justify-center relative overflow-hidden chat-scroll-area">
+    <div className="flex-1 flex items-center justify-center relative overflow-hidden chat-scroll-area z-0">
       {/* Floating particles background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
         {[...Array(6)].map((_, i) => (
           <div
             key={i}
