@@ -59,7 +59,7 @@ export const AppearanceSettings: React.FC = () => {
                     variant={settings.theme === option.value ? "default" : "outline"}
                     className={`flex flex-col items-center gap-2 h-20 ${
                       settings.theme === option.value
-                        ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white'
+                        ? 'bg-gradient-to-r from-purple-500 to-violet-600 text-white'
                         : 'text-white border-white/20 hover:bg-white/5'
                     }`}
                     onClick={() => handleThemeChange(option.value as any)}

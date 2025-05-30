@@ -35,7 +35,7 @@ export const ProfileSettings: React.FC = () => {
           <div className="flex items-center gap-6">
             <Avatar className="w-20 h-20">
               <AvatarImage src={user?.avatar} />
-              <AvatarFallback className="bg-blue-500/20 text-blue-400 text-lg">
+              <AvatarFallback className="bg-purple-500/20 text-purple-400 text-lg">
                 {user?.name?.charAt(0) || 'U'}
               </AvatarFallback>
             </Avatar>
@@ -95,7 +95,7 @@ export const ProfileSettings: React.FC = () => {
           <div className="flex gap-3 pt-4">
             <Button 
               onClick={handleSave}
-              className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white"
+              className="bg-gradient-to-r from-purple-500 to-violet-600 hover:from-purple-600 hover:to-violet-700 text-white"
             >
               Save Changes
             </Button>
