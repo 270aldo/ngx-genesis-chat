@@ -35,7 +35,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, disabled })
   return (
     <div className="p-4">
       <div className="max-w-4xl mx-auto">
-        <div className="flex items-center gap-3 bg-purple-900/20 backdrop-blur-sm rounded-2xl p-3">
+        <div className="flex items-center gap-3 bg-black/40 backdrop-blur-sm rounded-2xl p-3 border border-white/20">
           <InputField
             input={input}
             setInput={setInput}
