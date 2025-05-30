@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -8,7 +7,6 @@ import { useChatStore } from '@/store/chatStore';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 import { Dumbbell, Calendar, Camera, BarChart3, Target, Clock, Apple, Utensils, Activity, Moon, Zap, Heart, Shield, Wind, Snowflake, Sun, Trophy, Map, CheckCircle, Sparkles } from 'lucide-react';
-
 const agentActions = {
   'training-strategist': [{
     label: 'Create Workout Plan',
@@ -143,7 +141,6 @@ const agentActions = {
     prompt: 'Let\'s acknowledge my achievements and plan some rewards'
   }]
 };
-
 export const QuickActionsButton: React.FC = () => {
   const {
     getActiveAgent
@@ -157,7 +154,6 @@ export const QuickActionsButton: React.FC = () => {
   const [open, setOpen] = useState(false);
   const activeAgent = getActiveAgent();
   const actions = activeAgent ? agentActions[activeAgent.id as keyof typeof agentActions] || [] : [];
-  
   const handleQuickAction = (prompt: string) => {
     let conversationId = getCurrentConversation()?.id;
     if (!conversationId) {
@@ -170,33 +166,12 @@ export const QuickActionsButton: React.FC = () => {
     });
     setOpen(false);
   };
-  
   if (actions.length === 0) return null;
-
-  return (
-    <Popover open={open} onOpenChange={setOpen}>
+  return <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button
-          variant="ghost"
-          size={isMobile ? "sm" : "default"}
-          className={cn(
-            "text-white/60 hover:text-white hover:bg-white/10 gap-2",
-            isMobile ? "px-2" : "px-3"
-          )}
-        >
-          <Sparkles className={cn(isMobile ? "w-4 h-4" : "w-4 h-4")} />
-          {!isMobile && <span className="text-sm">Quick Actions</span>}
-        </Button>
+        
       </PopoverTrigger>
-      <PopoverContent 
-        className={cn(
-          "p-4 bg-black/90 backdrop-blur-xl border border-purple-500/20",
-          isMobile ? "w-72" : "w-80"
-        )} 
-        align="end"
-        side={isMobile ? "bottom" : "bottom"}
-        sideOffset={8}
-      >
+      <PopoverContent className={cn("p-4 bg-black/90 backdrop-blur-xl border border-purple-500/20", isMobile ? "w-72" : "w-80")} align="end" side={isMobile ? "bottom" : "bottom"} sideOffset={8}>
         <div className="space-y-3">
           <div className="flex items-center gap-2 mb-3">
             <Sparkles className="w-4 h-4 text-purple-400" />
@@ -206,60 +181,33 @@ export const QuickActionsButton: React.FC = () => {
             </Badge>
           </div>
           
-          <div className={cn(
-            "grid gap-2",
-            isMobile ? "grid-cols-1" : "grid-cols-2"
-          )}>
+          <div className={cn("grid gap-2", isMobile ? "grid-cols-1" : "grid-cols-2")}>
             {actions.slice(0, isMobile ? 4 : 6).map((action, index) => {
-              const Icon = action.icon;
-              return (
-                <Button 
-                  key={index} 
-                  variant="ghost" 
-                  size="sm" 
-                  onClick={() => handleQuickAction(action.prompt)} 
-                  className={cn(
-                    "group relative overflow-hidden",
-                    "flex items-center gap-3 text-left",
-                    "text-white/70 hover:text-white rounded-xl",
-                    "border border-transparent hover:border-purple-500/30",
-                    "transition-all duration-300 ease-out",
-                    "hover:bg-purple-500/10 hover:scale-[1.02]",
-                    "active:scale-[0.98] active:transition-transform active:duration-100",
-                    isMobile ? "h-12 py-2 px-3 justify-start" : "h-auto py-3 px-3 flex-col"
-                  )}
-                >
+            const Icon = action.icon;
+            return <Button key={index} variant="ghost" size="sm" onClick={() => handleQuickAction(action.prompt)} className={cn("group relative overflow-hidden", "flex items-center gap-3 text-left", "text-white/70 hover:text-white rounded-xl", "border border-transparent hover:border-purple-500/30", "transition-all duration-300 ease-out", "hover:bg-purple-500/10 hover:scale-[1.02]", "active:scale-[0.98] active:transition-transform active:duration-100", isMobile ? "h-12 py-2 px-3 justify-start" : "h-auto py-3 px-3 flex-col")}>
                   <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-violet-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out" />
                   
-                  {isMobile ? (
-                    <>
+                  {isMobile ? <>
                       <Icon className="w-4 h-4 flex-shrink-0 relative z-10 transition-transform duration-300 ease-out group-hover:scale-110" />
                       <span className="text-sm font-medium relative z-10 transition-all duration-300 ease-out">
                         {action.label}
                       </span>
-                    </>
-                  ) : (
-                    <>
+                    </> : <>
                       <Icon className="w-4 h-4 flex-shrink-0 relative z-10 transition-transform duration-300 ease-out group-hover:scale-110" />
                       <span className="leading-tight text-center font-medium relative z-10 transition-all duration-300 ease-out text-xs">
                         {action.label}
                       </span>
-                    </>
-                  )}
-                </Button>
-              );
-            })}
+                    </>}
+                </Button>;
+          })}
           </div>
 
-          {actions.length > (isMobile ? 4 : 6) && (
-            <div className="text-center pt-2 border-t border-white/10">
+          {actions.length > (isMobile ? 4 : 6) && <div className="text-center pt-2 border-t border-white/10">
               <span className="text-xs text-white/50">
                 +{actions.length - (isMobile ? 4 : 6)} more available
               </span>
-            </div>
-          )}
+            </div>}
         </div>
       </PopoverContent>
-    </Popover>
-  );
+    </Popover>;
 };
