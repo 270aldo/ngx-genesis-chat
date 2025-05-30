@@ -1,13 +1,17 @@
-import React from 'react';
+
+import React, { useState } from 'react';
 import { Sidebar } from './Sidebar';
 import { ChatArea } from '../chat/ChatArea';
 import { ChatInput } from '../chat/ChatInput';
 import { AgentSelector } from '../agents/AgentSelector';
 import { AgentQuickActions } from '../agents/AgentQuickActions';
 import { ExportOptions } from '../chat/ExportOptions';
+import { BiometricsOverview } from '../biometrics/BiometricsOverview';
 import { useChatStore } from '@/store/chatStore';
 import { useAgentStore } from '@/store/agentStore';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useChatShortcuts } from '@/hooks/useKeyboardShortcuts';
+import { toastAI, toastSuccess } from '@/components/ui/enhanced-toast';
 import { cn } from '@/lib/utils';
 
 export const ChatLayout: React.FC = () => {
@@ -24,6 +28,22 @@ export const ChatLayout: React.FC = () => {
   
   const { getActiveAgent, analyzeUserIntent, setActiveAgent } = useAgentStore();
   const isMobile = useIsMobile();
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [showBiometrics, setShowBiometrics] = useState(false);
+
+  // Keyboard shortcuts
+  useChatShortcuts({
+    onSearch: () => setIsSearchOpen(true),
+    onNewChat: () => {
+      createConversation();
+      toastSuccess('New conversation created');
+    },
+    onToggleSidebar: () => toggleSidebar(),
+    onFocusInput: () => {
+      const input = document.querySelector('textarea');
+      input?.focus();
+    }
+  });
 
   // Auto-collapse sidebar on mobile
   React.useEffect(() => {
@@ -47,6 +67,19 @@ export const ChatLayout: React.FC = () => {
     // Auto-switch to most relevant agent if using orchestrator
     if (activeAgent?.id === 'orchestrator' && relevantAgents.length > 0) {
       setActiveAgent(relevantAgents[0]);
+      toastAI('Agent switched', `Switched to ${relevantAgents[0]} for better assistance`);
+    }
+
+    // Check if user is asking about biometrics
+    const isBiometricsQuery = content.toLowerCase().includes('biometric') || 
+                            content.toLowerCase().includes('hrv') ||
+                            content.toLowerCase().includes('heart rate') ||
+                            content.toLowerCase().includes('sleep') ||
+                            content.toLowerCase().includes('recovery');
+
+    if (isBiometricsQuery) {
+      setShowBiometrics(true);
+      toastAI('Biometrics Dashboard', 'Showing your latest health metrics');
     }
 
     // Add user message
@@ -147,12 +180,25 @@ export const ChatLayout: React.FC = () => {
             <div className="flex-1 min-w-0">
               <AgentSelector />
             </div>
-            <div className="ml-4 flex-shrink-0">
+            <div className="ml-4 flex-shrink-0 flex items-center gap-2">
+              {getActiveAgent()?.id === 'biometrics-engine' && (
+                <button
+                  onClick={() => setShowBiometrics(!showBiometrics)}
+                  className={cn(
+                    "px-3 py-1 text-xs rounded-full transition-all duration-200",
+                    showBiometrics 
+                      ? "bg-blue-500/20 text-blue-400 border border-blue-500/30" 
+                      : "bg-white/10 text-white/60 border border-white/10 hover:bg-white/20"
+                  )}
+                >
+                  {showBiometrics ? 'Hide' : 'Show'} Biometrics
+                </button>
+              )}
               <ExportOptions />
             </div>
           </div>
           
-          {/* Quick Actions Row - Now properly separated */}
+          {/* Quick Actions Row */}
           <div className="border-t border-white/5">
             <AgentQuickActions />
           </div>
@@ -160,10 +206,31 @@ export const ChatLayout: React.FC = () => {
         
         {/* Chat Content Area */}
         <div className="flex-1 flex flex-col min-h-0">
-          <ChatArea />
+          {showBiometrics && getActiveAgent()?.id === 'biometrics-engine' ? (
+            <div className="flex-1 overflow-y-auto p-6">
+              <div className="max-w-7xl mx-auto">
+                <div className="mb-6">
+                  <h2 className="text-2xl font-light text-white/90 mb-2">Biometrics Dashboard</h2>
+                  <p className="text-white/60 text-sm">Real-time health and performance metrics</p>
+                </div>
+                <BiometricsOverview />
+              </div>
+            </div>
+          ) : (
+            <ChatArea />
+          )}
+          
           <div className="px-4 pb-4 sm:px-6 sm:pb-6">
             <ChatInput onSendMessage={handleSendMessage} />
           </div>
+        </div>
+      </div>
+
+      {/* Keyboard Shortcuts Help */}
+      <div className="fixed bottom-4 left-4 text-xs text-white/30 font-light hidden lg:block">
+        <div className="space-y-1">
+          <div>Ctrl+F: Search • Ctrl+N: New Chat</div>
+          <div>Ctrl+B: Toggle Sidebar • /: Focus Input</div>
         </div>
       </div>
     </div>
