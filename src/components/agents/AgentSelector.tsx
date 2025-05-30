@@ -3,6 +3,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useAgentStore } from '@/store/agentStore';
+import { useAgentNavigation } from '@/hooks/useAgentNavigation';
 import { cn } from '@/lib/utils';
 import { Circle, Target, Leaf, BarChart3, Lightbulb, TrendingUp, RotateCcw, Zap, Users, ChevronDown } from 'lucide-react';
 
@@ -19,7 +20,8 @@ const iconMap = {
 };
 
 export const AgentSelector: React.FC = () => {
-  const { agents, activeAgentId, setActiveAgent, getActiveAgent } = useAgentStore();
+  const { agents, activeAgentId, getActiveAgent } = useAgentStore();
+  const { navigateToAgent } = useAgentNavigation();
   const activeAgent = getActiveAgent();
   const [isExpanded, setIsExpanded] = React.useState(false);
 
@@ -100,7 +102,7 @@ export const AgentSelector: React.FC = () => {
                     key={agent.id}
                     variant="ghost"
                     size="sm"
-                    onClick={() => setActiveAgent(agent.id)}
+                    onClick={() => navigateToAgent(agent.id)}
                     className={cn(
                       "transition-all duration-200 rounded-xl",
                       isExpanded 
