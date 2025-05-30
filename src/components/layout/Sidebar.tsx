@@ -18,6 +18,7 @@ import {
   Menu,
   Activity
 } from 'lucide-react';
+import { BiometricsToggle } from './BiometricsToggle';
 
 export const Sidebar: React.FC = () => {
   const {
@@ -31,6 +32,7 @@ export const Sidebar: React.FC = () => {
   } = useChatStore();
   
   const isMobile = useIsMobile();
+  const [showBiometrics, setShowBiometrics] = React.useState(false);
 
   const handleNewConversation = () => {
     createConversation();
@@ -101,6 +103,16 @@ export const Sidebar: React.FC = () => {
           {(sidebarOpen || isMobile) && <span>New Chat</span>}
         </Button>
       </div>
+
+      {/* Biometrics Toggle */}
+      {(sidebarOpen || isMobile) && (
+        <div className="px-3 pb-3 bg-slate-900">
+          <BiometricsToggle 
+            showBiometrics={showBiometrics}
+            setShowBiometrics={setShowBiometrics}
+          />
+        </div>
+      )}
 
       {/* Conversations List */}
       <ScrollArea className="flex-1 px-3 bg-slate-900">
