@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Sidebar } from './Sidebar';
 import { ChatHeader } from './ChatHeader';
@@ -65,7 +64,10 @@ export const ChatLayout: React.FC = () => {
       )}
       
       {/* Sidebar */}
-      <Sidebar />
+      <Sidebar 
+        showBiometrics={showBiometrics}
+        setShowBiometrics={setShowBiometrics}
+      />
       
       {/* Main Chat Area */}
       <div className={cn(

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -20,7 +19,12 @@ import {
 } from 'lucide-react';
 import { BiometricsToggle } from './BiometricsToggle';
 
-export const Sidebar: React.FC = () => {
+interface SidebarProps {
+  showBiometrics: boolean;
+  setShowBiometrics: (show: boolean) => void;
+}
+
+export const Sidebar: React.FC<SidebarProps> = ({ showBiometrics, setShowBiometrics }) => {
   const {
     conversations,
     currentConversationId,
@@ -32,7 +36,6 @@ export const Sidebar: React.FC = () => {
   } = useChatStore();
   
   const isMobile = useIsMobile();
-  const [showBiometrics, setShowBiometrics] = React.useState(false);
 
   const handleNewConversation = () => {
     createConversation();
