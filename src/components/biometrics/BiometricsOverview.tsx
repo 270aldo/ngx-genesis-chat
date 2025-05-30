@@ -113,9 +113,9 @@ export const BiometricsOverview: React.FC = () => {
                 <Line 
                   type="monotone" 
                   dataKey="hrv" 
-                  stroke="#3b82f6" 
+                  stroke="#a855f7" 
                   strokeWidth={2}
-                  dot={{ fill: '#3b82f6', strokeWidth: 2, r: 3 }}
+                  dot={{ fill: '#a855f7', strokeWidth: 2, r: 3 }}
                 />
               </LineChart>
             </ResponsiveContainer>

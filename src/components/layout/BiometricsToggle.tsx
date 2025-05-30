@@ -25,7 +25,7 @@ export const BiometricsToggle: React.FC<BiometricsToggleProps> = ({
       className={cn(
         "px-3 py-1 text-xs rounded-full transition-all duration-200",
         showBiometrics 
-          ? "bg-blue-500/20 text-blue-400 border border-blue-500/30" 
+          ? "bg-purple-500/20 text-purple-400 border border-purple-500/30" 
           : "bg-white/10 text-white/60 border border-white/10 hover:bg-white/20"
       )}
     >

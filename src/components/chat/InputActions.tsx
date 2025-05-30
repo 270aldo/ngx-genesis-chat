@@ -62,7 +62,7 @@ export const InputActions: React.FC<InputActionsProps> = ({
           "shrink-0 h-10 w-10 rounded-xl transition-all duration-300 premium-button",
           isTyping
             ? "bg-red-500/20 hover:bg-red-500/30 border border-red-500/30"
-            : "bg-gradient-to-r from-blue-500/20 to-purple-500/20 hover:from-blue-500/30 hover:to-purple-500/30 border border-blue-500/30",
+            : "bg-gradient-to-r from-purple-500/20 to-violet-500/20 hover:from-purple-500/30 hover:to-violet-500/30 border border-purple-500/30",
           "disabled:opacity-30 disabled:cursor-not-allowed",
           !disabled && (input.trim() || isTyping) && "glow-subtle shadow-lg"
         )}

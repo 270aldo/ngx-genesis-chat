@@ -48,7 +48,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, disabled })
             "absolute inset-0 rounded-3xl transition-opacity duration-300",
             isFocused ? "opacity-100" : "opacity-0"
           )}>
-            <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-blue-500/20 blur-sm"></div>
+            <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-purple-500/20 via-violet-500/20 to-purple-500/20 blur-sm"></div>
           </div>
 
           {/* Input Area */}
@@ -77,8 +77,8 @@ export const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, disabled })
           {/* Voice Mode Indicator */}
           {isVoiceMode && (
             <div className="px-6 pb-4">
-              <div className="flex items-center gap-2 text-xs text-blue-400/80 font-light">
-                <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+              <div className="flex items-center gap-2 text-xs text-purple-400/80 font-light">
+                <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
                 <span>Voice mode active</span>
               </div>
             </div>

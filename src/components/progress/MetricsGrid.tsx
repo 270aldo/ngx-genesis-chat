@@ -21,7 +21,7 @@ export const MetricsGrid: React.FC = () => {
       change: latest.weight - previous.weight,
       changeLabel: `${Math.abs(latest.weight - previous.weight).toFixed(1)}kg`,
       icon: Scale,
-      color: 'blue'
+      color: 'purple'
     },
     {
       title: 'Body Fat',
@@ -45,7 +45,7 @@ export const MetricsGrid: React.FC = () => {
       change: latest.waist - previous.waist,
       changeLabel: `${Math.abs(latest.waist - previous.waist).toFixed(1)}cm`,
       icon: Target,
-      color: 'orange'
+      color: 'violet'
     }
   ];
 
@@ -70,10 +70,10 @@ export const MetricsGrid: React.FC = () => {
                   <div className="flex items-center gap-3">
                     <div className={cn(
                       "p-2 rounded-lg",
-                      metric.color === 'blue' && "bg-blue-500/20 text-blue-400",
+                      metric.color === 'purple' && "bg-purple-500/20 text-purple-400",
                       metric.color === 'red' && "bg-red-500/20 text-red-400",
                       metric.color === 'green' && "bg-green-500/20 text-green-400",
-                      metric.color === 'orange' && "bg-orange-500/20 text-orange-400"
+                      metric.color === 'violet' && "bg-violet-500/20 text-violet-400"
                     )}>
                       <Icon className="h-4 w-4" />
                     </div>
