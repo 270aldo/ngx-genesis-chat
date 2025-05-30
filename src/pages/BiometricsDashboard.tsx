@@ -7,9 +7,9 @@ import { BiometricsOverview } from '@/components/biometrics/BiometricsOverview';
 
 const BiometricsDashboard: React.FC = () => {
   return (
-    <div className="min-h-screen bg-slate-900">
+    <div className="min-h-screen bg-black">
       {/* Header */}
-      <div className="border-b border-slate-700 bg-slate-900/80 backdrop-blur-xl sticky top-0 z-40">
+      <div className="border-b border-gray-800 bg-black/80 backdrop-blur-xl sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-4">
@@ -25,11 +25,11 @@ const BiometricsDashboard: React.FC = () => {
             </div>
             
             <div className="flex items-center gap-3">
-              <Button variant="outline" size="sm" className="border-slate-600 text-white/80 hover:bg-slate-800">
+              <Button variant="outline" size="sm" className="border-gray-600 text-white/80 hover:bg-gray-900">
                 <Download className="h-4 w-4 mr-2" />
                 Export
               </Button>
-              <Button variant="outline" size="sm" className="border-slate-600 text-white/80 hover:bg-slate-800">
+              <Button variant="outline" size="sm" className="border-gray-600 text-white/80 hover:bg-gray-900">
                 <Share2 className="h-4 w-4 mr-2" />
                 Share
               </Button>
@@ -42,7 +42,7 @@ const BiometricsDashboard: React.FC = () => {
         <BiometricsOverview />
 
         {/* Additional Stats Footer */}
-        <div className="mt-12 pt-8 border-t border-slate-700">
+        <div className="mt-12 pt-8 border-t border-gray-800">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             <div className="text-center">
               <div className="text-2xl font-bold text-white">98%</div>
