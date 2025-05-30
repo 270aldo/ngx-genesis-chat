@@ -3,7 +3,15 @@ import React from 'react';
 import { useAgentStore } from '@/store/agentStore';
 import { cn } from '@/lib/utils';
 
-export const BiometricsToggle: React.FC = () => {
+interface BiometricsToggleProps {
+  showBiometrics: boolean;
+  setShowBiometrics: (show: boolean) => void;
+}
+
+export const BiometricsToggle: React.FC<BiometricsToggleProps> = ({
+  showBiometrics,
+  setShowBiometrics
+}) => {
   const { getActiveAgent } = useAgentStore();
   const activeAgent = getActiveAgent();
 
@@ -13,12 +21,15 @@ export const BiometricsToggle: React.FC = () => {
 
   return (
     <button
+      onClick={() => setShowBiometrics(!showBiometrics)}
       className={cn(
         "px-3 py-1 text-xs rounded-full transition-all duration-200",
-        "bg-white/10 text-white/60 border border-white/10 hover:bg-white/20"
+        showBiometrics 
+          ? "bg-blue-500/20 text-blue-400 border border-blue-500/30" 
+          : "bg-white/10 text-white/60 border border-white/10 hover:bg-white/20"
       )}
     >
-      Biometrics
+      {showBiometrics ? 'Hide' : 'Show'} Biometrics
     </button>
   );
 };

@@ -76,7 +76,10 @@ export const ChatLayout: React.FC = () => {
       <div className="flex-1 flex flex-col min-w-0 relative">
         <div className="absolute inset-0 bg-gradient-to-t from-background/50 via-transparent to-transparent pointer-events-none"></div>
         
-        <ChatHeader />
+        <ChatHeader 
+          showBiometrics={showBiometrics}
+          setShowBiometrics={setShowBiometrics}
+        />
         
         {/* Chat Content Area */}
         <div className="flex-1 flex flex-col min-h-0">
