@@ -39,13 +39,11 @@ export const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, disabled })
         {/* Input Area */}
         <div className={cn(
           "relative glass-ultra rounded-3xl transition-all duration-300",
-          isFocused 
-            ? "border border-blue-500/30 glow-subtle" 
-            : "",
+          isFocused && "glow-subtle",
           "overflow-hidden"
         )}>
           
-          {/* Animated border effect */}
+          {/* Animated border effect - only when focused */}
           <div className={cn(
             "absolute inset-0 rounded-3xl transition-opacity duration-300",
             isFocused ? "opacity-100" : "opacity-0"
