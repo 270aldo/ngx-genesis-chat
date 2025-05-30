@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Send, Mic, Plus, Phone } from 'lucide-react';
+import { Send, Mic, Plus, Bot } from 'lucide-react';
 import { useVoiceConversation } from '@/hooks/useVoiceConversation';
 import { VoiceInterface } from '../voice/VoiceInterface';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
@@ -49,7 +49,7 @@ export const InputActions: React.FC<InputActionsProps> = ({
             }`}
             disabled={disabled}
           >
-            <Phone className="h-4 w-4" />
+            <Bot className="h-4 w-4" />
           </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-md bg-black/90 border-purple-500/20">

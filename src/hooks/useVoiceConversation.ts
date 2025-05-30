@@ -24,23 +24,22 @@ export const useVoiceConversation = () => {
       console.log('Voice message received:', message);
       
       // Add voice messages to chat history
-      if (message.type === 'user_transcript' && message.text) {
+      if (message.source === 'user' && message.message) {
         const chatId = currentConversationId || createConversation();
         addMessage(chatId, {
-          content: message.text,
+          content: message.message,
           role: 'user',
           agentId: getActiveAgent()?.id
         });
       }
       
-      if (message.type === 'agent_response' && message.text) {
+      if (message.source === 'ai' && message.message) {
         const chatId = currentConversationId || createConversation();
         addMessage(chatId, {
-          content: message.text,
+          content: message.message,
           role: 'assistant',
           agentId: getActiveAgent()?.id,
           metadata: {
-            isVoiceResponse: true,
             confidence: 0.95
           }
         });
@@ -61,10 +60,8 @@ export const useVoiceConversation = () => {
       // For now, we'll use a placeholder URL - in production, you'd need to:
       // 1. Create agents in ElevenLabs UI
       // 2. Get signed URLs from your backend
-      const agentUrl = `wss://api.elevenlabs.io/v1/convai/conversation?agent_id=${agentId || 'default'}`;
-      
       const id = await conversation.startSession({ 
-        url: agentUrl 
+        agentId: agentId || 'default'
       });
       
       setConversationId(id);
