@@ -52,7 +52,7 @@ export const ChatLayout: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-violet-800 relative overflow-hidden">
       <div className="h-screen flex relative z-10">
         {/* Mobile Overlay for Sidebar */}
         {isMobile && sidebarOpen && (
