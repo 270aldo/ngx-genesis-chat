@@ -211,7 +211,7 @@ export const WearableSettings: React.FC = () => {
               onClick={manualSync}
               disabled={syncStatus === 'syncing'}
               size="sm"
-              className="bg-purple-600 hover:bg-purple-700"
+              className="bg-black border border-white/20 text-white hover:bg-black/80 hover:border-white/40"
             >
               {syncStatus === 'syncing' ? (
                 <RefreshCw className="h-4 w-4 animate-spin" />

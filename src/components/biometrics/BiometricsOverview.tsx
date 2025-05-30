@@ -123,7 +123,7 @@ export const BiometricsOverview: React.FC = () => {
           
           <Dialog>
             <DialogTrigger asChild>
-              <Button size="sm" className="bg-purple-600 hover:bg-purple-700">
+              <Button size="sm" className="bg-black border border-white/20 text-white hover:bg-black/80 hover:border-white/40">
                 <Settings className="h-4 w-4 mr-2" />
                 Wearables
               </Button>
