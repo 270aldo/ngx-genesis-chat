@@ -6,7 +6,8 @@ import { useAgentStore } from '@/store/agentStore';
 import { useChatStore } from '@/store/chatStore';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
-import { Dumbbell, Calendar, Camera, BarChart3, Target, Clock, Apple, Utensils, Activity, Moon, Zap, Heart, Shield, Wind, Snowflake, Sun, Trophy, Map, CheckCircle, Sparkles } from 'lucide-react';
+import { Sparkles, Zap } from 'lucide-react';
+
 const agentActions = {
   'training-strategist': [{
     label: 'Create Workout Plan',
@@ -141,6 +142,7 @@ const agentActions = {
     prompt: 'Let\'s acknowledge my achievements and plan some rewards'
   }]
 };
+
 export const QuickActionsButton: React.FC = () => {
   const {
     getActiveAgent
@@ -169,9 +171,31 @@ export const QuickActionsButton: React.FC = () => {
   if (actions.length === 0) return null;
   return <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        
+        <Button
+          variant="ghost"
+          size={isMobile ? "sm" : "default"}
+          className="relative text-white/70 hover:text-white hover:bg-white/10 rounded-lg border border-transparent hover:border-purple-500/30 transition-all duration-200"
+        >
+          <Zap className="w-4 h-4" />
+          {!isMobile && (
+            <>
+              <span className="ml-2 text-sm">Quick Actions</span>
+              <Badge variant="secondary" className="ml-2 bg-purple-500/20 text-purple-300 text-xs border border-purple-500/30">
+                {actions.length}
+              </Badge>
+            </>
+          )}
+        </Button>
       </PopoverTrigger>
-      <PopoverContent className={cn("p-4 bg-black/90 backdrop-blur-xl border border-purple-500/20", isMobile ? "w-72" : "w-80")} align="end" side={isMobile ? "bottom" : "bottom"} sideOffset={8}>
+      <PopoverContent 
+        className={cn(
+          "p-4 bg-black/90 backdrop-blur-xl border border-purple-500/20",
+          isMobile ? "w-72" : "w-80"
+        )} 
+        align="end" 
+        side={isMobile ? "bottom" : "bottom"} 
+        sideOffset={8}
+      >
         <div className="space-y-3">
           <div className="flex items-center gap-2 mb-3">
             <Sparkles className="w-4 h-4 text-purple-400" />
