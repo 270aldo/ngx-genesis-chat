@@ -63,7 +63,7 @@ export const QuickActions: React.FC = () => {
               variant={action.primary ? "default" : "ghost"}
               className={`w-full justify-start gap-3 ${
                 action.primary 
-                  ? 'bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white' 
+                  ? 'bg-gradient-to-r from-purple-500 to-violet-600 hover:from-purple-600 hover:to-violet-700 text-white' 
                   : 'text-white/60 hover:text-white hover:bg-white/5'
               }`}
               onClick={action.onClick}

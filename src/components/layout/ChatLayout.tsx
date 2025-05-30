@@ -54,7 +54,7 @@ export const ChatLayout: React.FC = () => {
   return (
     <div className="h-screen flex bg-background relative overflow-hidden">
       {/* Background effects */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-purple-500/5 pointer-events-none"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-violet-500/5 pointer-events-none"></div>
       
       {/* Mobile Overlay for Sidebar */}
       {isMobile && sidebarOpen && (
