@@ -148,9 +148,6 @@ export const AgentSelector: React.FC = () => {
                         <span className="text-xs font-medium leading-none truncate">
                           {agent.title}
                         </span>
-                        {agent.actions && (
-                          <div className="w-1.5 h-1.5 rounded-full bg-current opacity-60 mt-0.5" />
-                        )}
                       </>
                     )}
                   </Button>
