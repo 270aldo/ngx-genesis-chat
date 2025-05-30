@@ -9,6 +9,9 @@ import { RecentActivity } from '@/components/dashboard/RecentActivity';
 import { QuickActions } from '@/components/dashboard/QuickActions';
 import { TokenBalance } from '@/components/tokens/TokenBalance';
 import { AgentInsights } from '@/components/dashboard/AgentInsights';
+import { Button } from '@/components/ui/button';
+import { ArrowLeft, Calendar, Download, Share2, Settings } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Dashboard: React.FC = () => {
   const { user } = useAuthStore();
@@ -24,51 +27,79 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background relative overflow-hidden">
-      {/* Background Effects */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-purple-500/5 to-pink-500/5"></div>
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,_rgba(255,255,255,0.1)_1px,_transparent_0)] [background-size:20px_20px] opacity-20"></div>
-
-      <div className="relative z-10 p-4 sm:p-8 max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-6 sm:mb-8">
-          <h1 className="text-2xl sm:text-4xl font-light text-white mb-2">
-            Welcome back, {user?.name || 'User'}
-          </h1>
-          <p className="text-sm sm:text-base text-white/60">
-            Your NGX Agents team is ready to optimize your fitness journey.
-          </p>
+    <div className="min-h-screen bg-background">
+      {/* Header */}
+      <div className="border-b border-white/10 bg-background/80 backdrop-blur-xl sticky top-0 z-40">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            <div className="flex items-center gap-4">
+              <div>
+                <h1 className="text-xl font-semibold text-white">Dashboard</h1>
+                <p className="text-sm text-white/60">Welcome back, {user?.name || 'User'}</p>
+              </div>
+            </div>
+            
+            <div className="flex items-center gap-3">
+              <Link to="/dashboard/progress">
+                <Button variant="outline" size="sm" className="border-white/20 text-white/80 hover:bg-white/5">
+                  <Calendar className="h-4 w-4 mr-2" />
+                  Progress
+                </Button>
+              </Link>
+              <Button variant="outline" size="sm" className="border-white/20 text-white/80 hover:bg-white/5">
+                <Download className="h-4 w-4 mr-2" />
+                Export
+              </Button>
+              <Link to="/settings">
+                <Button variant="outline" size="sm" className="border-white/20 text-white/80 hover:bg-white/5">
+                  <Settings className="h-4 w-4 mr-2" />
+                  Settings
+                </Button>
+              </Link>
+            </div>
+          </div>
         </div>
+      </div>
 
-        {/* Main Grid - Responsive Layout */}
-        {isMobile ? (
-          // Mobile: Stack everything vertically
-          <div className="space-y-6">
-            <TokenBalance />
-            <AgentInsights />
-            <QuickActions />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Main Content Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Left Column - Main Content */}
+          <div className="lg:col-span-2 space-y-8">
             <StatsCards stats={stats} />
-            <ProfileSection user={user} />
             <RecentActivity conversations={conversations.slice(0, 5)} />
           </div>
-        ) : (
-          // Desktop/Tablet: Grid layout
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
-            {/* Left Column */}
-            <div className="lg:col-span-2 space-y-6 lg:space-y-8">
-              <StatsCards stats={stats} />
-              <RecentActivity conversations={conversations.slice(0, 5)} />
-            </div>
 
-            {/* Right Column */}
-            <div className="space-y-6 lg:space-y-8">
-              <TokenBalance />
-              <AgentInsights />
-              <ProfileSection user={user} />
-              <QuickActions />
+          {/* Right Column - Sidebar Content */}
+          <div className="space-y-8">
+            <TokenBalance />
+            <AgentInsights />
+            <ProfileSection user={user} />
+            <QuickActions />
+          </div>
+        </div>
+
+        {/* Stats Footer */}
+        <div className="mt-12 pt-8 border-t border-white/10">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div className="text-center">
+              <div className="text-2xl font-bold text-white">{conversations.length}</div>
+              <div className="text-sm text-white/60">Total Chats</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-white">{user?.tokens || 0}</div>
+              <div className="text-sm text-white/60">Available Tokens</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-white">12</div>
+              <div className="text-sm text-white/60">Days Active</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-white">94%</div>
+              <div className="text-sm text-white/60">Satisfaction</div>
             </div>
           </div>
-        )}
+        </div>
       </div>
     </div>
   );
