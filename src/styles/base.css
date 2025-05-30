@@ -5,45 +5,45 @@
 
 @layer base {
   :root {
-    --background: 0 0% 6%;
-    --foreground: 0 0% 95%;
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
 
-    --card: 0 0% 8%;
-    --card-foreground: 0 0% 95%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
 
-    --popover: 0 0% 8%;
-    --popover-foreground: 0 0% 95%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
 
-    --primary: 270 100% 70%;
-    --primary-foreground: 0 0% 95%;
+    --primary: 263 70% 50.4%;
+    --primary-foreground: 210 20% 98%;
 
-    --secondary: 0 0% 12%;
-    --secondary-foreground: 0 0% 95%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
 
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 60%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
 
-    --accent: 0 0% 12%;
-    --accent-foreground: 0 0% 95%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
 
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 95%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 15%;
-    --input: 0 0% 10%;
-    --ring: 270 100% 70%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 263 70% 50.4%;
 
     --radius: 1rem;
 
-    /* Sidebar variables - Updated to violet theme */
-    --sidebar-background: 0 0% 3%;
+    /* Sidebar variables - Violet theme */
+    --sidebar-background: 262 83% 5%;
     --sidebar-foreground: 0 0% 95%;
-    --sidebar-primary: 270 100% 70%;
+    --sidebar-primary: 263 70% 50.4%;
     --sidebar-primary-foreground: 0 0% 95%;
-    --sidebar-accent: 270 50% 8%;
+    --sidebar-accent: 262 50% 8%;
     --sidebar-accent-foreground: 0 0% 95%;
-    --sidebar-border: 270 30% 12%;
-    --sidebar-ring: 270 100% 70%;
+    --sidebar-border: 262 30% 12%;
+    --sidebar-ring: 263 70% 50.4%;
   }
 }
 
@@ -54,9 +54,10 @@
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    background: radial-gradient(ellipse at top, rgba(168, 85, 247, 0.15) 0%, transparent 50%), 
+    background: radial-gradient(ellipse at top, rgba(139, 92, 246, 0.15) 0%, transparent 50%), 
                 radial-gradient(ellipse at bottom, rgba(147, 51, 234, 0.1) 0%, transparent 50%),
-                #0a0a0a;
+                radial-gradient(ellipse at center, rgba(168, 85, 247, 0.05) 0%, transparent 70%),
+                #0a0612;
     min-height: 100vh;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   }
@@ -83,7 +84,7 @@
 @layer utilities {
   .glass-ultra {
     backdrop-filter: blur(16px);
-    background: rgba(168, 85, 247, 0.02);
+    background: rgba(139, 92, 246, 0.05);
     border: 1px solid rgba(168, 85, 247, 0.08);
   }
 }
