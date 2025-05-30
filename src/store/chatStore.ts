@@ -8,6 +8,14 @@ export interface Message {
   role: 'user' | 'assistant';
   timestamp: Date;
   agentId?: string;
+  isTyping?: boolean;
+  metadata?: {
+    confidence?: number;
+    processingTime?: number;
+    tokens?: number;
+    agentName?: string;
+    agentAvatar?: string;
+  };
 }
 
 export interface Conversation {
@@ -29,7 +37,7 @@ interface ChatState {
   // Actions
   createConversation: (agentId?: string) => string;
   setActiveConversation: (id: string) => void;
-  addMessage: (conversationId: string, message: Omit<Message, 'id' | 'timestamp'>) => void;
+  addMessage: (conversationId: string, message: Omit<Message, 'id' | 'timestamp'>) => string;
   updateMessage: (conversationId: string, messageId: string, updates: Partial<Message>) => void;
   deleteMessage: (conversationId: string, messageId: string) => void;
   deleteConversation: (id: string) => void;
@@ -40,6 +48,10 @@ interface ChatState {
   setVoiceMode: (enabled: boolean) => void;
   setTyping: (typing: boolean) => void;
   updateConversationTitle: (id: string, title: string) => void;
+  
+  // Computed properties
+  currentConversationId: string | null;
+  setCurrentConversation: (id: string) => void;
 }
 
 export const useChatStore = create<ChatState>()(
@@ -50,6 +62,14 @@ export const useChatStore = create<ChatState>()(
       sidebarOpen: true,
       isVoiceMode: false,
       isTyping: false,
+
+      get currentConversationId() {
+        return get().activeConversationId;
+      },
+
+      setCurrentConversation: (id: string) => {
+        set({ activeConversationId: id });
+      },
 
       createConversation: (agentId?: string) => {
         const id = Date.now().toString();
@@ -75,9 +95,10 @@ export const useChatStore = create<ChatState>()(
       },
 
       addMessage: (conversationId: string, message: Omit<Message, 'id' | 'timestamp'>) => {
+        const messageId = Date.now().toString();
         const newMessage: Message = {
           ...message,
-          id: Date.now().toString(),
+          id: messageId,
           timestamp: new Date(),
         };
 
@@ -93,6 +114,8 @@ export const useChatStore = create<ChatState>()(
               : conv
           ),
         }));
+
+        return messageId;
       },
 
       updateMessage: (conversationId: string, messageId: string, updates: Partial<Message>) => {

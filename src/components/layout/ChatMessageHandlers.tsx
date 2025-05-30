@@ -58,7 +58,7 @@ export const useChatMessageHandlers = () => {
     const response = generateAgentResponse(content, getActiveAgent());
     
     setTimeout(() => {
-      updateMessage(conversationId!, typingMessageId.id, {
+      updateMessage(conversationId!, typingMessageId, {
         content: response.content,
         isTyping: false,
         metadata: {
