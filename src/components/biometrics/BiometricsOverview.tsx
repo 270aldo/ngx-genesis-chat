@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -94,7 +93,6 @@ export const BiometricsOverview: React.FC = () => {
       {/* Header with Wearables Status */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-light text-white/90 mb-2">Biometrics Dashboard</h2>
           <p className="text-white/60 text-sm">
             {hasConnectedDevices 
               ? `Live data from ${connectedDevices.filter(d => d.isConnected).length} connected device(s)`
