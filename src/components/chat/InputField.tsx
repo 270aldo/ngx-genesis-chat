@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Textarea } from '@/components/ui/textarea';
-import { Sparkles } from 'lucide-react';
+import { Sparkles, Brain } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface InputFieldProps {
@@ -34,29 +34,37 @@ export const InputField: React.FC<InputFieldProps> = ({
         onKeyPress={handleKeyPress}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
-        placeholder={isTyping ? "NGX Agent is responding..." : "Type your message..."}
+        placeholder={isTyping ? "NGX Agent is thinking..." : "Ask me anything..."}
         disabled={disabled || isTyping}
         className={cn(
-          "min-h-[48px] max-h-[120px] resize-none border-0 bg-transparent",
-          "focus-visible:ring-0 focus-visible:ring-offset-0 px-0 py-3",
-          "placeholder:text-white/30 text-white/90 font-light text-base",
-          "scrollbar-none"
+          "min-h-[52px] max-h-[140px] resize-none border-0 bg-transparent",
+          "focus-visible:ring-0 focus-visible:ring-offset-0 px-0 py-4",
+          "placeholder:text-white/35 text-white/95 font-light text-base leading-relaxed",
+          "scrollbar-none transition-all duration-300",
+          isFocused && "placeholder:text-white/50"
         )}
         rows={1}
       />
       
-      {/* Typing Indicator Overlay */}
+      {/* Enhanced Typing Indicator */}
       {isTyping && (
-        <div className="absolute inset-0 flex items-center justify-center glass-premium rounded-xl backdrop-blur-sm">
-          <div className="flex items-center gap-3 text-sm text-white/60">
-            <div className="flex gap-1">
-              <div className="typing-dot-premium"></div>
-              <div className="typing-dot-premium"></div>
-              <div className="typing-dot-premium"></div>
+        <div className="absolute inset-0 flex items-center justify-center rounded-xl">
+          <div className="flex items-center gap-4 px-6 py-3 rounded-xl bg-gradient-to-r from-purple-500/10 to-violet-500/10 backdrop-blur-sm border border-purple-500/20">
+            <div className="flex gap-1.5">
+              <div className="typing-dot-premium bg-gradient-to-r from-purple-400 to-violet-400"></div>
+              <div className="typing-dot-premium bg-gradient-to-r from-purple-400 to-violet-400"></div>
+              <div className="typing-dot-premium bg-gradient-to-r from-purple-400 to-violet-400"></div>
             </div>
-            <Sparkles className="w-4 h-4 text-blue-400" />
-            <span className="font-light">Generating response...</span>
+            <Brain className="w-5 h-5 text-purple-400 animate-pulse" />
+            <span className="text-sm font-light text-white/80">Generating response...</span>
           </div>
+        </div>
+      )}
+
+      {/* Input Enhancement Indicator */}
+      {isFocused && !isTyping && (
+        <div className="absolute bottom-1 right-1 opacity-60">
+          <Sparkles className="w-3 h-3 text-purple-400/60" />
         </div>
       )}
     </div>
