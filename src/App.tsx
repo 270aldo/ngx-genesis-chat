@@ -13,6 +13,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import NotFound from "./pages/NotFound";
 import ProgressDashboard from "./pages/ProgressDashboard";
 import NutritionDashboard from "./pages/NutritionDashboard";
+import TrainingDashboard from "./pages/TrainingDashboard";
 import { AgentChatPage } from "./components/agents/AgentChatPage";
 
 const queryClient = new QueryClient();
@@ -30,6 +31,7 @@ const App = () => (
           <Route path="/dashboard" element={<Navigate to="/dashboard/progress" replace />} />
           <Route path="/dashboard/progress" element={<ProgressDashboard />} />
           <Route path="/dashboard/nutrition" element={<NutritionDashboard />} />
+          <Route path="/dashboard/training" element={<TrainingDashboard />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
