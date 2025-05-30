@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Sidebar } from './Sidebar';
 import { ChatHeader } from './ChatHeader';
@@ -53,7 +54,7 @@ export const ChatLayout: React.FC = () => {
   return (
     <div className="h-screen flex bg-background relative overflow-hidden">
       {/* Background effects */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-purple-500/5 pointer-events-none z-0"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-purple-500/5 pointer-events-none"></div>
       
       {/* Mobile Overlay for Sidebar */}
       {isMobile && sidebarOpen && (
@@ -64,19 +65,16 @@ export const ChatLayout: React.FC = () => {
       )}
       
       {/* Sidebar */}
-      <Sidebar 
-        showBiometrics={showBiometrics}
-        setShowBiometrics={setShowBiometrics}
-      />
+      <div className={cn(
+        "relative z-50",
+        isMobile && !sidebarOpen && "hidden"
+      )}>
+        <Sidebar />
+      </div>
       
       {/* Main Chat Area */}
-      <div className={cn(
-        "flex-1 flex flex-col min-w-0 relative transition-all duration-300 z-10",
-        !isMobile && sidebarOpen && "ml-80",
-        !isMobile && !sidebarOpen && "ml-16",
-        isMobile && "ml-0"
-      )}>
-        <div className="absolute inset-0 bg-gradient-to-t from-background/50 via-transparent to-transparent pointer-events-none z-0"></div>
+      <div className="flex-1 flex flex-col min-w-0 relative">
+        <div className="absolute inset-0 bg-gradient-to-t from-background/50 via-transparent to-transparent pointer-events-none"></div>
         
         <ChatHeader 
           showBiometrics={showBiometrics}
@@ -84,7 +82,7 @@ export const ChatLayout: React.FC = () => {
         />
         
         {/* Chat Content Area */}
-        <div className="flex-1 flex flex-col min-h-0 relative z-10">
+        <div className="flex-1 flex flex-col min-h-0">
           <ChatMainContent showBiometrics={showBiometrics} />
           <ChatFooter onSendMessage={onSendMessage} />
         </div>

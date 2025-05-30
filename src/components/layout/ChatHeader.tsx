@@ -3,6 +3,7 @@ import React from 'react';
 import { AgentSelector } from '../agents/AgentSelector';
 import { QuickActionsButton } from '../chat/QuickActionsButton';
 import { ExportOptions } from '../chat/ExportOptions';
+import { BiometricsToggle } from './BiometricsToggle';
 
 interface ChatHeaderProps {
   showBiometrics: boolean;
@@ -21,6 +22,10 @@ export const ChatHeader: React.FC<ChatHeaderProps> = ({
         </div>
         <div className="ml-4 flex-shrink-0 flex items-center gap-3">
           <QuickActionsButton />
+          <BiometricsToggle 
+            showBiometrics={showBiometrics}
+            setShowBiometrics={setShowBiometrics}
+          />
           <ExportOptions />
         </div>
       </div>

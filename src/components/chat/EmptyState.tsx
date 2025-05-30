@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -76,9 +77,9 @@ export const EmptyState: React.FC<EmptyStateProps> = ({ activeAgent, onQuickMess
   const quickMessages = getQuickMessages();
 
   return (
-    <div className="flex-1 flex items-center justify-center relative overflow-hidden chat-scroll-area z-0">
+    <div className="flex-1 flex items-center justify-center relative overflow-hidden chat-scroll-area">
       {/* Floating particles background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {[...Array(6)].map((_, i) => (
           <div
             key={i}
@@ -107,16 +108,16 @@ export const EmptyState: React.FC<EmptyStateProps> = ({ activeAgent, onQuickMess
 
         {/* Title and description */}
         <div className="space-y-4">
-          <h1 className="text-4xl font-light tracking-tight text-black">
+          <h1 className="text-4xl font-light tracking-tight bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent">
             {activeAgent?.name || 'NGX Agents'}
           </h1>
-          <p className="text-lg text-black font-light max-w-md mx-auto leading-relaxed">
+          <p className="text-lg text-muted-foreground font-light max-w-md mx-auto leading-relaxed">
             {activeAgent?.description || 'Experience the future of AI conversation with advanced agent intelligence.'}
           </p>
         </div>
 
         {/* Search hint */}
-        <div className="text-xs text-black/50 font-light">
+        <div className="text-xs text-white/30 font-light">
           Press Ctrl+F to search conversations
         </div>
 
@@ -127,7 +128,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({ activeAgent, onQuickMess
               key={index}
               onClick={() => onQuickMessage(message)}
               variant="ghost"
-              className="px-6 py-3 text-sm font-medium rounded-full glass-ultra hover:glass-premium transition-all duration-300 border border-white/5 hover:border-white/10 hover:scale-105 shimmer-premium text-black"
+              className="px-6 py-3 text-sm font-medium rounded-full glass-ultra hover:glass-premium transition-all duration-300 border border-white/5 hover:border-white/10 hover:scale-105 shimmer-premium"
             >
               {message}
             </Button>
