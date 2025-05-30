@@ -15,7 +15,8 @@ import {
   ChevronLeft,
   Brain,
   TrendingUp,
-  Menu
+  Menu,
+  Activity
 } from 'lucide-react';
 
 export const Sidebar: React.FC = () => {
@@ -156,6 +157,18 @@ export const Sidebar: React.FC = () => {
             >
               <TrendingUp className="h-4 w-4 flex-shrink-0" />
               {(sidebarOpen || isMobile) && <span>Progress Dashboard</span>}
+            </Button>
+          </Link>
+          <Link to="/dashboard/biometrics">
+            <Button
+              variant="ghost"
+              className={cn(
+                "w-full text-slate-400 hover:text-white hover:bg-slate-800",
+                (sidebarOpen || isMobile) ? "justify-start gap-2" : "justify-center px-2"
+              )}
+            >
+              <Activity className="h-4 w-4 flex-shrink-0" />
+              {(sidebarOpen || isMobile) && <span>Biometrics Dashboard</span>}
             </Button>
           </Link>
           <Link to="/settings">
