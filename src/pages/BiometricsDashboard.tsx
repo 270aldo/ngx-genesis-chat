@@ -13,7 +13,7 @@ const BiometricsDashboard: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-4">
-              <Link to="/chat/biometrics-engine">
+              <Link to="/chat/orchestrator">
                 <Button variant="ghost" size="icon" className="text-white/60 hover:text-white/80">
                   <ArrowLeft className="h-5 w-5" />
                 </Button>
