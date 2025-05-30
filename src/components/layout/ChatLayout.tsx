@@ -69,7 +69,10 @@ export const ChatLayout: React.FC = () => {
         "relative z-50",
         isMobile && !sidebarOpen && "hidden"
       )}>
-        <Sidebar />
+        <Sidebar 
+          showBiometrics={showBiometrics}
+          setShowBiometrics={setShowBiometrics}
+        />
       </div>
       
       {/* Main Chat Area */}

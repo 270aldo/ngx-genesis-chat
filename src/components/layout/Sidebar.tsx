@@ -3,6 +3,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useChatStore } from '@/store/chatStore';
+import { useAgentStore } from '@/store/agentStore';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 import { Link } from 'react-router-dom';
@@ -18,7 +19,12 @@ import {
   Menu
 } from 'lucide-react';
 
-export const Sidebar: React.FC = () => {
+interface SidebarProps {
+  showBiometrics: boolean;
+  setShowBiometrics: (show: boolean) => void;
+}
+
+export const Sidebar: React.FC<SidebarProps> = ({ showBiometrics, setShowBiometrics }) => {
   const {
     conversations,
     currentConversationId,
@@ -29,6 +35,8 @@ export const Sidebar: React.FC = () => {
     toggleSidebar,
   } = useChatStore();
   
+  const { getActiveAgent } = useAgentStore();
+  const activeAgent = getActiveAgent();
   const isMobile = useIsMobile();
 
   const handleNewConversation = () => {
@@ -100,6 +108,24 @@ export const Sidebar: React.FC = () => {
           {(sidebarOpen || isMobile) && <span>New Chat</span>}
         </Button>
       </div>
+
+      {/* Biometrics Toggle Button */}
+      {activeAgent?.id === 'biometrics-engine' && (
+        <div className="px-3 pb-3">
+          <button
+            onClick={() => setShowBiometrics(!showBiometrics)}
+            className={cn(
+              "w-full px-3 py-1 text-xs rounded-full transition-all duration-200",
+              (sidebarOpen || isMobile) ? "justify-start" : "justify-center",
+              showBiometrics 
+                ? "bg-blue-500/20 text-blue-400 border border-blue-500/30" 
+                : "bg-white/10 text-white/60 border border-white/10 hover:bg-white/20"
+            )}
+          >
+            {(sidebarOpen || isMobile) ? (showBiometrics ? 'Hide' : 'Show') + ' Biometrics' : showBiometrics ? 'H' : 'S'}
+          </button>
+        </div>
+      )}
 
       {/* Conversations List */}
       <ScrollArea className="flex-1 px-3">
