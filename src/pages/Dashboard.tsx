@@ -10,7 +10,7 @@ import { QuickActions } from '@/components/dashboard/QuickActions';
 import { TokenBalance } from '@/components/tokens/TokenBalance';
 import { AgentInsights } from '@/components/dashboard/AgentInsights';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Calendar, Download, Share2, Settings } from 'lucide-react';
+import { ArrowLeft, Calendar, Download, Share2, Settings, TrendingUp, Activity } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Dashboard: React.FC = () => {
@@ -28,11 +28,15 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-purple-900/30 to-black relative overflow-hidden">
-      {/* Background effects - Updated to match violet theme */}
+      {/* Enhanced Background effects */}
       <div className="absolute inset-0 bg-gradient-to-br from-purple-600/8 via-transparent to-violet-600/5 pointer-events-none"></div>
       <div className="absolute inset-0 bg-gradient-to-t from-purple-900/5 via-transparent to-transparent pointer-events-none"></div>
       
-      {/* Header */}
+      {/* Floating orbs for visual enhancement */}
+      <div className="absolute top-20 left-1/4 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
+      <div className="absolute bottom-20 right-1/4 w-40 h-40 bg-violet-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+      
+      {/* Enhanced Header */}
       <div className="border-b border-purple-500/20 bg-background/80 backdrop-blur-xl sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
@@ -43,15 +47,15 @@ const Dashboard: React.FC = () => {
                 </Button>
               </Link>
               <div>
-                <h1 className="text-xl font-semibold text-white">Dashboard</h1>
+                <h1 className="text-2xl font-bold text-white">Dashboard</h1>
                 <p className="text-sm text-white/60">Welcome back, {user?.name || 'User'}</p>
               </div>
             </div>
             
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
               <Link to="/dashboard/progress">
                 <Button variant="outline" size="sm" className="border-purple-500/20 text-white/80 hover:bg-purple-500/10 hover:border-purple-400/30">
-                  <Calendar className="h-4 w-4 mr-2" />
+                  <TrendingUp className="h-4 w-4 mr-2" />
                   Progress
                 </Button>
               </Link>
@@ -71,41 +75,86 @@ const Dashboard: React.FC = () => {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
-        {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left Column - Main Content */}
-          <div className="lg:col-span-2 space-y-8">
-            <StatsCards stats={stats} />
+        {/* Welcome Section */}
+        <div className="mb-8">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold text-white mb-2">Your Fitness Command Center</h2>
+            <p className="text-white/60 max-w-2xl mx-auto">
+              Track your progress, monitor your health, and get AI-powered insights to optimize your fitness journey.
+            </p>
+          </div>
+        </div>
+
+        {/* Stats Overview */}
+        <div className="mb-8">
+          <StatsCards stats={stats} />
+        </div>
+
+        {/* Main Content Grid - Enhanced Layout */}
+        <div className="grid grid-cols-1 xl:grid-cols-4 gap-8">
+          {/* Left Section - Main Content (3 columns) */}
+          <div className="xl:col-span-3 space-y-8">
+            {/* AI Insights - Prominent placement */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <div className="lg:col-span-2">
+                <AgentInsights />
+              </div>
+            </div>
+
+            {/* Recent Activity */}
             <RecentActivity conversations={conversations.slice(0, 5)} />
           </div>
 
-          {/* Right Column - Sidebar Content */}
-          <div className="space-y-8">
+          {/* Right Sidebar (1 column) */}
+          <div className="xl:col-span-1 space-y-6">
             <TokenBalance />
-            <AgentInsights />
             <ProfileSection user={user} />
             <QuickActions />
           </div>
         </div>
 
-        {/* Stats Footer */}
-        <div className="mt-12 pt-8 border-t border-purple-500/20">
+        {/* Enhanced Stats Footer */}
+        <div className="mt-16 pt-8 border-t border-purple-500/20">
+          <div className="text-center mb-6">
+            <h3 className="text-xl font-semibold text-white mb-2">Performance Overview</h3>
+            <p className="text-white/60">Your fitness journey at a glance</p>
+          </div>
+          
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <div className="text-center">
-              <div className="text-2xl font-bold text-white">{conversations.length}</div>
+            <div className="text-center p-4 rounded-xl bg-white/5 border border-purple-500/20">
+              <div className="flex items-center justify-center mb-2">
+                <Activity className="h-5 w-5 text-purple-400 mr-2" />
+                <div className="text-2xl font-bold text-white">{conversations.length}</div>
+              </div>
               <div className="text-sm text-white/60">Total Chats</div>
+              <div className="text-xs text-green-400 mt-1">+15% this week</div>
             </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-white">{user?.tokens || 0}</div>
+            
+            <div className="text-center p-4 rounded-xl bg-white/5 border border-purple-500/20">
+              <div className="flex items-center justify-center mb-2">
+                <TrendingUp className="h-5 w-5 text-green-400 mr-2" />
+                <div className="text-2xl font-bold text-white">{user?.tokens || 0}</div>
+              </div>
               <div className="text-sm text-white/60">Available Tokens</div>
+              <div className="text-xs text-yellow-400 mt-1">Use wisely</div>
             </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-white">12</div>
+            
+            <div className="text-center p-4 rounded-xl bg-white/5 border border-purple-500/20">
+              <div className="flex items-center justify-center mb-2">
+                <Calendar className="h-5 w-5 text-blue-400 mr-2" />
+                <div className="text-2xl font-bold text-white">12</div>
+              </div>
               <div className="text-sm text-white/60">Days Active</div>
+              <div className="text-xs text-blue-400 mt-1">Great streak!</div>
             </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-white">94%</div>
+            
+            <div className="text-center p-4 rounded-xl bg-white/5 border border-purple-500/20">
+              <div className="flex items-center justify-center mb-2">
+                <Share2 className="h-5 w-5 text-violet-400 mr-2" />
+                <div className="text-2xl font-bold text-white">94%</div>
+              </div>
               <div className="text-sm text-white/60">Satisfaction</div>
+              <div className="text-xs text-violet-400 mt-1">Excellent!</div>
             </div>
           </div>
         </div>
