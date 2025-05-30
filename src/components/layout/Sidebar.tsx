@@ -16,7 +16,8 @@ import {
   ChevronLeft,
   Brain,
   TrendingUp,
-  Menu
+  Menu,
+  Activity
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -50,6 +51,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ showBiometrics, setShowBiometr
   const handleSelectConversation = (id: string) => {
     setCurrentConversation(id);
     // Auto-close sidebar on mobile after selecting conversation
+    if (isMobile) {
+      toggleSidebar();
+    }
+  };
+
+  const handleBiometricsToggle = () => {
+    setShowBiometrics(!showBiometrics);
+    // Auto-close sidebar on mobile after toggling biometrics
     if (isMobile) {
       toggleSidebar();
     }
@@ -109,24 +118,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ showBiometrics, setShowBiometr
         </Button>
       </div>
 
-      {/* Biometrics Toggle Button */}
-      {activeAgent?.id === 'biometrics-engine' && (
-        <div className="px-3 pb-3">
-          <button
-            onClick={() => setShowBiometrics(!showBiometrics)}
-            className={cn(
-              "w-full px-3 py-1 text-xs rounded-full transition-all duration-200",
-              (sidebarOpen || isMobile) ? "justify-start" : "justify-center",
-              showBiometrics 
-                ? "bg-blue-500/20 text-blue-400 border border-blue-500/30" 
-                : "bg-white/10 text-white/60 border border-white/10 hover:bg-white/20"
-            )}
-          >
-            {(sidebarOpen || isMobile) ? (showBiometrics ? 'Hide' : 'Show') + ' Biometrics' : showBiometrics ? 'H' : 'S'}
-          </button>
-        </div>
-      )}
-
       {/* Conversations List */}
       <ScrollArea className="flex-1 px-3">
         <div className="space-y-1">
@@ -184,6 +175,18 @@ export const Sidebar: React.FC<SidebarProps> = ({ showBiometrics, setShowBiometr
               {(sidebarOpen || isMobile) && <span>Progress Dashboard</span>}
             </Button>
           </Link>
+          <Button
+            variant="ghost"
+            onClick={handleBiometricsToggle}
+            className={cn(
+              "w-full text-sidebar-foreground/60 hover:text-sidebar-foreground hover:bg-sidebar-accent",
+              (sidebarOpen || isMobile) ? "justify-start gap-2" : "justify-center px-2",
+              showBiometrics && "bg-sidebar-accent text-sidebar-accent-foreground"
+            )}
+          >
+            <Activity className="h-4 w-4 flex-shrink-0" />
+            {(sidebarOpen || isMobile) && <span>Biometrics</span>}
+          </Button>
           <Link to="/settings">
             <Button
               variant="ghost"
