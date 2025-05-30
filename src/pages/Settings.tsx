@@ -38,17 +38,17 @@ const Settings: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-indigo-900/30 to-black relative overflow-hidden">
-      {/* Background Effects - Updated to dark violet theme */}
-      <div className="absolute inset-0 bg-gradient-to-br from-indigo-600/8 via-transparent to-violet-600/5 pointer-events-none"></div>
-      <div className="absolute inset-0 bg-gradient-to-t from-indigo-900/5 via-transparent to-transparent pointer-events-none"></div>
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,_rgba(99,102,241,0.1)_1px,_transparent_0)] [background-size:20px_20px] opacity-20"></div>
+    <div className="min-h-screen bg-gradient-to-br from-black via-purple-900/30 to-black relative overflow-hidden">
+      {/* Background Effects - Purple theme */}
+      <div className="absolute inset-0 bg-gradient-to-br from-purple-600/8 via-transparent to-violet-600/5 pointer-events-none"></div>
+      <div className="absolute inset-0 bg-gradient-to-t from-purple-900/5 via-transparent to-transparent pointer-events-none"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,_rgba(168,85,247,0.1)_1px,_transparent_0)] [background-size:20px_20px] opacity-20"></div>
 
       <div className="relative z-10 p-4 sm:p-6 lg:p-8 max-w-6xl mx-auto">
         {/* Header */}
         <div className="mb-6 sm:mb-8 flex items-center gap-4">
           <Link to="/dashboard">
-            <Button variant="ghost" size="icon" className="text-white/60 hover:text-white hover:bg-indigo-500/10">
+            <Button variant="ghost" size="icon" className="text-white/60 hover:text-white hover:bg-purple-500/10">
               <ArrowLeft className="w-5 h-5" />
             </Button>
           </Link>
@@ -67,7 +67,7 @@ const Settings: React.FC = () => {
           // Mobile: Stack everything vertically
           <div className="space-y-6">
             {/* Mobile Tab Selector */}
-            <div className="bg-white/5 backdrop-blur-xl border border-indigo-500/20 rounded-2xl p-4">
+            <div className="bg-white/5 backdrop-blur-xl border border-purple-500/20 rounded-2xl p-4">
               <div className="grid grid-cols-2 gap-2">
                 {tabs.map((tab) => {
                   const Icon = tab.icon;
@@ -77,8 +77,8 @@ const Settings: React.FC = () => {
                       onClick={() => setActiveTab(tab.id)}
                       className={`flex flex-col items-center gap-2 p-3 rounded-lg transition-colors ${
                         activeTab === tab.id
-                          ? 'bg-indigo-500/20 text-indigo-400 border border-indigo-500/30'
-                          : 'text-white/60 hover:text-white hover:bg-indigo-500/5'
+                          ? 'bg-purple-500/20 text-purple-400 border border-purple-500/30'
+                          : 'text-white/60 hover:text-white hover:bg-purple-500/5'
                       }`}
                     >
                       <Icon className="w-5 h-5" />
@@ -90,7 +90,7 @@ const Settings: React.FC = () => {
             </div>
 
             {/* Mobile Content */}
-            <div className="bg-white/5 backdrop-blur-xl border border-indigo-500/20 rounded-2xl p-4 sm:p-6">
+            <div className="bg-white/5 backdrop-blur-xl border border-purple-500/20 rounded-2xl p-4 sm:p-6">
               {renderTabContent()}
             </div>
           </div>
@@ -99,7 +99,7 @@ const Settings: React.FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 lg:gap-8">
             {/* Sidebar */}
             <div className="lg:col-span-1">
-              <div className="bg-white/5 backdrop-blur-xl border border-indigo-500/20 rounded-2xl p-6">
+              <div className="bg-white/5 backdrop-blur-xl border border-purple-500/20 rounded-2xl p-6">
                 <nav className="space-y-2">
                   {tabs.map((tab) => {
                     const Icon = tab.icon;
@@ -109,8 +109,8 @@ const Settings: React.FC = () => {
                         onClick={() => setActiveTab(tab.id)}
                         className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
                           activeTab === tab.id
-                            ? 'bg-indigo-500/20 text-indigo-400 border border-indigo-500/30'
-                            : 'text-white/60 hover:text-white hover:bg-indigo-500/5'
+                            ? 'bg-purple-500/20 text-purple-400 border border-purple-500/30'
+                            : 'text-white/60 hover:text-white hover:bg-purple-500/5'
                         }`}
                       >
                         <Icon className="w-5 h-5" />
@@ -124,7 +124,7 @@ const Settings: React.FC = () => {
 
             {/* Content */}
             <div className="lg:col-span-3">
-              <div className="bg-white/5 backdrop-blur-xl border border-indigo-500/20 rounded-2xl p-8">
+              <div className="bg-white/5 backdrop-blur-xl border border-purple-500/20 rounded-2xl p-8">
                 {renderTabContent()}
               </div>
             </div>
