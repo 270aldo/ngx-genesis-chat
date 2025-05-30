@@ -1,8 +1,7 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Send, Mic, MicOff, Plus, Square } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { Send, Mic, Plus } from 'lucide-react';
 
 interface InputActionsProps {
   disabled?: boolean;
@@ -23,70 +22,32 @@ export const InputActions: React.FC<InputActionsProps> = ({
 }) => {
   return (
     <div className="flex items-center gap-2">
-      {/* Clean Attachment Button */}
       <Button
         variant="ghost"
         size="icon"
-        className={cn(
-          "h-10 w-10 rounded-lg",
-          "text-white/50 hover:text-white/80",
-          "hover:bg-purple-500/20",
-          "transition-all duration-200"
-        )}
+        className="h-8 w-8 text-white/60 hover:text-white hover:bg-white/10"
         disabled={disabled}
       >
         <Plus className="h-4 w-4" />
       </Button>
 
-      {/* Clean Voice Button */}
       <Button
         variant="ghost"
         size="icon"
         onClick={toggleRecording}
         disabled={disabled}
-        className={cn(
-          "h-10 w-10 rounded-lg",
-          "transition-all duration-200",
-          isRecording ? [
-            "text-red-400 bg-red-500/20",
-            "hover:bg-red-500/30"
-          ] : [
-            "text-white/50 hover:text-white/80",
-            "hover:bg-purple-500/20"
-          ]
-        )}
+        className={`h-8 w-8 ${isRecording ? 'text-red-400 bg-red-500/20' : 'text-white/60 hover:text-white hover:bg-white/10'}`}
       >
-        {isRecording ? (
-          <MicOff className="h-4 w-4" />
-        ) : (
-          <Mic className="h-4 w-4" />
-        )}
+        <Mic className="h-4 w-4" />
       </Button>
 
-      {/* Clean Send/Stop Button */}
       <Button
-        onClick={isTyping ? () => {} : handleSubmit}
+        onClick={handleSubmit}
         disabled={(!input.trim() && !isTyping) || disabled}
         size="icon"
-        className={cn(
-          "h-10 w-10 rounded-lg",
-          "transition-all duration-200",
-          isTyping ? [
-            "bg-red-500/30 text-red-300",
-            "hover:bg-red-500/40"
-          ] : [
-            "bg-purple-500/30 text-purple-200",
-            "hover:bg-purple-500/40",
-            !disabled && input.trim() && "bg-purple-500/50"
-          ],
-          "disabled:opacity-50 disabled:cursor-not-allowed"
-        )}
+        className="h-8 w-8 bg-purple-600 hover:bg-purple-700 text-white disabled:opacity-50"
       >
-        {isTyping ? (
-          <Square className="h-4 w-4" />
-        ) : (
-          <Send className="h-4 w-4" />
-        )}
+        <Send className="h-4 w-4" />
       </Button>
     </div>
   );
