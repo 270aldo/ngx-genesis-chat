@@ -12,6 +12,7 @@ import SignUp from "./pages/SignUp";
 import ForgotPassword from "./pages/ForgotPassword";
 import NotFound from "./pages/NotFound";
 import ProgressDashboard from "./pages/ProgressDashboard";
+import NutritionDashboard from "./pages/NutritionDashboard";
 import { AgentChatPage } from "./components/agents/AgentChatPage";
 
 const queryClient = new QueryClient();
@@ -28,6 +29,7 @@ const App = () => (
           <Route path="/chat/:agentId" element={<AgentChatPage />} />
           <Route path="/dashboard" element={<Navigate to="/dashboard/progress" replace />} />
           <Route path="/dashboard/progress" element={<ProgressDashboard />} />
+          <Route path="/dashboard/nutrition" element={<NutritionDashboard />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />

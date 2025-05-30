@@ -5,7 +5,7 @@ import { useChatStore } from '@/store/chatStore';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 import { Link } from 'react-router-dom';
-import { Settings, User, TrendingUp, Activity } from 'lucide-react';
+import { Settings, User, TrendingUp, Activity, Utensils } from 'lucide-react';
 
 interface SidebarFooterProps {
   showBiometrics: boolean;
@@ -40,6 +40,18 @@ export const SidebarFooter: React.FC<SidebarFooterProps> = ({
           >
             <TrendingUp className="h-4 w-4 flex-shrink-0" />
             {(sidebarOpen || isMobile) && <span>Progress Dashboard</span>}
+          </Button>
+        </Link>
+        <Link to="/dashboard/nutrition">
+          <Button
+            variant="ghost"
+            className={cn(
+              "w-full text-sidebar-foreground/60 hover:text-sidebar-foreground hover:bg-sidebar-accent",
+              (sidebarOpen || isMobile) ? "justify-start gap-2" : "justify-center px-2"
+            )}
+          >
+            <Utensils className="h-4 w-4 flex-shrink-0" />
+            {(sidebarOpen || isMobile) && <span>Nutrition</span>}
           </Button>
         </Link>
         <Button
