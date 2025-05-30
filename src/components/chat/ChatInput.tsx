@@ -56,13 +56,6 @@ export const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, disabled })
             handleSubmit={handleSubmit}
           />
         </div>
-
-        {/* Helper text */}
-        <div className="flex justify-center gap-4 mt-3 text-xs text-white/40">
-          <span>Press Enter to send</span>
-          <span>•</span>
-          <span>Shift+Enter for new line</span>
-        </div>
       </div>
     </div>
   );
