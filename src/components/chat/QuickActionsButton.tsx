@@ -6,7 +6,27 @@ import { useAgentStore } from '@/store/agentStore';
 import { useChatStore } from '@/store/chatStore';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
-import { Sparkles, Zap } from 'lucide-react';
+import { 
+  Sparkles, 
+  Zap, 
+  Dumbbell, 
+  Calendar, 
+  Camera, 
+  Utensils, 
+  BarChart3, 
+  Moon, 
+  Activity, 
+  Heart, 
+  Target, 
+  Clock, 
+  Shield, 
+  Snowflake, 
+  Wind, 
+  Apple, 
+  Sun, 
+  CheckCircle, 
+  Trophy 
+} from 'lucide-react';
 
 const agentActions = {
   'training-strategist': [{
