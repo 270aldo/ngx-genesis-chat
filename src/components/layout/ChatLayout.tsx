@@ -4,7 +4,7 @@ import { Sidebar } from './Sidebar';
 import { ChatArea } from '../chat/ChatArea';
 import { ChatInput } from '../chat/ChatInput';
 import { AgentSelector } from '../agents/AgentSelector';
-import { AgentQuickActions } from '../agents/AgentQuickActions';
+import { QuickActionsButton } from '../chat/QuickActionsButton';
 import { ExportOptions } from '../chat/ExportOptions';
 import { BiometricsOverview } from '../biometrics/BiometricsOverview';
 import { useChatStore } from '@/store/chatStore';
@@ -173,14 +173,14 @@ export const ChatLayout: React.FC = () => {
       <div className="flex-1 flex flex-col min-w-0 relative">
         <div className="absolute inset-0 bg-gradient-to-t from-background/50 via-transparent to-transparent pointer-events-none"></div>
         
-        {/* Improved Header Layout */}
+        {/* Simplified Header Layout */}
         <div className="relative z-10 border-b border-white/5">
-          {/* Top Header Row - Agent Selector and Export */}
           <div className="flex items-center justify-between px-4 sm:px-6 py-3">
             <div className="flex-1 min-w-0">
               <AgentSelector />
             </div>
-            <div className="ml-4 flex-shrink-0 flex items-center gap-2">
+            <div className="ml-4 flex-shrink-0 flex items-center gap-3">
+              <QuickActionsButton />
               {getActiveAgent()?.id === 'biometrics-engine' && (
                 <button
                   onClick={() => setShowBiometrics(!showBiometrics)}
@@ -196,11 +196,6 @@ export const ChatLayout: React.FC = () => {
               )}
               <ExportOptions />
             </div>
-          </div>
-          
-          {/* Quick Actions Row */}
-          <div className="border-t border-white/5">
-            <AgentQuickActions />
           </div>
         </div>
         
