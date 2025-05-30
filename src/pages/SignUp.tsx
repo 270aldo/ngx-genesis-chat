@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Eye, EyeOff, ArrowLeft, Check } from 'lucide-react';
+import { Eye, EyeOff, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -10,8 +10,7 @@ const SignUp: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
+    name: '',
     email: '',
     password: '',
     confirmPassword: ''
@@ -27,18 +26,11 @@ const SignUp: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // TODO: Implementar lógica de registro con Supabase
-    console.log('Sign up attempt:', formData);
+    console.log('Register attempt:', formData);
   };
 
-  const passwordRequirements = [
-    { text: 'At least 8 characters', met: formData.password.length >= 8 },
-    { text: 'Contains uppercase letter', met: /[A-Z]/.test(formData.password) },
-    { text: 'Contains number', met: /\d/.test(formData.password) },
-    { text: 'Passwords match', met: formData.password === formData.confirmPassword && formData.confirmPassword !== '' }
-  ];
-
   return (
-    <div className="min-h-screen bg-background relative overflow-hidden flex items-center justify-center py-12">
+    <div className="min-h-screen bg-background relative overflow-hidden flex items-center justify-center">
       {/* Background Effects */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/5 to-pink-500/10"></div>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,_rgba(255,255,255,0.15)_1px,_transparent_0)] [background-size:20px_20px] opacity-20"></div>
@@ -58,47 +50,30 @@ const SignUp: React.FC = () => {
           {/* Header */}
           <div className="text-center mb-8">
             <h1 className="text-3xl font-light text-white mb-2">
-              Join NGX Agents
+              Create Account
             </h1>
             <p className="text-white/60">
-              Create your account and start chatting
+              Join NGX Agents and start your AI journey
             </p>
           </div>
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Name Fields */}
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="firstName" className="text-white/80">
-                  First Name
-                </Label>
-                <Input
-                  id="firstName"
-                  name="firstName"
-                  type="text"
-                  value={formData.firstName}
-                  onChange={handleInputChange}
-                  placeholder="John"
-                  className="glass-premium border-white/10 bg-white/5 text-white placeholder:text-white/40 focus:border-blue-500/50"
-                  required
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="lastName" className="text-white/80">
-                  Last Name
-                </Label>
-                <Input
-                  id="lastName"
-                  name="lastName"
-                  type="text"
-                  value={formData.lastName}
-                  onChange={handleInputChange}
-                  placeholder="Doe"
-                  className="glass-premium border-white/10 bg-white/5 text-white placeholder:text-white/40 focus:border-blue-500/50"
-                  required
-                />
-              </div>
+            {/* Name Field */}
+            <div className="space-y-2">
+              <Label htmlFor="name" className="text-white/80">
+                Full Name
+              </Label>
+              <Input
+                id="name"
+                name="name"
+                type="text"
+                value={formData.name}
+                onChange={handleInputChange}
+                placeholder="Enter your full name"
+                className="glass-premium border-white/10 bg-white/5 text-white placeholder:text-white/40 focus:border-blue-500/50"
+                required
+              />
             </div>
 
             {/* Email Field */}
@@ -112,7 +87,7 @@ const SignUp: React.FC = () => {
                 type="email"
                 value={formData.email}
                 onChange={handleInputChange}
-                placeholder="john@example.com"
+                placeholder="Enter your email"
                 className="glass-premium border-white/10 bg-white/5 text-white placeholder:text-white/40 focus:border-blue-500/50"
                 required
               />
@@ -130,7 +105,7 @@ const SignUp: React.FC = () => {
                   type={showPassword ? 'text' : 'password'}
                   value={formData.password}
                   onChange={handleInputChange}
-                  placeholder="Create a strong password"
+                  placeholder="Create a password"
                   className="glass-premium border-white/10 bg-white/5 text-white placeholder:text-white/40 focus:border-blue-500/50 pr-12"
                   required
                 />
@@ -170,47 +145,33 @@ const SignUp: React.FC = () => {
               </div>
             </div>
 
-            {/* Password Requirements */}
-            {formData.password && (
-              <div className="space-y-2">
-                <p className="text-white/60 text-sm">Password requirements:</p>
-                <div className="space-y-1">
-                  {passwordRequirements.map((req, index) => (
-                    <div key={index} className="flex items-center gap-2 text-sm">
-                      <Check className={`w-4 h-4 ${req.met ? 'text-green-400' : 'text-white/30'}`} />
-                      <span className={req.met ? 'text-green-400' : 'text-white/40'}>
-                        {req.text}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
+            {/* Terms */}
+            <div className="text-sm text-white/60">
+              By creating an account, you agree to our{' '}
+              <a href="#" className="text-blue-400 hover:text-blue-300 transition-colors">
+                Terms of Service
+              </a>{' '}
+              and{' '}
+              <a href="#" className="text-blue-400 hover:text-blue-300 transition-colors">
+                Privacy Policy
+              </a>
+            </div>
 
             {/* Sign Up Button */}
-            <button 
-              type="submit" 
-              className="premium-glow-button w-full"
-              disabled={!passwordRequirements.every(req => req.met)}
-            >
+            <button type="submit" className="premium-glow-button w-full">
               <span>Create Account</span>
             </button>
           </form>
 
-          {/* Terms */}
-          <p className="text-center text-white/40 text-sm mt-6">
-            By signing up, you agree to our{' '}
-            <Link to="/terms" className="text-blue-400 hover:text-blue-300">
-              Terms of Service
-            </Link>{' '}
-            and{' '}
-            <Link to="/privacy" className="text-blue-400 hover:text-blue-300">
-              Privacy Policy
-            </Link>
-          </p>
+          {/* Divider */}
+          <div className="my-8 flex items-center">
+            <div className="flex-1 h-px bg-white/10"></div>
+            <span className="px-4 text-white/40 text-sm">or</span>
+            <div className="flex-1 h-px bg-white/10"></div>
+          </div>
 
           {/* Sign In Link */}
-          <div className="text-center mt-8">
+          <div className="text-center">
             <p className="text-white/60">
               Already have an account?{' '}
               <Link 

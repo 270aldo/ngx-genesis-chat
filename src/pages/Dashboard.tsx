@@ -33,6 +33,11 @@ const Dashboard: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-4">
+              <Link to="/chat">
+                <Button variant="ghost" size="icon" className="text-white/60 hover:text-white/80">
+                  <ArrowLeft className="h-5 w-5" />
+                </Button>
+              </Link>
               <div>
                 <h1 className="text-xl font-semibold text-white">Dashboard</h1>
                 <p className="text-sm text-white/60">Welcome back, {user?.name || 'User'}</p>
