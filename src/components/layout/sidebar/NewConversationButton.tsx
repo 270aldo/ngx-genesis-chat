@@ -25,7 +25,7 @@ export const NewConversationButton: React.FC = () => {
         <Button
           onClick={handleNewConversation}
           className={cn(
-            "w-full bg-black hover:bg-gray-900 text-white border-0",
+            "w-full bg-black hover:bg-gray-900 text-white border-0 rounded-lg",
             (sidebarOpen || isMobile) ? "justify-start gap-2" : "justify-center px-2"
           )}
         >
