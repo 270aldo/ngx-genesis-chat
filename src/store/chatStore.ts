@@ -39,7 +39,7 @@ interface ChatState {
   createConversation: () => string;
   deleteConversation: (id: string) => void;
   setCurrentConversation: (id: string) => void;
-  addMessage: (conversationId: string, message: Omit<Message, 'id' | 'timestamp'>) => void;
+  addMessage: (conversationId: string, message: Omit<Message, 'id' | 'timestamp'>) => { id: string };
   updateMessage: (conversationId: string, messageId: string, updates: Partial<Message>) => void;
   deleteMessage: (conversationId: string, messageId: string) => void;
   setTyping: (isTyping: boolean) => void;
@@ -131,6 +131,8 @@ export const useChatStore = create<ChatState>()(
               : conv
           ),
         }));
+
+        return { id: newMessage.id };
       },
 
       updateMessage: (conversationId: string, messageId: string, updates) => {

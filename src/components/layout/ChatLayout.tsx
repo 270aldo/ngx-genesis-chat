@@ -4,6 +4,9 @@ import { ChatArea } from '../chat/ChatArea';
 import { ChatInput } from '../chat/ChatInput';
 import { AgentSelector } from '../agents/AgentSelector';
 import { AgentQuickActions } from '../agents/AgentQuickActions';
+import { QuickMessages } from '../chat/QuickMessages';
+import { ExportOptions } from '../chat/ExportOptions';
+import { useRealtimeTyping } from '@/hooks/useRealtimeTyping';
 import { useChatStore } from '@/store/chatStore';
 import { useAgentStore } from '@/store/agentStore';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -18,6 +21,7 @@ export const ChatLayout: React.FC = () => {
     currentConversationId,
     sidebarOpen,
     toggleSidebar,
+    updateMessage,
   } = useChatStore();
   
   const { getActiveAgent, analyzeUserIntent, setActiveAgent } = useAgentStore();
@@ -58,35 +62,30 @@ export const ChatLayout: React.FC = () => {
     setTyping(true);
     
     // Add typing indicator
-    addMessage(conversationId, {
+    const typingMessageId = addMessage(conversationId, {
       content: '',
       role: 'assistant',
       isTyping: true,
       agentId: getActiveAgent()?.id
     });
 
+    // Generate agent-specific response
+    const response = generateAgentResponse(content, getActiveAgent());
+    
     // Simulate API delay
     setTimeout(() => {
-      // Remove typing indicator and add actual response
-      const conversation = getCurrentConversation();
-      if (conversation) {
-        // Generate agent-specific response
-        const response = generateAgentResponse(content, getActiveAgent());
-        
-        // Add actual AI response
-        addMessage(conversationId!, {
-          content: response.content,
-          role: 'assistant',
-          agentId: getActiveAgent()?.id,
-          metadata: {
-            confidence: 0.95,
-            processingTime: Math.floor(Math.random() * 1000) + 500,
-            tokens: Math.floor(Math.random() * 100) + 50,
-            agentName: getActiveAgent()?.name,
-            agentAvatar: getActiveAgent()?.avatar
-          },
-        });
-      }
+      // Remove typing indicator by updating the message
+      updateMessage(conversationId!, typingMessageId.id, {
+        content: response.content,
+        isTyping: false,
+        metadata: {
+          confidence: 0.95,
+          processingTime: Math.floor(Math.random() * 1000) + 500,
+          tokens: Math.floor(Math.random() * 100) + 50,
+          agentName: getActiveAgent()?.name,
+          agentAvatar: getActiveAgent()?.avatar
+        },
+      });
       
       setTyping(false);
     }, 2000 + Math.random() * 1500);
@@ -143,9 +142,17 @@ export const ChatLayout: React.FC = () => {
       <div className="flex-1 flex flex-col min-w-0 relative">
         <div className="absolute inset-0 bg-gradient-to-t from-background/50 via-transparent to-transparent pointer-events-none"></div>
         
-        {/* Agent Controls */}
-        <AgentSelector />
-        <AgentQuickActions />
+        {/* Header with Agent Controls and Export */}
+        <div className="relative z-10">
+          <div className="flex items-center justify-between px-4 py-2 border-b border-white/5">
+            <div className="flex-1">
+              <AgentSelector />
+            </div>
+            <ExportOptions />
+          </div>
+          <AgentQuickActions />
+          <QuickMessages onSelectMessage={handleSendMessage} />
+        </div>
         
         <ChatArea />
         <div className="px-4 pb-4 sm:px-6 sm:pb-6">
