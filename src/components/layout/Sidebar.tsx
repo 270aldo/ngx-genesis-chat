@@ -1,24 +1,12 @@
 
 import React from 'react';
-import { Button } from '@/components/ui/button';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { useChatStore } from '@/store/chatStore';
-import { useAgentStore } from '@/store/agentStore';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useChatStore } from '@/store/chatStore';
 import { cn } from '@/lib/utils';
-import { Link } from 'react-router-dom';
-import { 
-  Plus, 
-  MessageSquare, 
-  Settings, 
-  Trash2, 
-  User,
-  ChevronLeft,
-  Brain,
-  TrendingUp,
-  Menu,
-  Activity
-} from 'lucide-react';
+import { SidebarHeader } from './sidebar/SidebarHeader';
+import { NewConversationButton } from './sidebar/NewConversationButton';
+import { SidebarConversationsList } from './sidebar/SidebarConversationsList';
+import { SidebarFooter } from './sidebar/SidebarFooter';
 
 interface SidebarProps {
   showBiometrics: boolean;
@@ -26,43 +14,8 @@ interface SidebarProps {
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({ showBiometrics, setShowBiometrics }) => {
-  const {
-    conversations,
-    currentConversationId,
-    sidebarOpen,
-    createConversation,
-    setCurrentConversation,
-    deleteConversation,
-    toggleSidebar,
-  } = useChatStore();
-  
-  const { getActiveAgent } = useAgentStore();
-  const activeAgent = getActiveAgent();
+  const { sidebarOpen } = useChatStore();
   const isMobile = useIsMobile();
-
-  const handleNewConversation = () => {
-    createConversation();
-    // Auto-close sidebar on mobile after creating conversation
-    if (isMobile) {
-      toggleSidebar();
-    }
-  };
-
-  const handleSelectConversation = (id: string) => {
-    setCurrentConversation(id);
-    // Auto-close sidebar on mobile after selecting conversation
-    if (isMobile) {
-      toggleSidebar();
-    }
-  };
-
-  const handleBiometricsToggle = () => {
-    setShowBiometrics(!showBiometrics);
-    // Auto-close sidebar on mobile after toggling biometrics
-    if (isMobile) {
-      toggleSidebar();
-    }
-  };
 
   return (
     <div
@@ -75,142 +28,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ showBiometrics, setShowBiometr
         )
       )}
     >
-      {/* Header */}
-      <div className="p-4 border-b border-sidebar-border">
-        <div className="flex items-center justify-between">
-          {(sidebarOpen || !isMobile) && (
-            <div className={cn("flex items-center gap-3", !sidebarOpen && !isMobile && "hidden")}>
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-600 to-navy-600 flex items-center justify-center">
-                <Brain className="w-4 h-4 text-white" />
-              </div>
-              <div>
-                <h1 className="font-semibold text-sm">NGX Agents</h1>
-                <p className="text-xs text-sidebar-foreground/60">Advanced AI Interface</p>
-              </div>
-            </div>
-          )}
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={toggleSidebar}
-            className="h-8 w-8 text-sidebar-foreground/60 hover:text-sidebar-foreground flex-shrink-0"
-          >
-            {isMobile ? (
-              <Menu className="h-4 w-4" />
-            ) : (
-              <ChevronLeft className={cn("h-4 w-4 transition-transform", !sidebarOpen && "rotate-180")} />
-            )}
-          </Button>
-        </div>
-      </div>
-
-      {/* New Conversation Button */}
-      <div className="p-3">
-        <Button
-          onClick={handleNewConversation}
-          className={cn(
-            "w-full bg-sidebar-primary hover:bg-sidebar-primary/80 text-sidebar-primary-foreground",
-            (sidebarOpen || isMobile) ? "justify-start gap-2" : "justify-center px-2"
-          )}
-        >
-          <Plus className="h-4 w-4 flex-shrink-0" />
-          {(sidebarOpen || isMobile) && <span>New Chat</span>}
-        </Button>
-      </div>
-
-      {/* Conversations List */}
-      <ScrollArea className="flex-1 px-3">
-        <div className="space-y-1">
-          {conversations.map((conversation) => (
-            <div
-              key={conversation.id}
-              className={cn(
-                "group relative flex items-center gap-2 p-2 rounded-lg cursor-pointer transition-colors",
-                "hover:bg-sidebar-accent",
-                conversation.id === currentConversationId && "bg-sidebar-accent"
-              )}
-              onClick={() => handleSelectConversation(conversation.id)}
-            >
-              <MessageSquare className="h-4 w-4 flex-shrink-0 text-sidebar-foreground/60" />
-              {(sidebarOpen || isMobile) && (
-                <>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm truncate text-sidebar-foreground">
-                      {conversation.title}
-                    </p>
-                    <p className="text-xs text-sidebar-foreground/60">
-                      {conversation.messages.length} messages
-                    </p>
-                  </div>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      deleteConversation(conversation.id);
-                    }}
-                    className="h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity text-sidebar-foreground/60 hover:text-red-400 flex-shrink-0"
-                  >
-                    <Trash2 className="h-3 w-3" />
-                  </Button>
-                </>
-              )}
-            </div>
-          ))}
-        </div>
-      </ScrollArea>
-
-      {/* Footer */}
-      <div className="p-3 border-t border-sidebar-border">
-        <div className="space-y-1">
-          <Link to="/dashboard/progress">
-            <Button
-              variant="ghost"
-              className={cn(
-                "w-full text-sidebar-foreground/60 hover:text-sidebar-foreground hover:bg-sidebar-accent",
-                (sidebarOpen || isMobile) ? "justify-start gap-2" : "justify-center px-2"
-              )}
-            >
-              <TrendingUp className="h-4 w-4 flex-shrink-0" />
-              {(sidebarOpen || isMobile) && <span>Progress Dashboard</span>}
-            </Button>
-          </Link>
-          <Button
-            variant="ghost"
-            onClick={handleBiometricsToggle}
-            className={cn(
-              "w-full text-sidebar-foreground/60 hover:text-sidebar-foreground hover:bg-sidebar-accent",
-              (sidebarOpen || isMobile) ? "justify-start gap-2" : "justify-center px-2",
-              showBiometrics && "bg-sidebar-accent text-sidebar-accent-foreground"
-            )}
-          >
-            <Activity className="h-4 w-4 flex-shrink-0" />
-            {(sidebarOpen || isMobile) && <span>Biometrics</span>}
-          </Button>
-          <Link to="/settings">
-            <Button
-              variant="ghost"
-              className={cn(
-                "w-full text-sidebar-foreground/60 hover:text-sidebar-foreground hover:bg-sidebar-accent",
-                (sidebarOpen || isMobile) ? "justify-start gap-2" : "justify-center px-2"
-              )}
-            >
-              <Settings className="h-4 w-4 flex-shrink-0" />
-              {(sidebarOpen || isMobile) && <span>Settings</span>}
-            </Button>
-          </Link>
-          <Button
-            variant="ghost"
-            className={cn(
-              "w-full text-sidebar-foreground/60 hover:text-sidebar-foreground hover:bg-sidebar-accent",
-              (sidebarOpen || isMobile) ? "justify-start gap-2" : "justify-center px-2"
-            )}
-          >
-            <User className="h-4 w-4 flex-shrink-0" />
-            {(sidebarOpen || isMobile) && <span>Profile</span>}
-          </Button>
-        </div>
-      </div>
+      <SidebarHeader />
+      <NewConversationButton />
+      <SidebarConversationsList />
+      <SidebarFooter 
+        showBiometrics={showBiometrics}
+        setShowBiometrics={setShowBiometrics}
+      />
     </div>
   );
 };
