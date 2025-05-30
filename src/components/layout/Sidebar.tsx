@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -52,9 +51,9 @@ export const Sidebar: React.FC = () => {
       className={cn(
         'h-full bg-sidebar border-r border-sidebar-border transition-all duration-300 ease-in-out flex flex-col',
         isMobile ? (
-          sidebarOpen ? 'w-80 absolute left-0 top-0 z-50' : 'w-0'
+          sidebarOpen ? 'w-80 fixed left-0 top-0 z-50' : 'w-0'
         ) : (
-          sidebarOpen ? 'w-80' : 'w-16'
+          sidebarOpen ? 'w-80 fixed left-0 top-0' : 'w-16 fixed left-0 top-0'
         )
       )}
     >
