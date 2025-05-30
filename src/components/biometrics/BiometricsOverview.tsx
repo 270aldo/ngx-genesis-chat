@@ -25,7 +25,7 @@ const MetricCard: React.FC<{
   className?: string;
 }> = ({ title, value, unit, icon, trend, className }) => {
   return (
-    <Card className={cn("glass-ultra border-white/10", className)}>
+    <Card className={cn("bg-slate-800 border-slate-700", className)}>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-sm font-medium text-white/80">{title}</CardTitle>
         <div className="text-white/60">{icon}</div>
@@ -93,22 +93,22 @@ export const BiometricsOverview: React.FC = () => {
       {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* HRV Trend */}
-        <Card className="glass-ultra border-white/10">
+        <Card className="bg-slate-800 border-slate-700">
           <CardHeader>
             <CardTitle className="text-white/80">Heart Rate Variability</CardTitle>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={200}>
               <LineChart data={mockData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" />
+                <CartesianGrid strokeDasharray="3 3" stroke="#475569" />
                 <XAxis 
                   dataKey="date" 
                   tick={{ fill: '#ffffff60', fontSize: 12 }}
-                  axisLine={{ stroke: '#ffffff20' }}
+                  axisLine={{ stroke: '#475569' }}
                 />
                 <YAxis 
                   tick={{ fill: '#ffffff60', fontSize: 12 }}
-                  axisLine={{ stroke: '#ffffff20' }}
+                  axisLine={{ stroke: '#475569' }}
                 />
                 <Line 
                   type="monotone" 
@@ -123,22 +123,22 @@ export const BiometricsOverview: React.FC = () => {
         </Card>
 
         {/* Sleep Pattern */}
-        <Card className="glass-ultra border-white/10">
+        <Card className="bg-slate-800 border-slate-700">
           <CardHeader>
             <CardTitle className="text-white/80">Sleep & Energy Pattern</CardTitle>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={200}>
               <AreaChart data={mockData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" />
+                <CartesianGrid strokeDasharray="3 3" stroke="#475569" />
                 <XAxis 
                   dataKey="date" 
                   tick={{ fill: '#ffffff60', fontSize: 12 }}
-                  axisLine={{ stroke: '#ffffff20' }}
+                  axisLine={{ stroke: '#475569' }}
                 />
                 <YAxis 
                   tick={{ fill: '#ffffff60', fontSize: 12 }}
-                  axisLine={{ stroke: '#ffffff20' }}
+                  axisLine={{ stroke: '#475569' }}
                 />
                 <Area 
                   type="monotone" 
