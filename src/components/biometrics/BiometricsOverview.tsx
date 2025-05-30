@@ -25,7 +25,7 @@ const MetricCard: React.FC<{
   className?: string;
 }> = ({ title, value, unit, icon, trend, className }) => {
   return (
-    <Card className={cn("glass-ultra border-white/10", className)}>
+    <Card className={cn("bg-white/5 backdrop-blur-xl border border-purple-500/20", className)}>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-sm font-medium text-white/80">{title}</CardTitle>
         <div className="text-white/60">{icon}</div>
@@ -93,7 +93,7 @@ export const BiometricsOverview: React.FC = () => {
       {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* HRV Trend */}
-        <Card className="glass-ultra border-white/10">
+        <Card className="bg-white/5 backdrop-blur-xl border border-purple-500/20">
           <CardHeader>
             <CardTitle className="text-white/80">Heart Rate Variability</CardTitle>
           </CardHeader>
@@ -123,7 +123,7 @@ export const BiometricsOverview: React.FC = () => {
         </Card>
 
         {/* Sleep Pattern */}
-        <Card className="glass-ultra border-white/10">
+        <Card className="bg-white/5 backdrop-blur-xl border border-purple-500/20">
           <CardHeader>
             <CardTitle className="text-white/80">Sleep & Energy Pattern</CardTitle>
           </CardHeader>
@@ -152,8 +152,8 @@ export const BiometricsOverview: React.FC = () => {
                   type="monotone" 
                   dataKey="energy" 
                   stackId="2"
-                  stroke="#10b981" 
-                  fill="#10b981" 
+                  stroke="#a855f7" 
+                  fill="#a855f7" 
                   fillOpacity={0.3}
                 />
               </AreaChart>
