@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -6,6 +7,7 @@ import { useAgentStore } from '@/store/agentStore';
 import { useChatStore } from '@/store/chatStore';
 import { cn } from '@/lib/utils';
 import { Dumbbell, Calendar, Camera, BarChart3, Target, Clock, Apple, Utensils, Activity, Moon, Zap, Heart, Shield, Wind, Snowflake, Sun, Trophy, Map, CheckCircle, Sparkles } from 'lucide-react';
+
 const agentActions = {
   'training-strategist': [{
     label: 'Create Workout Plan',
@@ -140,6 +142,7 @@ const agentActions = {
     prompt: 'Let\'s acknowledge my achievements and plan some rewards'
   }]
 };
+
 export const QuickActionsButton: React.FC = () => {
   const {
     getActiveAgent
@@ -150,8 +153,10 @@ export const QuickActionsButton: React.FC = () => {
     createConversation
   } = useChatStore();
   const [open, setOpen] = useState(false);
+  
   const activeAgent = getActiveAgent();
   const actions = activeAgent ? agentActions[activeAgent.id as keyof typeof agentActions] || [] : [];
+  
   const handleQuickAction = (prompt: string) => {
     let conversationId = getCurrentConversation()?.id;
     if (!conversationId) {
@@ -164,10 +169,19 @@ export const QuickActionsButton: React.FC = () => {
     });
     setOpen(false);
   };
+  
   if (actions.length === 0) return null;
-  return <Popover open={open} onOpenChange={setOpen}>
+  
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        
+        <Button
+          variant="ghost"
+          size="sm"
+          className="text-white/60 hover:text-white hover:bg-white/10 transition-all duration-300 ease-out"
+        >
+          <Sparkles className="w-4 h-4" />
+        </Button>
       </PopoverTrigger>
       <PopoverContent className="w-80 p-4 bg-black/90 backdrop-blur-xl border border-purple-500/20" align="end">
         <div className="space-y-3">
@@ -181,16 +195,34 @@ export const QuickActionsButton: React.FC = () => {
           
           <div className="grid grid-cols-2 gap-2">
             {actions.map((action, index) => {
-            const Icon = action.icon;
-            return <Button key={index} variant="ghost" size="sm" onClick={() => handleQuickAction(action.prompt)} className="flex flex-col gap-1.5 h-auto py-3 px-3 text-xs text-white/70 hover:text-white hover:bg-purple-500/10 rounded-xl border border-transparent hover:border-purple-500/20 transition-all duration-200 premium-button">
-                  <Icon className="w-4 h-4 flex-shrink-0" />
-                  <span className="leading-tight text-center font-medium">
+              const Icon = action.icon;
+              return (
+                <Button
+                  key={index}
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => handleQuickAction(action.prompt)}
+                  className={cn(
+                    "group relative overflow-hidden",
+                    "flex flex-col gap-1.5 h-auto py-3 px-3 text-xs",
+                    "text-white/70 hover:text-white rounded-xl",
+                    "border border-transparent hover:border-purple-500/30",
+                    "transition-all duration-300 ease-out",
+                    "hover:bg-purple-500/10 hover:scale-[1.02]",
+                    "active:scale-[0.98] active:transition-transform active:duration-100"
+                  )}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-violet-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out" />
+                  <Icon className="w-4 h-4 flex-shrink-0 relative z-10 transition-transform duration-300 ease-out group-hover:scale-110" />
+                  <span className="leading-tight text-center font-medium relative z-10 transition-all duration-300 ease-out">
                     {action.label}
                   </span>
-                </Button>;
-          })}
+                </Button>
+              );
+            })}
           </div>
         </div>
       </PopoverContent>
-    </Popover>;
+    </Popover>
+  );
 };
