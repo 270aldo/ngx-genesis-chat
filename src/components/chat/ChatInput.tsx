@@ -38,10 +38,10 @@ export const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, disabled })
       <div className="max-w-5xl mx-auto space-y-4">
         {/* Input Area */}
         <div className={cn(
-          "relative glass-ultra rounded-3xl border transition-all duration-300",
+          "relative glass-ultra rounded-3xl transition-all duration-300",
           isFocused 
-            ? "border-blue-500/30 glow-subtle" 
-            : "border-white/10",
+            ? "border border-blue-500/30 glow-subtle" 
+            : "",
           "overflow-hidden"
         )}>
           
