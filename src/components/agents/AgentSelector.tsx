@@ -88,7 +88,7 @@ export const AgentSelector: React.FC = () => {
           "transition-all duration-300 ease-in-out overflow-hidden",
           isExpanded ? "max-h-96 opacity-100" : "max-h-20 opacity-100"
         )}>
-          <ScrollArea className="w-full">
+          <div className="w-full">
             <div className={cn(
               "grid gap-2 pb-2",
               isExpanded ? "grid-cols-2 sm:grid-cols-3" : "flex overflow-x-auto"
@@ -157,7 +157,7 @@ export const AgentSelector: React.FC = () => {
                 );
               })}
             </div>
-          </ScrollArea>
+          </div>
         </div>
 
         {/* Capabilities Preview - Only show when expanded and agent has actions */}
