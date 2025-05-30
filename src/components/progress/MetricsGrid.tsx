@@ -64,7 +64,7 @@ export const MetricsGrid: React.FC = () => {
             : isPositive;
 
           return (
-            <Card key={index} className="bg-white/5 border-white/10 backdrop-blur-sm">
+            <Card key={index} className="bg-white/5 border-purple-500/20 backdrop-blur-sm">
               <CardContent className="p-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">

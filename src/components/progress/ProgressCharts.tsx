@@ -13,7 +13,7 @@ export const ProgressCharts: React.FC = () => {
   const chartConfig = {
     weight: {
       label: "Weight",
-      color: "#3b82f6",
+      color: "#8b5cf6",
     },
     bodyFat: {
       label: "Body Fat %",
@@ -33,7 +33,7 @@ export const ProgressCharts: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Weight Progress */}
-      <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
+      <Card className="bg-white/5 border-purple-500/20 backdrop-blur-sm">
         <CardHeader>
           <CardTitle className="text-white flex items-center gap-2">
             Weight Progress
@@ -51,8 +51,8 @@ export const ProgressCharts: React.FC = () => {
               <Area
                 type="monotone"
                 dataKey="weight"
-                stroke="#3b82f6"
-                fill="#3b82f6"
+                stroke="#8b5cf6"
+                fill="#8b5cf6"
                 fillOpacity={0.1}
                 strokeWidth={2}
               />
@@ -62,7 +62,7 @@ export const ProgressCharts: React.FC = () => {
       </Card>
 
       {/* Body Composition */}
-      <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
+      <Card className="bg-white/5 border-purple-500/20 backdrop-blur-sm">
         <CardHeader>
           <CardTitle className="text-white">Body Composition</CardTitle>
         </CardHeader>
@@ -92,7 +92,7 @@ export const ProgressCharts: React.FC = () => {
       </Card>
 
       {/* Body Measurements */}
-      <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
+      <Card className="bg-white/5 border-purple-500/20 backdrop-blur-sm">
         <CardHeader>
           <CardTitle className="text-white">Body Measurements</CardTitle>
         </CardHeader>
