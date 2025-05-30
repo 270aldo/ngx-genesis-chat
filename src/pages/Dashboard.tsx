@@ -1,112 +1,40 @@
 
 import React from 'react';
-import { useAuthStore } from '@/store/authStore';
-import { useChatStore } from '@/store/chatStore';
-import { useIsMobile } from '@/hooks/use-mobile';
-import { ProfileSection } from '@/components/dashboard/ProfileSection';
 import { StatsCards } from '@/components/dashboard/StatsCards';
-import { RecentActivity } from '@/components/dashboard/RecentActivity';
 import { QuickActions } from '@/components/dashboard/QuickActions';
-import { TokenBalance } from '@/components/tokens/TokenBalance';
+import { RecentActivity } from '@/components/dashboard/RecentActivity';
 import { AgentInsights } from '@/components/dashboard/AgentInsights';
-import { Button } from '@/components/ui/button';
-import { ArrowLeft, Calendar, Download, Share2, Settings } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { ProfileSection } from '@/components/dashboard/ProfileSection';
 
-const Dashboard: React.FC = () => {
-  const { user } = useAuthStore();
-  const { conversations } = useChatStore();
-  const isMobile = useIsMobile();
-
-  // Mock stats for now - will be real data when Supabase is connected
-  const stats = {
-    totalConversations: conversations.length,
-    totalMessages: conversations.reduce((acc, conv) => acc + conv.messages.length, 0),
-    tokensUsed: 12500,
-    tokensLimit: 50000,
-  };
-
+const Dashboard = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-purple-900/30 to-black">
-      {/* Background effects */}
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-violet-500/5 pointer-events-none"></div>
+    <div className="min-h-screen bg-gradient-to-br from-black via-purple-900/30 to-black relative overflow-hidden">
+      {/* Background effects - Consistent violet theme */}
+      <div className="absolute inset-0 bg-gradient-to-br from-purple-600/8 via-transparent to-violet-600/5 pointer-events-none"></div>
+      <div className="absolute inset-0 bg-gradient-to-t from-purple-900/5 via-transparent to-transparent pointer-events-none"></div>
       
-      {/* Header */}
-      <div className="border-b border-white/10 bg-background/80 backdrop-blur-xl sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center gap-4">
-              <Link to="/chat">
-                <Button variant="ghost" size="icon" className="text-white/60 hover:text-white/80">
-                  <ArrowLeft className="h-5 w-5" />
-                </Button>
-              </Link>
-              <div>
-                <h1 className="text-xl font-semibold text-white">Dashboard</h1>
-                <p className="text-sm text-white/60">Welcome back, {user?.name || 'User'}</p>
-              </div>
-            </div>
-            
-            <div className="flex items-center gap-3">
-              <Link to="/dashboard/progress">
-                <Button variant="outline" size="sm" className="border-white/20 text-white/80 hover:bg-white/5">
-                  <Calendar className="h-4 w-4 mr-2" />
-                  Progress
-                </Button>
-              </Link>
-              <Button variant="outline" size="sm" className="border-white/20 text-white/80 hover:bg-white/5">
-                <Download className="h-4 w-4 mr-2" />
-                Export
-              </Button>
-              <Link to="/settings">
-                <Button variant="outline" size="sm" className="border-white/20 text-white/80 hover:bg-white/5">
-                  <Settings className="h-4 w-4 mr-2" />
-                  Settings
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
-        {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left Column - Main Content */}
-          <div className="lg:col-span-2 space-y-8">
-            <StatsCards stats={stats} />
-            <RecentActivity conversations={conversations.slice(0, 5)} />
+      <div className="relative z-10 p-6">
+        <div className="max-w-7xl mx-auto space-y-8">
+          {/* Header */}
+          <div className="mb-8">
+            <h1 className="text-3xl font-light text-white/90 mb-2">Dashboard</h1>
+            <p className="text-white/60">Your fitness journey overview</p>
           </div>
 
-          {/* Right Column - Sidebar Content */}
-          <div className="space-y-8">
-            <TokenBalance />
-            <AgentInsights />
-            <ProfileSection user={user} />
+          {/* Profile Section */}
+          <ProfileSection />
+
+          {/* Stats Cards */}
+          <StatsCards />
+
+          {/* Quick Actions and Recent Activity */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <QuickActions />
+            <RecentActivity />
           </div>
-        </div>
 
-        {/* Stats Footer */}
-        <div className="mt-12 pt-8 border-t border-white/10">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <div className="text-center">
-              <div className="text-2xl font-bold text-white">{conversations.length}</div>
-              <div className="text-sm text-white/60">Total Chats</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-white">{user?.tokens || 0}</div>
-              <div className="text-sm text-white/60">Available Tokens</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-white">12</div>
-              <div className="text-sm text-white/60">Days Active</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-white">94%</div>
-              <div className="text-sm text-white/60">Satisfaction</div>
-            </div>
-          </div>
+          {/* Agent Insights */}
+          <AgentInsights />
         </div>
       </div>
     </div>

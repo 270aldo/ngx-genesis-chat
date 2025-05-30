@@ -52,11 +52,7 @@ export const ChatLayout: React.FC = () => {
   };
 
   return (
-    <div className="h-screen flex bg-background relative overflow-hidden">
-      {/* Background effects - Simplified violet gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-600/8 via-transparent to-violet-600/5 pointer-events-none"></div>
-      <div className="absolute inset-0 bg-gradient-to-t from-purple-900/5 via-transparent to-transparent pointer-events-none"></div>
-      
+    <div className="h-full flex relative">
       {/* Mobile Overlay for Sidebar */}
       {isMobile && sidebarOpen && (
         <div 
@@ -78,8 +74,6 @@ export const ChatLayout: React.FC = () => {
       
       {/* Main Chat Area */}
       <div className="flex-1 flex flex-col min-w-0 relative">
-        <div className="absolute inset-0 bg-gradient-to-t from-background/50 via-transparent to-transparent pointer-events-none"></div>
-        
         <ChatHeader 
           showBiometrics={showBiometrics}
           setShowBiometrics={setShowBiometrics}

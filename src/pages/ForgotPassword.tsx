@@ -1,138 +1,47 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Mail, CheckCircle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
-const ForgotPassword: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [isSubmitted, setIsSubmitted] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // TODO: Implementar lógica de reset password con Supabase
-    console.log('Password reset for:', email);
-    setIsSubmitted(true);
-  };
-
-  if (isSubmitted) {
-    return (
-      <div className="min-h-screen bg-background relative overflow-hidden flex items-center justify-center">
-        {/* Background Effects */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/5 to-pink-500/10"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,_rgba(255,255,255,0.15)_1px,_transparent_0)] [background-size:20px_20px] opacity-20"></div>
-
-        {/* Back to Sign In */}
-        <Link 
-          to="/sign-in" 
-          className="absolute top-8 left-8 flex items-center gap-2 text-white/60 hover:text-white transition-colors"
-        >
-          <ArrowLeft className="w-5 h-5" />
-          <span>Back to Sign In</span>
-        </Link>
-
-        {/* Success Message */}
-        <div className="w-full max-w-md px-6">
-          <div className="glass-ultra border border-white/10 rounded-3xl p-8 text-center">
-            <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-green-500/20 flex items-center justify-center">
-              <CheckCircle className="w-8 h-8 text-green-400" />
-            </div>
-            
-            <h1 className="text-2xl font-light text-white mb-4">
-              Check Your Email
-            </h1>
-            
-            <p className="text-white/60 mb-6">
-              We've sent a password reset link to <strong className="text-white">{email}</strong>
-            </p>
-            
-            <p className="text-white/40 text-sm mb-8">
-              Didn't receive the email? Check your spam folder or try again.
-            </p>
-
-            <button 
-              onClick={() => setIsSubmitted(false)}
-              className="premium-glow-button w-full"
-            >
-              <span>Try Again</span>
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
+const ForgotPassword = () => {
   return (
-    <div className="min-h-screen bg-background relative overflow-hidden flex items-center justify-center">
-      {/* Background Effects */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/5 to-pink-500/10"></div>
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,_rgba(255,255,255,0.15)_1px,_transparent_0)] [background-size:20px_20px] opacity-20"></div>
-
-      {/* Back to Sign In */}
-      <Link 
-        to="/sign-in" 
-        className="absolute top-8 left-8 flex items-center gap-2 text-white/60 hover:text-white transition-colors"
-      >
-        <ArrowLeft className="w-5 h-5" />
-        <span>Back to Sign In</span>
-      </Link>
-
-      {/* Main Content */}
-      <div className="w-full max-w-md px-6">
-        <div className="glass-ultra border border-white/10 rounded-3xl p-8 relative overflow-hidden">
-          {/* Header */}
-          <div className="text-center mb-8">
-            <div className="w-16 h-16 mx-auto mb-6 rounded-full glass-premium border border-blue-500/20 flex items-center justify-center">
-              <Mail className="w-8 h-8 text-blue-400" />
-            </div>
-            
-            <h1 className="text-3xl font-light text-white mb-2">
-              Reset Password
-            </h1>
-            <p className="text-white/60">
-              Enter your email and we'll send you a reset link
-            </p>
-          </div>
-
-          {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Email Field */}
+    <div className="min-h-screen bg-gradient-to-br from-black via-purple-900/30 to-black relative overflow-hidden">
+      {/* Background effects - Consistent violet theme */}
+      <div className="absolute inset-0 bg-gradient-to-br from-purple-600/8 via-transparent to-violet-600/5 pointer-events-none"></div>
+      <div className="absolute inset-0 bg-gradient-to-t from-purple-900/5 via-transparent to-transparent pointer-events-none"></div>
+      
+      <div className="flex items-center justify-center min-h-screen p-4">
+        <Card className="w-full max-w-md bg-white/5 border-purple-500/20 backdrop-blur-xl">
+          <CardHeader className="space-y-1">
+            <CardTitle className="text-2xl text-center text-white">Reset Password</CardTitle>
+            <CardDescription className="text-center text-white/60">
+              Enter your email to receive a password reset link
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email" className="text-white/80">
-                Email Address
-              </Label>
+              <Label htmlFor="email" className="text-white/80">Email</Label>
               <Input
                 id="email"
-                name="email"
                 type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email"
-                className="glass-premium border-white/10 bg-white/5 text-white placeholder:text-white/40 focus:border-blue-500/50"
-                required
+                className="bg-white/5 border-purple-500/20 text-white placeholder:text-white/40"
               />
             </div>
-
-            {/* Submit Button */}
-            <button type="submit" className="premium-glow-button w-full">
-              <span>Send Reset Link</span>
-            </button>
-          </form>
-
-          {/* Sign In Link */}
-          <div className="text-center mt-8">
-            <p className="text-white/60">
+            <Button className="w-full bg-gradient-to-r from-purple-500/20 to-violet-500/20 hover:from-purple-500/30 hover:to-violet-500/30 border border-purple-500/30 text-white">
+              Send Reset Link
+            </Button>
+            <div className="text-center text-sm text-white/60">
               Remember your password?{' '}
-              <Link 
-                to="/sign-in" 
-                className="text-blue-400 hover:text-blue-300 transition-colors font-medium"
-              >
-                Sign in here
+              <Link to="/signin" className="text-purple-400 hover:text-purple-300">
+                Sign in
               </Link>
-            </p>
-          </div>
-        </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
