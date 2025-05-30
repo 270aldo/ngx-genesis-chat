@@ -83,7 +83,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({ activeAgent, onQuickMess
         {[...Array(6)].map((_, i) => (
           <div
             key={i}
-            className="absolute w-1 h-1 bg-blue-500/20 rounded-full floating-animation"
+            className="absolute w-1 h-1 bg-purple-500/20 rounded-full floating-animation"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
@@ -97,10 +97,10 @@ export const EmptyState: React.FC<EmptyStateProps> = ({ activeAgent, onQuickMess
       <div className="text-center space-y-8 max-w-2xl mx-auto p-8 relative z-10">
         {/* Main icon with premium effects */}
         <div className="relative mx-auto w-20 h-20">
-          <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-500/20 to-purple-500/20 pulse-ring"></div>
+          <div className="absolute inset-0 rounded-full bg-gradient-to-br from-purple-500/20 to-violet-500/20 pulse-ring"></div>
           <div className={cn(
-            "relative w-20 h-20 rounded-full glass-premium flex items-center justify-center glow-subtle",
-            activeAgent && `bg-gradient-to-br ${activeAgent.color}`
+            "relative w-20 h-20 rounded-full glass-premium flex items-center justify-center shadow-lg shadow-purple-500/20",
+            "bg-gradient-to-br from-purple-600/20 to-violet-600/20 border border-purple-500/30"
           )}>
             <div className="text-2xl">{activeAgent?.avatar || '🧠'}</div>
           </div>
@@ -108,7 +108,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({ activeAgent, onQuickMess
 
         {/* Title and description */}
         <div className="space-y-4">
-          <h1 className="text-4xl font-light tracking-tight bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent">
+          <h1 className="text-4xl font-light tracking-tight bg-gradient-to-r from-white via-purple-100 to-violet-100 bg-clip-text text-transparent">
             {activeAgent?.name || 'NGX Agents'}
           </h1>
           <p className="text-lg text-muted-foreground font-light max-w-md mx-auto leading-relaxed">
@@ -128,7 +128,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({ activeAgent, onQuickMess
               key={index}
               onClick={() => onQuickMessage(message)}
               variant="ghost"
-              className="px-6 py-3 text-sm font-medium rounded-full glass-ultra hover:glass-premium transition-all duration-300 border border-white/5 hover:border-white/10 hover:scale-105 shimmer-premium"
+              className="px-6 py-3 text-sm font-medium rounded-full glass-ultra hover:glass-premium transition-all duration-300 border border-purple-500/10 hover:border-purple-500/20 hover:scale-105 shimmer-premium hover:bg-purple-500/5"
             >
               {message}
             </Button>

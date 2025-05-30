@@ -6,6 +6,7 @@ import { useAgentStore } from '@/store/agentStore';
 import { useChatStore } from '@/store/chatStore';
 import { cn } from '@/lib/utils';
 import { Dumbbell, Calendar, Camera, BarChart3, Target, Clock, Apple, Utensils, Activity, Moon, Zap, Heart, Shield, Wind, Snowflake, Sun, Trophy, Map, CheckCircle, Sparkles } from 'lucide-react';
+
 const agentActions = {
   'training-strategist': [{
     label: 'Create Workout Plan',
@@ -140,57 +141,75 @@ const agentActions = {
     prompt: 'Let\'s acknowledge my achievements and plan some rewards'
   }]
 };
+
 export const QuickActionsButton: React.FC = () => {
-  const {
-    getActiveAgent
-  } = useAgentStore();
-  const {
-    addMessage,
-    getCurrentConversation,
-    createConversation
-  } = useChatStore();
+  const { getActiveAgent } = useAgentStore();
+  const { addMessage, getCurrentConversation, createConversation } = useChatStore();
   const [open, setOpen] = useState(false);
+  
   const activeAgent = getActiveAgent();
   const actions = activeAgent ? agentActions[activeAgent.id as keyof typeof agentActions] || [] : [];
+
   const handleQuickAction = (prompt: string) => {
     let conversationId = getCurrentConversation()?.id;
+    
     if (!conversationId) {
       conversationId = createConversation();
     }
+    
     addMessage(conversationId, {
       content: prompt,
       role: 'user',
       agentId: activeAgent?.id
     });
+    
     setOpen(false);
   };
+
   if (actions.length === 0) return null;
-  return <Popover open={open} onOpenChange={setOpen}>
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        
+        <Button
+          variant="ghost"
+          size="icon"
+          className="h-9 w-9 text-white/40 hover:text-white/60 hover:bg-purple-500/10 transition-all duration-200 rounded-xl border border-transparent hover:border-purple-500/20"
+        >
+          <Sparkles className="h-4 w-4" />
+        </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-80 p-4 bg-black/90 backdrop-blur-xl border border-white/10" align="end">
+      <PopoverContent className="w-80 p-4 bg-black/90 backdrop-blur-xl border border-purple-500/20" align="end">
         <div className="space-y-3">
           <div className="flex items-center gap-2 mb-3">
-            <Sparkles className="w-4 h-4 text-blue-400" />
+            <Sparkles className="w-4 h-4 text-purple-400" />
             <h3 className="font-medium text-white">Quick Actions</h3>
-            <Badge variant="secondary" className="bg-blue-500/20 text-blue-300 text-xs">
+            <Badge variant="secondary" className="bg-purple-500/20 text-purple-300 text-xs border border-purple-500/30">
               {activeAgent?.name}
             </Badge>
           </div>
           
           <div className="grid grid-cols-2 gap-2">
             {actions.map((action, index) => {
-            const Icon = action.icon;
-            return <Button key={index} variant="ghost" size="sm" onClick={() => handleQuickAction(action.prompt)} className="flex flex-col gap-1.5 h-auto py-3 px-3 text-xs text-white/70 hover:text-white hover:bg-white/10 rounded-xl border border-transparent hover:border-white/10 transition-all duration-200">
+              const Icon = action.icon;
+              return (
+                <Button
+                  key={index}
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => handleQuickAction(action.prompt)}
+                  className="flex flex-col gap-1.5 h-auto py-3 px-3 text-xs text-white/70 hover:text-white hover:bg-purple-500/10 rounded-xl border border-transparent hover:border-purple-500/20 transition-all duration-200 premium-button"
+                >
                   <Icon className="w-4 h-4 flex-shrink-0" />
                   <span className="leading-tight text-center font-medium">
                     {action.label}
                   </span>
-                </Button>;
-          })}
+                </Button>
+              );
+            })}
           </div>
         </div>
       </PopoverContent>
-    </Popover>;
+    </Popover>
+  );
 };

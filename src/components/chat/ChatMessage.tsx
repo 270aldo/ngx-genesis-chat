@@ -28,7 +28,8 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
   const agent = message.agentId ? getAgent(message.agentId) : null;
   const agentAvatar = agent?.avatar || '🤖';
   const agentName = agent?.name || 'NGX Agent';
-  const agentColor = agent?.color || 'from-blue-500 to-purple-600';
+  // Updated to use violet color scheme
+  const agentColor = 'from-purple-500 to-violet-600';
 
   return (
     <div
@@ -44,7 +45,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
           'flex-shrink-0 w-8 h-8 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center relative',
           isUser
             ? 'glass-premium border border-white/10'
-            : `glass-premium border border-white/10 bg-gradient-to-br ${agentColor} glow-subtle`
+            : `glass-premium border border-purple-500/20 bg-gradient-to-br ${agentColor} shadow-lg shadow-purple-500/10`
         )}
       >
         {isUser ? (
@@ -52,7 +53,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
         ) : (
           <>
             <span className="text-sm sm:text-lg">{agentAvatar}</span>
-            <Sparkles className="w-2 h-2 sm:w-3 sm:h-3 text-white absolute -top-0.5 -right-0.5 sm:-top-1 sm:-right-1" />
+            <Sparkles className="w-2 h-2 sm:w-3 sm:h-3 text-purple-400 absolute -top-0.5 -right-0.5 sm:-top-1 sm:-right-1" />
           </>
         )}
       </div>
@@ -63,7 +64,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
         {isAssistant && agent && (
           <div className="flex items-center gap-2">
             <span className="text-xs sm:text-sm font-medium text-white/80">{agentName}</span>
-            <span className="text-xs text-white/40">{agent.specialty}</span>
+            <span className="text-xs text-purple-400/60">{agent.specialty}</span>
           </div>
         )}
         
@@ -73,7 +74,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
             'inline-block max-w-full rounded-xl sm:rounded-2xl relative overflow-hidden',
             isUser
               ? 'glass-premium border border-white/10 px-3 py-2 sm:px-6 sm:py-4'
-              : `glass-ultra border border-white/10 px-3 py-2 sm:px-6 sm:py-4 bg-gradient-to-br ${agentColor}/10`,
+              : `glass-ultra border border-purple-500/10 px-3 py-2 sm:px-6 sm:py-4 bg-gradient-to-br ${agentColor}/10`,
             'backdrop-blur-xl'
           )}
         >
@@ -133,13 +134,13 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
           <div className={cn('text-xs text-muted-foreground/50 space-x-2 sm:space-x-4', isUser && 'text-right')}>
             {message.metadata.confidence && (
               <span className="inline-flex items-center gap-1">
-                <div className="w-1 h-1 rounded-full bg-green-400"></div>
+                <div className="w-1 h-1 rounded-full bg-purple-400"></div>
                 {Math.round(message.metadata.confidence * 100)}% confidence
               </span>
             )}
             {message.metadata.processingTime && (
               <span className="inline-flex items-center gap-1">
-                <div className="w-1 h-1 rounded-full bg-blue-400"></div>
+                <div className="w-1 h-1 rounded-full bg-violet-400"></div>
                 {message.metadata.processingTime}ms
               </span>
             )}
