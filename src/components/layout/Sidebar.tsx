@@ -14,7 +14,7 @@ import {
   User,
   ChevronLeft,
   Brain,
-  LayoutDashboard,
+  TrendingUp,
   Menu
 } from 'lucide-react';
 
@@ -146,7 +146,7 @@ export const Sidebar: React.FC = () => {
       {/* Footer */}
       <div className="p-3 border-t border-sidebar-border">
         <div className="space-y-1">
-          <Link to="/dashboard">
+          <Link to="/dashboard/progress">
             <Button
               variant="ghost"
               className={cn(
@@ -154,8 +154,8 @@ export const Sidebar: React.FC = () => {
                 (sidebarOpen || isMobile) ? "justify-start gap-2" : "justify-center px-2"
               )}
             >
-              <LayoutDashboard className="h-4 w-4 flex-shrink-0" />
-              {(sidebarOpen || isMobile) && <span>Dashboard</span>}
+              <TrendingUp className="h-4 w-4 flex-shrink-0" />
+              {(sidebarOpen || isMobile) && <span>Progress Dashboard</span>}
             </Button>
           </Link>
           <Link to="/settings">
