@@ -71,3 +71,10 @@ Yes, you can!
 To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+
+## Continuous Integration
+
+Pull requests trigger a GitHub Actions workflow that installs dependencies and
+executes linting. Any available tests are also run automatically. Optional build
+steps exist for desktop or mobile targets when corresponding `npm` scripts are
+defined.
