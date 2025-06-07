@@ -60,6 +60,10 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
+## Preparing for Desktop Packaging
+
+If you need to distribute the application as a native desktop app you can use either **Electron** or **Tauri**. See [docs/desktop-evaluation.md](docs/desktop-evaluation.md) for a comparison and setup steps.
+
 ## How can I deploy this project?
 
 Simply open [Lovable](https://lovable.dev/projects/a7bc901c-f7e7-4551-ab21-949f9d00b0a3) and click on Share -> Publish.
