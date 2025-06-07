@@ -71,3 +71,8 @@ Yes, you can!
 To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+
+## Mobile strategy
+
+See [docs/mobile-strategy.md](docs/mobile-strategy.md) for a discussion on using React Native or converting the web app to a PWA as a first step toward native apps.
+
