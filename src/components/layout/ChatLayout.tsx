@@ -51,7 +51,7 @@ export const ChatLayout: React.FC = () => {
     if (isMobile && sidebarOpen) {
       toggleSidebar();
     }
-  }, [isMobile]);
+  }, [isMobile, sidebarOpen, toggleSidebar]);
 
   const onSendMessage = async (content: string) => {
     const shouldShowBiometrics = await handleSendMessage(content);

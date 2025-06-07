@@ -37,7 +37,7 @@ interface TrainingState {
   planHistory: TrainingPlan[];
   isUploading: boolean;
   uploadProgress: number;
-  workoutLogs: Record<string, any[]>;
+  workoutLogs: Record<string, Record<string, unknown>[]>;
 
   // Actions
   setCurrentPlan: (plan: TrainingPlan) => void;
@@ -46,7 +46,11 @@ interface TrainingState {
   setUploadProgress: (progress: number) => void;
   clearCurrentPlan: () => void;
   completeWorkout: (workoutId: string) => void;
-  logExercise: (workoutId: string, exerciseId: string, data: any) => void;
+  logExercise: (
+    workoutId: string,
+    exerciseId: string,
+    data: Record<string, unknown>
+  ) => void;
 }
 
 export const useTrainingStore = create<TrainingState>()(
@@ -91,7 +95,11 @@ export const useTrainingStore = create<TrainingState>()(
         });
       },
 
-      logExercise: (workoutId: string, exerciseId: string, data: any) => {
+      logExercise: (
+        workoutId: string,
+        exerciseId: string,
+        data: Record<string, unknown>
+      ) => {
         set((state) => ({
           workoutLogs: {
             ...state.workoutLogs,

@@ -22,15 +22,15 @@ export const MessageList: React.FC<MessageListProps> = ({
   const [showScrollButtons, setShowScrollButtons] = useState(false);
   const [isNearBottom, setIsNearBottom] = useState(true);
 
-  const scrollToBottom = () => {
+  const scrollToBottom = React.useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
+  }, []);
 
-  const scrollToTop = () => {
+  const scrollToTop = React.useCallback(() => {
     scrollAreaRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  }, []);
 
-  const handleScroll = () => {
+  const handleScroll = React.useCallback(() => {
     if (!scrollAreaRef.current) return;
     
     const { scrollTop, scrollHeight, clientHeight } = scrollAreaRef.current;
@@ -39,21 +39,21 @@ export const MessageList: React.FC<MessageListProps> = ({
     
     setIsNearBottom(isAtBottom);
     setShowScrollButtons(hasScroll && conversation.messages.length > 3);
-  };
+  }, [conversation.messages.length]);
 
   useEffect(() => {
     scrollToBottom();
-  }, [conversation.messages]);
+  }, [conversation.messages, scrollToBottom]);
 
   useEffect(() => {
     const scrollElement = scrollAreaRef.current;
     if (scrollElement) {
       scrollElement.addEventListener('scroll', handleScroll);
       handleScroll(); // Check initial state
-      
+
       return () => scrollElement.removeEventListener('scroll', handleScroll);
     }
-  }, [conversation.messages.length]);
+  }, [conversation.messages.length, handleScroll]);
 
   return (
     <>
