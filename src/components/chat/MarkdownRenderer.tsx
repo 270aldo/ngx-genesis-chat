@@ -12,11 +12,11 @@ interface MarkdownRendererProps {
 }
 
 interface CodeProps {
-  node?: any;
+  node?: React.ReactNode;
   inline?: boolean;
   className?: string;
   children?: React.ReactNode;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, className }) => {

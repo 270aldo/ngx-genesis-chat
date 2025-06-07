@@ -6,26 +6,30 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
-import { Palette, Monitor, Sun, Moon } from 'lucide-react';
+import { Palette, Monitor, Sun, Moon, type LucideIcon } from 'lucide-react';
 
 export const AppearanceSettings: React.FC = () => {
   const { settings, updateSettings } = useSettingsStore();
 
-  const handleThemeChange = (theme: 'light' | 'dark' | 'system') => {
+  type Theme = 'light' | 'dark' | 'system';
+
+  const handleThemeChange = (theme: Theme) => {
     updateSettings({ theme });
   };
 
-  const handleLanguageChange = (language: 'en' | 'es' | 'fr' | 'de') => {
+  type Language = 'en' | 'es' | 'fr' | 'de';
+
+  const handleLanguageChange = (language: Language) => {
     updateSettings({ language });
   };
 
-  const themeOptions = [
+  const themeOptions: { value: Theme; label: string; icon: LucideIcon }[] = [
     { value: 'dark', label: 'Dark', icon: Moon },
     { value: 'light', label: 'Light', icon: Sun },
     { value: 'system', label: 'System', icon: Monitor },
   ];
 
-  const languageOptions = [
+  const languageOptions: { value: Language; label: string }[] = [
     { value: 'en', label: 'English' },
     { value: 'es', label: 'Español' },
     { value: 'fr', label: 'Français' },
@@ -62,7 +66,7 @@ export const AppearanceSettings: React.FC = () => {
                         ? 'bg-gradient-to-r from-purple-500 to-violet-600 text-white'
                         : 'text-white border-white/20 hover:bg-white/5'
                     }`}
-                    onClick={() => handleThemeChange(option.value as any)}
+                    onClick={() => handleThemeChange(option.value)}
                   >
                     <Icon className="w-5 h-5" />
                     <span className="text-sm">{option.label}</span>

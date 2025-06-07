@@ -27,5 +27,5 @@ export interface AgentMessage {
   content: string;
   timestamp: Date;
   type: 'analysis' | 'recommendation' | 'insight' | 'plan' | 'alert';
-  data?: any;
+  data?: Record<string, unknown>;
 }

@@ -2,6 +2,7 @@
 import { useAgentStore } from '@/store/agentStore';
 import { useChatStore } from '@/store/chatStore';
 import { toastAI, toastSuccess } from '@/components/ui/enhanced-toast';
+import type { Agent } from '@/types/agent';
 
 export const useChatMessageHandlers = () => {
   const {
@@ -76,7 +77,7 @@ export const useChatMessageHandlers = () => {
     return isBiometricsQuery;
   };
 
-  const generateAgentResponse = (userMessage: string, agent: any) => {
+  const generateAgentResponse = (userMessage: string, agent: Agent | null) => {
     const responses = {
       'training-strategist': [
         `Based on your request "${userMessage.toLowerCase()}", I'll design a personalized training program. Your current fitness level and goals suggest we should focus on progressive overload with compound movements. Let me create a structured plan that will maximize your results while ensuring proper recovery.`,

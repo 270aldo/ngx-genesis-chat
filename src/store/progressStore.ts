@@ -97,7 +97,7 @@ export const useProgressStore = create<ProgressState>()(
       getFilteredData: () => {
         const { progressData, selectedTimeframe } = get();
         const now = new Date();
-        let startDate = new Date();
+        const startDate = new Date();
 
         switch (selectedTimeframe) {
           case '1W':
