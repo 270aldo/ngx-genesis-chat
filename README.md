@@ -4,6 +4,27 @@
 
 **URL**: https://lovable.dev/projects/a7bc901c-f7e7-4551-ab21-949f9d00b0a3
 
+## Purpose and Features
+
+NGX Genesis Chat is a front‑end application showcasing a multi‑agent chat
+experience. The project demonstrates a premium user interface and includes
+several key features:
+
+- **Advanced AI agents** – specialized agents capable of complex reasoning and
+  task execution.
+- **Real‑time processing** – quick streaming responses with instant feedback.
+- **Premium interface** – a modern glassmorphism style with fluid animations.
+
+## Installation
+
+Clone the repository and install the dependencies using npm:
+
+```sh
+git clone <YOUR_GIT_URL>
+cd <YOUR_PROJECT_NAME>
+npm install
+```
+
 ## How can I edit this code?
 
 There are several ways of editing your application.
@@ -50,6 +71,15 @@ npm run dev
 - Click on "New codespace" to launch a new Codespace environment.
 - Edit files directly within the Codespace and commit and push your changes once you're done.
 
+## Development
+
+Use the following commands during development:
+
+```sh
+npm run dev   # Start the local dev server
+npm run lint  # Lint the project with ESLint
+```
+
 ## What technologies are used for this project?
 
 This project is built with:
@@ -59,6 +89,18 @@ This project is built with:
 - React
 - shadcn-ui
 - Tailwind CSS
+
+## Architecture
+
+The source code resides in the `src/` folder and is organized as follows:
+
+- **pages/** – top‑level routes rendered via React Router.
+- **components/** – reusable UI pieces including chat and dashboard widgets.
+- **store/** – Zustand stores for application state management.
+- **styles/** – global styles built with Tailwind CSS.
+
+`Vite` handles bundling and development, while the application entry point is
+`src/main.tsx`, which mounts the `App` component.
 
 ## How can I deploy this project?
 
