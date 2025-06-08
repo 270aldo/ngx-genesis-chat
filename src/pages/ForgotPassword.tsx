@@ -4,15 +4,28 @@ import { Link } from 'react-router-dom';
 import { ArrowLeft, Mail, CheckCircle } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/lib/supabaseClient';
 
 const ForgotPassword: React.FC = () => {
   const [email, setEmail] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implementar lógica de reset password con Supabase
-    console.log('Password reset for:', email);
+    setIsLoading(true);
+    const { error } = await supabase.auth.resetPasswordForEmail(email);
+
+    if (error) {
+      toast({ title: 'Error', description: error.message, variant: 'destructive' });
+      setIsLoading(false);
+      return;
+    }
+
+    toast({ title: 'Email sent', description: 'Check your inbox for the reset link.' });
+    setIsLoading(false);
     setIsSubmitted(true);
   };
 
@@ -115,8 +128,12 @@ const ForgotPassword: React.FC = () => {
             </div>
 
             {/* Submit Button */}
-            <button type="submit" className="w-full bg-gradient-to-r from-purple-500 to-violet-600 hover:from-purple-600 hover:to-violet-700 text-white font-medium py-3 px-4 rounded-xl transition-all duration-200 shadow-lg shadow-purple-500/25">
-              <span>Send Reset Link</span>
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="w-full bg-gradient-to-r from-purple-500 to-violet-600 hover:from-purple-600 hover:to-violet-700 text-white font-medium py-3 px-4 rounded-xl transition-all duration-200 shadow-lg shadow-purple-500/25 disabled:opacity-50"
+            >
+              <span>{isLoading ? 'Sending...' : 'Send Reset Link'}</span>
             </button>
           </form>
 

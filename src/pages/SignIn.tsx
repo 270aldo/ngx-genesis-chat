@@ -1,10 +1,13 @@
 
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/lib/supabaseClient';
+import { useAuthStore } from '@/store/authStore';
 
 const SignIn: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -12,6 +15,10 @@ const SignIn: React.FC = () => {
     email: '',
     password: ''
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+  const { toast } = useToast();
+  const { setUser, setSession } = useAuthStore();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -20,10 +27,33 @@ const SignIn: React.FC = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implementar lógica de login con Supabase
-    console.log('Login attempt:', formData);
+    setIsLoading(true);
+
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: formData.email,
+      password: formData.password,
+    });
+
+    if (error) {
+      toast({ title: 'Error', description: error.message, variant: 'destructive' });
+    } else if (data.session && data.user) {
+      setSession(data.session);
+      setUser({
+        id: data.user.id,
+        email: data.user.email || '',
+        name: data.user.user_metadata?.name || '',
+        avatar: data.user.user_metadata?.avatar_url,
+        createdAt: new Date(data.user.created_at),
+        subscription: data.user.user_metadata?.subscription,
+        tokens: data.user.user_metadata?.tokens ?? 100,
+      });
+      toast({ title: 'Signed in', description: 'Welcome back!' });
+      navigate('/dashboard');
+    }
+
+    setIsLoading(false);
   };
 
   return (
@@ -110,8 +140,12 @@ const SignIn: React.FC = () => {
             </div>
 
             {/* Sign In Button */}
-            <button type="submit" className="w-full bg-gradient-to-r from-purple-500 to-violet-600 hover:from-purple-600 hover:to-violet-700 text-white font-medium py-3 px-4 rounded-xl transition-all duration-200 shadow-lg shadow-purple-500/25">
-              <span>Sign In</span>
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="w-full bg-gradient-to-r from-purple-500 to-violet-600 hover:from-purple-600 hover:to-violet-700 text-white font-medium py-3 px-4 rounded-xl transition-all duration-200 shadow-lg shadow-purple-500/25 disabled:opacity-50"
+            >
+              <span>{isLoading ? 'Signing In...' : 'Sign In'}</span>
             </button>
           </form>
 
