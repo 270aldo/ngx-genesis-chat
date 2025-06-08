@@ -1,23 +1,68 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useSettingsStore } from '@/store/settingsStore';
+import { useAuthStore } from '@/store/authStore';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
-import { Shield, Key, Database, AlertTriangle } from 'lucide-react';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
+import { toastSuccess, toastError } from '@/components/ui/enhanced-toast';
+import { Key, Database, AlertTriangle, Loader2 } from 'lucide-react';
 
 export const SecuritySettings: React.FC = () => {
   const { settings, updatePrivacy } = useSettingsStore();
+  const { logout } = useAuthStore();
 
-  const handleExportData = () => {
-    console.log('Export user data');
-    // TODO: Implement data export
+  const [isExporting, setIsExporting] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const handleExportData = async () => {
+    setIsExporting(true);
+    try {
+      const res = await fetch('/api/export-data');
+      if (!res.ok) throw new Error('Request failed');
+      const blob = await res.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'user-data.json';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+      toastSuccess('Data exported', 'Your data file has been downloaded');
+    } catch (err) {
+      console.error('Export failed', err);
+      toastError('Export failed', 'Unable to export your data');
+    } finally {
+      setIsExporting(false);
+    }
   };
 
-  const handleDeleteAccount = () => {
-    console.log('Delete account requested');
-    // TODO: Implement account deletion with confirmation
+  const handleDeleteAccount = async () => {
+    setIsDeleting(true);
+    try {
+      const res = await fetch('/api/delete-account', { method: 'DELETE' });
+      if (!res.ok) throw new Error('Request failed');
+      toastSuccess('Account deleted');
+      logout();
+    } catch (err) {
+      console.error('Deletion failed', err);
+      toastError('Deletion failed', 'Could not delete account');
+    } finally {
+      setIsDeleting(false);
+    }
   };
 
   return (
@@ -97,12 +142,20 @@ export const SecuritySettings: React.FC = () => {
             >
               Enable Two-Factor Authentication
             </Button>
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               className="w-full text-white border-white/20 hover:bg-white/5"
               onClick={handleExportData}
+              disabled={isExporting}
             >
-              Export My Data
+              {isExporting ? (
+                <>
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  Exporting...
+                </>
+              ) : (
+                'Export My Data'
+              )}
             </Button>
           </div>
         </CardContent>
@@ -120,13 +173,37 @@ export const SecuritySettings: React.FC = () => {
             <p className="text-white/60 text-sm">
               Once you delete your account, there is no going back. Please be certain.
             </p>
-            <Button 
-              variant="destructive" 
-              className="bg-red-600 hover:bg-red-700"
-              onClick={handleDeleteAccount}
-            >
-              Delete Account
-            </Button>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button
+                  variant="destructive"
+                  className="bg-red-600 hover:bg-red-700"
+                >
+                  Delete Account
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Confirm Deletion</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This action will permanently remove your account and all data.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel disabled={isDeleting}>Cancel</AlertDialogCancel>
+                  <AlertDialogAction onClick={handleDeleteAccount} disabled={isDeleting}>
+                    {isDeleting ? (
+                      <>
+                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                        Deleting...
+                      </>
+                    ) : (
+                      'Delete'
+                    )}
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </div>
         </CardContent>
       </Card>
