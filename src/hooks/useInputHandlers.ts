@@ -23,7 +23,7 @@ export const useInputHandlers = (onSendMessage: (content: string) => void, disab
     }
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
+  const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSubmit();
@@ -37,6 +37,6 @@ export const useInputHandlers = (onSendMessage: (content: string) => void, disab
     setIsFocused,
     textareaRef,
     handleSubmit,
-    handleKeyPress
+    handleKeyDown
   };
 };

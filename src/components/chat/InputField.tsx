@@ -10,7 +10,7 @@ interface InputFieldProps {
   isFocused: boolean;
   setIsFocused: (focused: boolean) => void;
   textareaRef: React.RefObject<HTMLTextAreaElement>;
-  handleKeyPress: (e: React.KeyboardEvent) => void;
+  handleKeyDown: (e: React.KeyboardEvent) => void;
   disabled?: boolean;
   isTyping: boolean;
 }
@@ -21,7 +21,7 @@ export const InputField: React.FC<InputFieldProps> = ({
   isFocused,
   setIsFocused,
   textareaRef,
-  handleKeyPress,
+  handleKeyDown,
   disabled,
   isTyping
 }) => {
@@ -33,7 +33,7 @@ export const InputField: React.FC<InputFieldProps> = ({
         ref={textareaRef}
         value={input}
         onChange={(e) => setInput(e.target.value)}
-        onKeyPress={handleKeyPress}
+        onKeyDown={handleKeyDown}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
         placeholder={isTyping ? "NGX Agent is thinking..." : "Ask me anything..."}
