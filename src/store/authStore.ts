@@ -1,6 +1,7 @@
 
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import type { Session } from '@supabase/supabase-js';
 
 export interface User {
   id: string;
@@ -14,11 +15,13 @@ export interface User {
 
 interface AuthState {
   user: User | null;
+  session: Session | null;
   isAuthenticated: boolean;
   isLoading: boolean;
   
   // Actions
   setUser: (user: User) => void;
+  setSession: (session: Session | null) => void;
   logout: () => void;
   updateProfile: (updates: Partial<User>) => void;
   setLoading: (loading: boolean) => void;
@@ -31,6 +34,7 @@ export const useAuthStore = create<AuthState>()(
   persist(
     (set, get) => ({
       user: null,
+      session: null,
       isAuthenticated: false,
       isLoading: false,
 
@@ -43,8 +47,12 @@ export const useAuthStore = create<AuthState>()(
         set({ user: userWithTokens, isAuthenticated: true });
       },
 
+      setSession: (session: Session | null) => {
+        set({ session });
+      },
+
       logout: () => {
-        set({ user: null, isAuthenticated: false });
+        set({ user: null, session: null, isAuthenticated: false });
       },
 
       updateProfile: (updates: Partial<User>) => {
@@ -92,6 +100,7 @@ export const useAuthStore = create<AuthState>()(
       partialize: (state) => ({
         user: state.user,
         isAuthenticated: state.isAuthenticated,
+        session: state.session,
       }),
     }
   )
