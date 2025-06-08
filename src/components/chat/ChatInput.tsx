@@ -25,7 +25,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, disabled })
     setIsFocused,
     textareaRef,
     handleSubmit,
-    handleKeyPress
+    handleKeyDown
   } = useInputHandlers(onSendMessage, disabled);
 
   useQuickMessageListener(onSendMessage);
@@ -48,7 +48,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, disabled })
             isFocused={isFocused}
             setIsFocused={setIsFocused}
             textareaRef={textareaRef}
-            handleKeyPress={handleKeyPress}
+            handleKeyDown={handleKeyDown}
             disabled={disabled}
             isTyping={isTyping}
           />
