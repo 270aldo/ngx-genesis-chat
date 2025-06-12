@@ -1,6 +1,7 @@
 
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { randomUUID } from 'crypto';
 
 export interface Message {
   id: string;
@@ -72,7 +73,7 @@ export const useChatStore = create<ChatState>()(
       },
 
       createConversation: (agentId?: string) => {
-        const id = Date.now().toString();
+        const id = randomUUID();
         const newConversation: Conversation = {
           id,
           title: 'New Conversation',
@@ -95,7 +96,7 @@ export const useChatStore = create<ChatState>()(
       },
 
       addMessage: (conversationId: string, message: Omit<Message, 'id' | 'timestamp'>) => {
-        const messageId = Date.now().toString();
+        const messageId = randomUUID();
         const newMessage: Message = {
           ...message,
           id: messageId,
