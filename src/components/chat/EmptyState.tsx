@@ -15,59 +15,59 @@ export const EmptyState: React.FC<EmptyStateProps> = ({ activeAgent, onQuickMess
     if (!activeAgent) return [];
 
     const agentSpecificMessages = {
-      'training-strategist': [
-        "Diseña mi rutina de entrenamiento",
-        "¿Cómo ganar músculo efectivamente?",
+      'blaze': [
+        "Diseña mi rutina de hipertrofia",
         "Plan de fuerza personalizado",
-        "Ejercicios para entrenar en casa"
+        "Análisis biomecánico avanzado",
+        "Periodización para ganancia muscular"
       ],
-      'nutrition-architect': [
-        "Calcula mis macros diarios",
-        "Plan de comidas saludable",
-        "¿Qué suplementos necesito?",
-        "Recetas rápidas y nutritivas"
+      'sage': [
+        "Nutrición de precisión personalizada",
+        "Protocolo de suplementación estratégica",
+        "Timing nutricional óptimo",
+        "Análisis nutrigenómico"
       ],
-      'biometrics-engine': [
-        "Analiza mis datos de sueño",
-        "Interpreta mi HRV",
-        "Optimizar mi recuperación",
-        "Tendencias de mis métricas"
+      'wave': [
+        "Análisis HRV profundo",
+        "Optimización circadiana",
+        "Protocolos de recuperación avanzada",
+        "Estrategias de sueño profundo"
       ],
-      'biohacking-innovator': [
-        "Protocolo de frío y calor",
-        "Optimizar mi circadiano",
-        "Stack de suplementos",
-        "Técnicas de biohacking"
+      'luna': [
+        "Entrenamiento por ciclos hormonales",
+        "Nutrición femenina por fases",
+        "Optimización hormonal natural",
+        "Salud reproductiva integral"
       ],
-      'motivation-coach': [
-        "Construir hábitos duraderos",
-        "Superar barreras mentales",
-        "Mantener la motivación",
-        "Estrategias de disciplina"
+      'spark': [
+        "Psicología de hábitos duraderos",
+        "Sistemas de motivación intrínseca",
+        "Superar creencias limitantes",
+        "Mentalidad NGX de élite"
       ],
-      'progress-tracker': [
-        "Analizar mi progreso",
-        "Establecer nuevas metas",
-        "Comparar mis fotos",
-        "Predicción de resultados"
+      'stella': [
+        "KPIs fisiológicos avanzados",
+        "Análisis de progreso integral",
+        "Bioestadística personalizada",
+        "Dashboard de métricas NGX"
       ],
-      'recovery-corrective': [
-        "Plan de movilidad",
-        "Prevenir lesiones",
-        "Optimizar mi sueño",
-        "Rutina de recuperación"
+      'nova': [
+        "Protocolos de biohacking cognitivo",
+        "Optimización cronobiológica",
+        "Stack de nootrópicos personalizados",
+        "Tecnologías de optimización"
       ],
-      'success-liaison': [
-        "Check-in semanal",
-        "Revisar mis objetivos",
-        "Celebrar mis logros",
-        "Planificar el éxito"
+      'codex': [
+        "Interpretación de test genético",
+        "Análisis de polimorfismos",
+        "Nutrigenómica personalizada",
+        "Protocolo basado en ADN"
       ],
-      'orchestrator': [
-        "Crear un plan integral",
-        "Coordinar mis objetivos",
-        "¿Qué agente necesito?",
-        "Análisis completo de fitness"
+      'nexus': [
+        "Crear plan integral NGX",
+        "Coordinar todos los agentes",
+        "Estrategia de éxito personalizada",
+        "Análisis completo multiagente"
       ]
     };
 

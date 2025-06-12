@@ -1,4 +1,3 @@
-
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import type { Agent, AgentMessage } from '@/types/agent';
@@ -24,12 +23,12 @@ export const useAgentStore = create<AgentState>()(
   persist(
     (set, get) => ({
       agents: FITNESS_AGENTS,
-      activeAgentId: 'orchestrator',
+      activeAgentId: 'nexus',
       orchestratorActive: true,
       agentHistory: [],
 
       setActiveAgent: (agentId: string) => {
-        set({ activeAgentId: agentId, orchestratorActive: agentId === 'orchestrator' });
+        set({ activeAgentId: agentId, orchestratorActive: agentId === 'nexus' });
       },
 
       toggleOrchestrator: () => {

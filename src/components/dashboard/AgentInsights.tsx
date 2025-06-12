@@ -10,37 +10,47 @@ import { cn } from '@/lib/utils';
 export const AgentInsights: React.FC = () => {
   const { agents } = useAgentStore();
 
-  // Enhanced mock insights data with better categorization
+  // Enhanced insights data for new NGX agents
   const insights = [
     {
-      agentId: 'training-strategist',
-      title: 'Training Progress Alert',
-      insight: 'Your strength has improved 15% this month. Ready for progressive overload.',
+      agentId: 'blaze',
+      title: 'Alerta de Progreso en Fuerza',
+      insight: 'Tu fuerza ha mejorado 18% este mes. Listo para sobrecarga progresiva avanzada.',
       priority: 'high' as const,
-      action: 'Increase weights by 5-10%',
+      action: 'Incrementar cargas 5-10% próxima semana',
       type: 'success' as const,
       icon: TrendingUp,
-      color: 'green'
+      color: 'orange'
     },
     {
-      agentId: 'nutrition-architect',
-      title: 'Nutrition Optimization',
-      insight: 'Protein intake below target 3 days this week.',
+      agentId: 'sage',
+      title: 'Optimización Nutrigenómica',
+      insight: 'Detecté polimorfismo MTHFR. Ajustar protocolo de folatos.',
       priority: 'medium' as const,
-      action: 'Add protein shake post-workout',
+      action: 'Incorporar folato metilado en suplementación',
       type: 'warning' as const,
       icon: AlertTriangle,
-      color: 'yellow'
+      color: 'emerald'
     },
     {
-      agentId: 'biometrics-engine',
-      title: 'Recovery Status',
-      insight: 'HRV trending down. Consider additional rest day.',
+      agentId: 'wave',
+      title: 'Análisis HRV Profundo',
+      insight: 'HRV descendente 3 días. Activar protocolo de recuperación avanzada.',
       priority: 'high' as const,
-      action: 'Schedule active recovery tomorrow',
+      action: 'Implementar sesión de respiración + crioterapia',
       type: 'alert' as const,
       icon: Brain,
-      color: 'red'
+      color: 'cyan'
+    },
+    {
+      agentId: 'luna',
+      title: 'Optimización Hormonal Femenina',
+      insight: 'Fase lútea detectada. Ajustar intensidad de entrenamiento.',
+      priority: 'medium' as const,
+      action: 'Reducir volumen 15%, enfoque en técnica',
+      type: 'warning' as const,
+      icon: CheckCircle,
+      color: 'pink'
     }
   ];
 
