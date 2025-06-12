@@ -35,11 +35,10 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, cla
                   <span className="text-xs text-gray-400 font-mono">{language}</span>
                 </div>
                 <SyntaxHighlighter
-                  style={oneDark as { [key: string]: React.CSSProperties }}
+                  style={oneDark}
                   language={language}
                   PreTag="div"
                   className="!mt-0 !rounded-t-none !border-t-0"
-                  {...props}
                 >
                   {String(children).replace(/\n$/, '')}
                 </SyntaxHighlighter>

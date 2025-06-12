@@ -1,107 +1,77 @@
 
-import React, { useState, useEffect } from 'react';
-import { ChatSearch } from './ChatSearch';
-import { EmptyState } from './EmptyState';
-import { WelcomeState } from './WelcomeState';
+import React, { useState, useRef, useEffect } from 'react';
+import { ChatInput } from './ChatInput';
 import { MessageList } from './MessageList';
+import { WelcomeState } from './WelcomeState';
 import { useChatStore } from '@/store/chatStore';
 import { useAgentStore } from '@/store/agentStore';
-import { useToast } from '@/hooks/use-toast';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { cn } from '@/lib/utils';
 
-export const ChatArea: React.FC = () => {
-  const { getCurrentConversation, deleteMessage, updateMessage } = useChatStore();
+export const ChatArea = () => {
+  const { getCurrentConversation, updateMessage, deleteMessage } = useChatStore();
   const { getActiveAgent } = useAgentStore();
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [editingMessageId, setEditingMessageId] = useState<string | null>(null);
-  const { toast } = useToast();
+  const isMobile = useIsMobile();
   const conversation = getCurrentConversation();
   const activeAgent = getActiveAgent();
+  const inputRef = useRef<HTMLTextAreaElement>(null);
 
-  // Handle keyboard shortcuts
   useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.ctrlKey || event.metaKey) {
-        if (event.key === 'f') {
-          event.preventDefault();
-          setIsSearchOpen(true);
-        }
-      }
-      if (event.key === 'Escape') {
-        setIsSearchOpen(false);
-        setEditingMessageId(null);
-      }
-    };
-
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
+    inputRef.current?.focus();
   }, []);
 
   const handleEditMessage = (messageId: string) => {
-    setEditingMessageId(messageId);
-    
-    // Find the message to edit
     const message = conversation?.messages.find(m => m.id === messageId);
-    if (message && message.role === 'user') {
-      const newContent = prompt('Edit your message:', message.content);
-      if (newContent !== null && newContent.trim() !== '' && conversation) {
-        updateMessage(conversation.id, messageId, { content: newContent.trim() });
-        toast({
-          title: "Message updated",
-          description: "Your message has been edited successfully.",
-        });
-      }
+    if (message && inputRef.current) {
+      inputRef.current.value = message.content;
+      inputRef.current.focus();
     }
-    setEditingMessageId(null);
   };
 
   const handleDeleteMessage = (messageId: string) => {
     if (conversation) {
-      const confirmDelete = window.confirm('Are you sure you want to delete this message?');
-      if (confirmDelete) {
-        deleteMessage(conversation.id, messageId);
-        toast({
-          title: "Message deleted",
-          description: "The message has been removed from the conversation.",
-        });
-      }
+      deleteMessage(conversation.id, messageId);
     }
-  };
-
-  const handleQuickMessage = (message: string) => {
-    // Dispatch a custom event to send the message
-    const event = new CustomEvent('quickMessageSelected', {
-      detail: { message }
-    });
-    window.dispatchEvent(event);
   };
 
   if (!conversation) {
     return (
-      <>
-        <ChatSearch isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
-        <EmptyState activeAgent={activeAgent} onQuickMessage={handleQuickMessage} />
-      </>
-    );
-  }
-
-  if (conversation.messages.length === 0) {
-    return (
-      <>
-        <ChatSearch isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
-        <WelcomeState activeAgent={activeAgent} />
-      </>
+      <div className="flex-1 flex items-center justify-center">
+        <WelcomeState />
+      </div>
     );
   }
 
   return (
-    <>
-      <ChatSearch isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
-      <MessageList
-        conversation={conversation}
-        editingMessageId={editingMessageId}
-        onEditMessage={handleEditMessage}
-        onDeleteMessage={handleDeleteMessage}
-      />
-    </>
+    <div className="flex-1 flex flex-col relative">
+      {/* Message Area */}
+      <div className="flex-1 flex flex-col min-h-0">
+        {conversation.messages.length === 0 ? (
+          <div className="flex-1 flex items-center justify-center">
+            <WelcomeState />
+          </div>
+        ) : (
+          <MessageList
+            conversation={conversation}
+            onEditMessage={handleEditMessage}
+            onDeleteMessage={handleDeleteMessage}
+          />
+        )}
+      </div>
+
+      {/* Chat Input */}
+      <div className={cn(
+        "relative z-20 border-t border-white/5 bg-black/20 backdrop-blur-xl",
+        isMobile ? "p-3" : "p-4 sm:p-6"
+      )}>
+        <div className="max-w-5xl mx-auto">
+          <ChatInput 
+            textareaRef={inputRef}
+            conversation={conversation}
+            activeAgent={activeAgent}
+          />
+        </div>
+      </div>
+    </div>
   );
 };

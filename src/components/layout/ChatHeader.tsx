@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { AgentSelector } from '../agents/AgentSelector';
-import { ExportOptions } from '../chat/ExportOptions';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 
@@ -23,14 +22,6 @@ export const ChatHeader: React.FC<ChatHeaderProps> = ({
       )}>
         <div className="flex-1 min-w-0">
           <AgentSelector />
-        </div>
-        <div className={cn(
-          "flex-shrink-0 flex items-center",
-          isMobile ? "ml-2 gap-2" : "ml-4 gap-3"
-        )}>
-          {!showBiometrics && (
-            <ExportOptions />
-          )}
         </div>
       </div>
     </div>
