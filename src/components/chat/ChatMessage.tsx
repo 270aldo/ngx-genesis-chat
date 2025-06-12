@@ -1,22 +1,19 @@
-
 import React from 'react';
 import { Message } from '@/store/chatStore';
 import { useAgentStore } from '@/store/agentStore';
 import { cn } from '@/lib/utils';
-import { Bot, User, Sparkles } from 'lucide-react';
+import { User, Sparkles } from 'lucide-react';
 import { MarkdownRenderer } from './MarkdownRenderer';
 import { MessageActions } from './MessageActions';
 
 interface ChatMessageProps {
   message: Message;
-  isLast?: boolean;
   onEditMessage?: (messageId: string) => void;
   onDeleteMessage?: (messageId: string) => void;
 }
 
 export const ChatMessage: React.FC<ChatMessageProps> = ({ 
   message, 
-  isLast,
   onEditMessage,
   onDeleteMessage
 }) => {

@@ -1,6 +1,6 @@
 import { useAgentStore } from '@/store/agentStore';
 import { useChatStore } from '@/store/chatStore';
-import { toastAI, toastSuccess } from '@/components/ui/enhanced-toast';
+import { toastAI } from '@/components/ui/enhanced-toast';
 import type { Agent } from '@/types/agent';
 
 export const useChatMessageHandlers = () => {
@@ -8,7 +8,6 @@ export const useChatMessageHandlers = () => {
     createConversation,
     addMessage,
     setTyping,
-    getCurrentConversation,
     currentConversationId,
     updateMessage,
   } = useChatStore();
@@ -55,7 +54,7 @@ export const useChatMessageHandlers = () => {
       agentId: getActiveAgent()?.id
     });
 
-    const response = generateAgentResponse(content, getActiveAgent());
+    const response = generateAgentResponse(content, getActiveAgent() || null);
     
     setTimeout(() => {
       updateMessage(conversationId!, typingMessageId, {

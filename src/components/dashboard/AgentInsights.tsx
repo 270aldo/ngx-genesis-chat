@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAgentStore } from '@/store/agentStore';
@@ -54,7 +53,7 @@ export const AgentInsights: React.FC = () => {
     }
   ];
 
-  const getPriorityStyle = (priority: string, type: string) => {
+  const getPriorityStyle = (type: string) => {
     if (type === 'success') return 'border-green-500/30 bg-green-500/10';
     if (type === 'warning') return 'border-yellow-500/30 bg-yellow-500/10';
     if (type === 'alert') return 'border-red-500/30 bg-red-500/10';
@@ -98,7 +97,7 @@ export const AgentInsights: React.FC = () => {
               key={index}
               className={cn(
                 "p-4 rounded-xl border backdrop-blur-sm transition-all hover:bg-white/5",
-                getPriorityStyle(insight.priority, insight.type)
+                getPriorityStyle(insight.type)
               )}
             >
               <div className="flex items-start gap-4">
