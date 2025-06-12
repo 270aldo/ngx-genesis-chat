@@ -9,6 +9,7 @@ import { MessageActions } from './MessageActions';
 
 interface ChatMessageProps {
   message: Message;
+  isLast?: boolean;
   onEditMessage?: (messageId: string) => void;
   onDeleteMessage?: (messageId: string) => void;
 }

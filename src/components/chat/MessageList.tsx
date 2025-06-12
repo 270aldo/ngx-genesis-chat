@@ -6,14 +6,12 @@ import type { Conversation } from '@/store/chatStore';
 
 interface MessageListProps {
   conversation: Conversation;
-  editingMessageId: string | null;
   onEditMessage: (messageId: string) => void;
   onDeleteMessage: (messageId: string) => void;
 }
 
 export const MessageList: React.FC<MessageListProps> = ({
   conversation,
-  editingMessageId,
   onEditMessage,
   onDeleteMessage
 }) => {

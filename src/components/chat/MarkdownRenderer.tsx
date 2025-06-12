@@ -35,7 +35,7 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, cla
                   <span className="text-xs text-gray-400 font-mono">{language}</span>
                 </div>
                 <SyntaxHighlighter
-                  style={oneDark}
+                  style={oneDark as { [key: string]: React.CSSProperties }}
                   language={language}
                   PreTag="div"
                   className="!mt-0 !rounded-t-none !border-t-0"

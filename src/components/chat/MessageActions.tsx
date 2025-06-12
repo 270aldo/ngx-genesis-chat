@@ -43,7 +43,6 @@ export const MessageActions: React.FC<MessageActionsProps> = ({
       toast({
         title: "Failed to copy",
         description: "Could not copy message content.",
-        variant: "destructive",
       });
     }
     setIsOpen(false);

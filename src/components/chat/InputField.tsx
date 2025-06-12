@@ -18,7 +18,6 @@ interface InputFieldProps {
 export const InputField: React.FC<InputFieldProps> = ({
   input,
   setInput,
-  isFocused,
   setIsFocused,
   textareaRef,
   handleKeyPress,
