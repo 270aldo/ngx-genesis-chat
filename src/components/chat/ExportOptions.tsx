@@ -8,18 +8,42 @@ import {
   DropdownMenuTrigger,
   DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
+import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 import { useChatStore } from '@/store/chatStore';
 import { useAgentStore } from '@/store/agentStore';
-import { Download, FileText, Share, Copy } from 'lucide-react';
+import { Download, FileText, Share, Copy, Sparkles } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 export const ExportOptions: React.FC = () => {
   const { getCurrentConversation } = useChatStore();
-  const { getAgent } = useAgentStore();
+  const { getAgent, getActiveAgent } = useAgentStore();
   const { toast } = useToast();
   const [isOpen, setIsOpen] = useState(false);
+  const [isExporting, setIsExporting] = useState(false);
 
   const conversation = getCurrentConversation();
+  const activeAgent = getActiveAgent();
+  const messageCount = conversation?.messages?.length || 0;
+
+  // Get agent color for dynamic styling
+  const getAgentGradient = () => {
+    if (!activeAgent) return 'from-purple-500 to-violet-600';
+    
+    const colorMap: Record<string, string> = {
+      'nexus': 'from-purple-500 to-violet-600',
+      'blaze': 'from-orange-500 to-red-600',
+      'sage': 'from-emerald-500 to-green-600',
+      'wave': 'from-cyan-500 to-blue-600',
+      'luna': 'from-pink-500 to-rose-600',
+      'spark': 'from-yellow-500 to-orange-600',
+      'stella': 'from-indigo-500 to-purple-600',
+      'nova': 'from-violet-500 to-purple-600',
+      'codex': 'from-blue-500 to-indigo-600'
+    };
+    
+    return colorMap[activeAgent.id] || 'from-purple-500 to-violet-600';
+  };
 
   const generateConversationText = () => {
     if (!conversation) return '';
@@ -90,41 +114,54 @@ export const ExportOptions: React.FC = () => {
     return html;
   };
 
-  const exportAsTxt = () => {
-    const text = generateConversationText();
-    const blob = new Blob([text], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `ngx-agents-${conversation?.title.replace(/[^a-z0-9]/gi, '-')}-${Date.now()}.txt`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+  const handleExport = async (type: 'txt' | 'html') => {
+    setIsExporting(true);
     
-    toast({
-      title: "Conversación exportada",
-      description: "La conversación se ha descargado como archivo de texto.",
-    });
-    setIsOpen(false);
-  };
-
-  const exportAsHTML = () => {
-    const html = generateConversationHTML();
-    const blob = new Blob([html], { type: 'text/html' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `ngx-agents-${conversation?.title.replace(/[^a-z0-9]/gi, '-')}-${Date.now()}.html`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    // Simulate export delay for better UX
+    await new Promise(resolve => setTimeout(resolve, 800));
     
-    toast({
-      title: "Conversación exportada",
-      description: "La conversación se ha descargado como archivo HTML.",
-    });
+    try {
+      if (type === 'txt') {
+        const text = generateConversationText();
+        const blob = new Blob([text], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `ngx-agents-${conversation?.title.replace(/[^a-z0-9]/gi, '-')}-${Date.now()}.txt`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        
+        toast({
+          title: "Conversación exportada",
+          description: "La conversación se ha descargado como archivo de texto.",
+        });
+      } else {
+        const html = generateConversationHTML();
+        const blob = new Blob([html], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `ngx-agents-${conversation?.title.replace(/[^a-z0-9]/gi, '-')}-${Date.now()}.html`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        
+        toast({
+          title: "Conversación exportada",
+          description: "La conversación se ha descargado como archivo HTML.",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Error al exportar",
+        description: "No se pudo exportar la conversación.",
+      });
+    }
+    
+    setIsExporting(false);
     setIsOpen(false);
   };
 
@@ -140,7 +177,6 @@ export const ExportOptions: React.FC = () => {
       toast({
         title: "Error al copiar",
         description: "No se pudo copiar la conversación.",
-        variant: "destructive",
       });
     }
     setIsOpen(false);
@@ -173,27 +209,80 @@ export const ExportOptions: React.FC = () => {
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
-          size="icon"
-          className="h-8 w-8 text-white/60 hover:text-white hover:bg-white/10"
+          className={cn(
+            "relative overflow-hidden group transition-all duration-300",
+            "glass-premium border border-white/10 hover:border-white/20",
+            `bg-gradient-to-r ${getAgentGradient()}/10 hover:${getAgentGradient()}/20`,
+            "text-white hover:text-white shadow-lg hover:shadow-xl",
+            "h-9 px-4 rounded-xl backdrop-blur-xl",
+            isExporting && "animate-pulse"
+          )}
+          disabled={isExporting}
         >
-          <Download className="h-4 w-4" />
+          {/* Background glow effect */}
+          <div className={cn(
+            "absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300",
+            `bg-gradient-to-r ${getAgentGradient()}/5 blur-lg`
+          )} />
+          
+          {/* Content */}
+          <div className="relative flex items-center gap-2">
+            {isExporting ? (
+              <>
+                <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                <span className="text-sm font-medium">Exportando...</span>
+              </>
+            ) : (
+              <>
+                <Download className="w-4 h-4 transition-transform group-hover:scale-110" />
+                <span className="text-sm font-medium">Exportar</span>
+                {messageCount > 0 && (
+                  <Badge 
+                    className={cn(
+                      "ml-1 h-5 px-1.5 text-xs font-semibold border-0",
+                      `bg-gradient-to-r ${getAgentGradient()}/20 text-white`
+                    )}
+                  >
+                    {messageCount}
+                  </Badge>
+                )}
+                <Sparkles className="w-3 h-3 text-white/60" />
+              </>
+            )}
+          </div>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-56">
-        <DropdownMenuItem onClick={exportAsTxt}>
+      
+      <DropdownMenuContent 
+        align="end" 
+        className="w-56 glass-ultra border-white/10 bg-black/80 backdrop-blur-xl"
+      >
+        <DropdownMenuItem 
+          onClick={() => handleExport('txt')}
+          className="hover:bg-white/5 text-white/90 hover:text-white"
+        >
           <FileText className="h-4 w-4 mr-2" />
           Exportar como TXT
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={exportAsHTML}>
+        <DropdownMenuItem 
+          onClick={() => handleExport('html')}
+          className="hover:bg-white/5 text-white/90 hover:text-white"
+        >
           <Download className="h-4 w-4 mr-2" />
           Exportar como HTML
         </DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={copyToClipboard}>
+        <DropdownMenuSeparator className="bg-white/10" />
+        <DropdownMenuItem 
+          onClick={copyToClipboard}
+          className="hover:bg-white/5 text-white/90 hover:text-white"
+        >
           <Copy className="h-4 w-4 mr-2" />
           Copiar al portapapeles
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={shareConversation}>
+        <DropdownMenuItem 
+          onClick={shareConversation}
+          className="hover:bg-white/5 text-white/90 hover:text-white"
+        >
           <Share className="h-4 w-4 mr-2" />
           Compartir
         </DropdownMenuItem>

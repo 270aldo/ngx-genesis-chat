@@ -1,3 +1,4 @@
+
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
@@ -16,11 +17,19 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, cla
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         components={{
-          code: ({ inline, className, children, ...props }) => {
+          code: ({ className, children, ...props }) => {
             const match = /language-(\w+)/.exec(className || '');
             const language = match ? match[1] : '';
+            const isInline = !match;
             
-            return !inline && language ? (
+            return isInline ? (
+              <code
+                className="bg-white/10 px-1.5 py-0.5 rounded text-sm font-mono"
+                {...props}
+              >
+                {children}
+              </code>
+            ) : (
               <div className="relative my-4">
                 <div className="flex items-center justify-between bg-gray-800 px-4 py-2 rounded-t-lg border border-white/10">
                   <span className="text-xs text-gray-400 font-mono">{language}</span>
@@ -35,13 +44,6 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, cla
                   {String(children).replace(/\n$/, '')}
                 </SyntaxHighlighter>
               </div>
-            ) : (
-              <code
-                className="bg-white/10 px-1.5 py-0.5 rounded text-sm font-mono"
-                {...props}
-              >
-                {children}
-              </code>
             );
           },
           pre: ({ children }) => <>{children}</>,

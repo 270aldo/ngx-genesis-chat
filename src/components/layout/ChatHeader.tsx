@@ -7,17 +7,16 @@ import { cn } from '@/lib/utils';
 
 interface ChatHeaderProps {
   showBiometrics: boolean;
-  setShowBiometrics: (show: boolean) => void;
+  setShowBiometrics?: (show: boolean) => void;
 }
 
 export const ChatHeader: React.FC<ChatHeaderProps> = ({ 
-  showBiometrics, 
-  setShowBiometrics 
+  showBiometrics
 }) => {
   const isMobile = useIsMobile();
 
   return (
-    <div className="relative z-10 border-b border-white/5">
+    <div className="relative z-10 border-b border-white/5 bg-black/20 backdrop-blur-xl">
       <div className={cn(
         "flex items-center justify-between py-3",
         isMobile ? "px-3" : "px-4 sm:px-6"
@@ -27,9 +26,9 @@ export const ChatHeader: React.FC<ChatHeaderProps> = ({
         </div>
         <div className={cn(
           "flex-shrink-0 flex items-center",
-          isMobile ? "ml-2 gap-1" : "ml-4 gap-3"
+          isMobile ? "ml-2 gap-2" : "ml-4 gap-3"
         )}>
-          {!showBiometrics && !isMobile && (
+          {!showBiometrics && (
             <ExportOptions />
           )}
         </div>
