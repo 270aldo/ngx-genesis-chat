@@ -80,3 +80,13 @@ Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-trick
 
 See [docs/mobile-strategy.md](docs/mobile-strategy.md) for a discussion on using React Native or converting the web app to a PWA as a first step toward native apps.
 
+## PWA installation
+
+The project can be installed on mobile browsers as a Progressive Web App.
+
+1. Open the app URL in your mobile browser.
+2. Use the browser menu to select **Add to Home Screen**.
+   - In Chrome, open the ⋮ menu and tap *Install app*.
+   - In Safari, tap the *Share* button and choose *Add to Home Screen*.
+3. Launch the icon from your home screen. The app will open full screen and work offline after the first load.
+
