@@ -66,7 +66,6 @@ export const ChatArea = () => {
       )}>
         <div className="max-w-5xl mx-auto">
           <ChatInput 
-            conversation={conversation}
             activeAgent={activeAgent}
           />
         </div>
