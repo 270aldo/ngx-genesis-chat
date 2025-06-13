@@ -1,5 +1,5 @@
 
-import React, { useState, useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 import { ChatInput } from './ChatInput';
 import { MessageList } from './MessageList';
 import { WelcomeState } from './WelcomeState';
@@ -9,7 +9,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 
 export const ChatArea = () => {
-  const { getCurrentConversation, updateMessage, deleteMessage } = useChatStore();
+  const { getCurrentConversation, deleteMessage } = useChatStore();
   const { getActiveAgent } = useAgentStore();
   const isMobile = useIsMobile();
   const conversation = getCurrentConversation();
@@ -66,7 +66,6 @@ export const ChatArea = () => {
       )}>
         <div className="max-w-5xl mx-auto">
           <ChatInput 
-            textareaRef={inputRef}
             conversation={conversation}
             activeAgent={activeAgent}
           />

@@ -3,9 +3,10 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
 import { Card } from '@/components/ui/card';
-import { Mic, MicOff, Volume2, Phone, PhoneOff } from 'lucide-react';
+import { Volume2, Phone, PhoneOff } from 'lucide-react';
 import { useVoiceConversation } from '@/hooks/useVoiceConversation';
 import { useAgentStore } from '@/store/agentStore';
+import { VoiceEnergyBall } from './VoiceEnergyBall';
 import { cn } from '@/lib/utils';
 
 interface VoiceInterfaceProps {
@@ -41,9 +42,10 @@ export const VoiceInterface: React.FC<VoiceInterfaceProps> = ({ className }) => 
 
   return (
     <Card className={cn(
-      "glass-ultra border-purple-500/20 p-4 space-y-4",
+      "glass-ultra border-purple-500/20 p-6 space-y-6",
       className
     )}>
+      {/* Status Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className={cn(
@@ -79,59 +81,54 @@ export const VoiceInterface: React.FC<VoiceInterfaceProps> = ({ className }) => 
         </Button>
       </div>
 
+      {/* Energy Ball Display */}
+      <div className="flex flex-col items-center py-8">
+        <VoiceEnergyBall 
+          isActive={isVoiceActive}
+          isSpeaking={isSpeaking}
+          className="mb-6"
+        />
+        
+        <div className="text-center space-y-2">
+          <h3 className="text-lg font-semibold text-white">
+            {activeAgent?.name || 'NGX Agent'}
+          </h3>
+          <p className="text-sm text-white/70">
+            {!isVoiceActive ? (
+              'Ready for voice conversation'
+            ) : isSpeaking ? (
+              `${activeAgent?.name} is speaking...`
+            ) : (
+              'Listening... Speak naturally'
+            )}
+          </p>
+        </div>
+      </div>
+
+      {/* Voice Controls */}
       {isVoiceActive && (
-        <>
-          <div className="flex items-center justify-center py-6">
-            <div className={cn(
-              "relative flex items-center justify-center",
-              "w-20 h-20 rounded-full transition-all duration-300",
-              "bg-gradient-to-br from-purple-500/20 to-violet-600/20",
-              "border-2 border-purple-500/30",
-              isSpeaking && "animate-pulse border-purple-400 shadow-lg shadow-purple-500/30"
-            )}>
-              {isSpeaking ? (
-                <div className="flex items-center gap-1">
-                  <div className="w-1 h-6 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                  <div className="w-1 h-8 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                  <div className="w-1 h-6 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
-                </div>
-              ) : (
-                <Mic className="w-8 h-8 text-purple-400" />
-              )}
-            </div>
+        <div className="space-y-4">
+          <div className="flex items-center gap-3">
+            <Volume2 className="w-4 h-4 text-white/60" />
+            <Slider
+              value={volume}
+              onValueChange={handleVolumeChange}
+              max={1}
+              min={0}
+              step={0.1}
+              className="flex-1"
+            />
+            <span className="text-xs text-white/60 w-10">
+              {Math.round(volume[0] * 100)}%
+            </span>
           </div>
-
-          <div className="space-y-3">
-            <div className="flex items-center gap-3">
-              <Volume2 className="w-4 h-4 text-white/60" />
-              <Slider
-                value={volume}
-                onValueChange={handleVolumeChange}
-                max={1}
-                min={0}
-                step={0.1}
-                className="flex-1"
-              />
-              <span className="text-xs text-white/60 w-10">
-                {Math.round(volume[0] * 100)}%
-              </span>
-            </div>
-
-            <div className="text-center">
-              <p className="text-sm text-white/70">
-                {isSpeaking 
-                  ? `${activeAgent?.name} is speaking...` 
-                  : 'Listening... Speak naturally'
-                }
-              </p>
-            </div>
-          </div>
-        </>
+        </div>
       )}
 
+      {/* Getting Started Info */}
       {!isVoiceActive && (
-        <div className="text-center py-4">
-          <p className="text-sm text-white/60 mb-2">
+        <div className="text-center py-4 space-y-3">
+          <p className="text-sm text-white/60">
             Experience natural voice conversations with {activeAgent?.name}
           </p>
           <p className="text-xs text-white/40">

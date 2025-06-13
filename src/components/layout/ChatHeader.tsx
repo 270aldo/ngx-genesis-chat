@@ -9,9 +9,7 @@ interface ChatHeaderProps {
   setShowBiometrics?: (show: boolean) => void;
 }
 
-export const ChatHeader: React.FC<ChatHeaderProps> = ({ 
-  showBiometrics
-}) => {
+export const ChatHeader: React.FC<ChatHeaderProps> = () => {
   const isMobile = useIsMobile();
 
   return (
