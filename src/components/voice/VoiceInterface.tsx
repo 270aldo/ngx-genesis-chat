@@ -1,9 +1,8 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
 import { Card } from '@/components/ui/card';
-import { Volume2, Phone, PhoneOff, Mic, MicOff } from 'lucide-react';
+import { Volume2, Phone, PhoneOff, Mic } from 'lucide-react';
 import { useVoiceConversation } from '@/hooks/useVoiceConversation';
 import { useAgentStore } from '@/store/agentStore';
 import { VoiceEnergyBall } from './VoiceEnergyBall';

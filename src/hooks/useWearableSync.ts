@@ -1,4 +1,3 @@
-
 import { useState, useCallback, useEffect } from 'react';
 import { useWearablesStore } from '@/store/wearablesStore';
 import { toastSuccess, toastError, toastAI } from '@/components/ui/enhanced-toast';
@@ -11,8 +10,7 @@ export const useWearableSync = () => {
     autoSyncEnabled,
     connectDevice,
     disconnectDevice,
-    syncAllDevices,
-    setSyncStatus
+    syncAllDevices
   } = useWearablesStore();
 
   // Auto-sync every 15 minutes if enabled

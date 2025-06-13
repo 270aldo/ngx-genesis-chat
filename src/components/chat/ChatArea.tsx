@@ -34,10 +34,15 @@ export const ChatArea = () => {
     }
   };
 
+  const handleSendMessage = (content: string) => {
+    // This function will be implemented by the parent component or hook
+    console.log('Sending message:', content);
+  };
+
   if (!conversation) {
     return (
       <div className="flex-1 flex items-center justify-center">
-        <WelcomeState />
+        <WelcomeState activeAgent={activeAgent} />
       </div>
     );
   }
@@ -48,7 +53,7 @@ export const ChatArea = () => {
       <div className="flex-1 flex flex-col min-h-0">
         {conversation.messages.length === 0 ? (
           <div className="flex-1 flex items-center justify-center">
-            <WelcomeState />
+            <WelcomeState activeAgent={activeAgent} />
           </div>
         ) : (
           <MessageList
@@ -66,7 +71,7 @@ export const ChatArea = () => {
       )}>
         <div className="max-w-5xl mx-auto">
           <ChatInput 
-            activeAgent={activeAgent}
+            onSendMessage={handleSendMessage}
           />
         </div>
       </div>
