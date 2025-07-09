@@ -20,11 +20,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ showBiometrics, setShowBiometr
   return (
     <aside
       className={cn(
-        'h-full bg-black border-r border-violet-800 transition-all duration-200 flex flex-col animate-slide-in',
+        'h-full bg-black transition-all duration-200 flex flex-col animate-slide-in',
         isMobile ? (
-          sidebarOpen ? 'w-72 absolute left-0 top-0 z-50' : 'w-0'
+          sidebarOpen ? 'w-72 absolute left-0 top-0 z-50 border-r border-violet-800' : 'w-0'
         ) : (
-          sidebarOpen ? 'w-72' : 'w-16'
+          sidebarOpen ? 'w-72 border-r border-violet-800' : 'w-16'
         )
       )}
     >

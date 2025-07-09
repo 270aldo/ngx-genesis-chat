@@ -44,7 +44,7 @@ export const AgentSelector: React.FC = () => {
   };
 
   return (
-    <div className="bg-violet-950/20 backdrop-blur-xl">
+    <div className="bg-violet-950/20 backdrop-blur-xl relative z-30">
       <div className={cn("px-4 py-3", isMobile && "px-3 py-2")}>
         {/* Active Agent Header - Optimized for mobile */}
         <div className="flex items-center justify-between mb-3">

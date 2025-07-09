@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { useAgentStore } from '@/store/agentStore';
+import { AgentSelector } from '../agents/AgentSelector';
 import { Circle, Target, Leaf, BarChart3, Lightbulb, TrendingUp, RotateCcw, Zap, Users } from 'lucide-react';
 
 const iconMap = {
@@ -49,8 +50,15 @@ export const WelcomeState: React.FC = () => {
   const Icon = getIcon(activeAgent.icon);
 
   return (
-    <main className="flex-grow flex flex-col items-center justify-center p-4 overflow-y-auto" style={{backgroundImage: 'radial-gradient(circle at 50% 0%, rgba(91, 33, 182, 0.2) 0%, transparent 40%)'}}>
-      <div className="w-full max-w-3xl mx-auto flex flex-col items-center">
+    <main className="flex-grow flex flex-col overflow-y-auto relative" style={{backgroundImage: 'radial-gradient(circle at 50% 0%, rgba(91, 33, 182, 0.2) 0%, transparent 40%)'}}>
+      {/* Agent Selector - Fixed at top */}
+      <div className="relative z-30">
+        <AgentSelector />
+      </div>
+      
+      {/* Welcome Content - Centered */}
+      <div className="flex-1 flex items-center justify-center p-4">
+        <div className="w-full max-w-3xl mx-auto flex flex-col items-center">
         
         <div className="text-center mb-8">
           <h1 className="animate-fade-in text-3xl md:text-5xl font-semibold tracking-tight text-white" style={{animationDelay: '100ms'}}>
@@ -94,6 +102,7 @@ export const WelcomeState: React.FC = () => {
             ))}
           </div>
         )}
+        </div>
       </div>
     </main>
   );
