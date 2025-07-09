@@ -32,7 +32,7 @@ export const SidebarConversationsList: React.FC = () => {
         <input 
           type="text" 
           placeholder="Search..." 
-          className="w-full rounded-md bg-neutral-900 px-3 py-2 text-sm text-neutral-200 placeholder-neutral-500 border border-neutral-700 focus:outline-none focus:ring-2 focus:ring-violet-500 transition-all"
+          className="w-full rounded-md bg-neutral-900 px-3 py-2 text-sm text-neutral-200 placeholder-neutral-500 border border-violet-800 focus:outline-none focus:ring-2 focus:ring-violet-500 transition-all"
         />
       </div>
       <nav className="space-y-4">
@@ -45,8 +45,8 @@ export const SidebarConversationsList: React.FC = () => {
                   className={cn(
                     "group flex items-center justify-between rounded-md px-2 py-2 text-sm font-medium cursor-pointer transition-all",
                     conversation.id === currentConversationId 
-                      ? "text-white bg-neutral-800" 
-                      : "text-neutral-300 hover:bg-neutral-900 hover:text-white"
+                      ? "text-white bg-violet-800/50" 
+                      : "text-neutral-300 hover:bg-violet-900/30 hover:text-white"
                   )}
                   onClick={() => handleSelectConversation(conversation.id)}
                 >

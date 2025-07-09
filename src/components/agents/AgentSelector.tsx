@@ -44,7 +44,7 @@ export const AgentSelector: React.FC = () => {
   };
 
   return (
-    <div className="border-b border-white/10 bg-white/5 backdrop-blur-xl">
+    <div className="border-b border-violet-800/30 bg-violet-950/20 backdrop-blur-xl">
       <div className={cn("px-4 py-3", isMobile && "px-3 py-2")}>
         {/* Active Agent Header - Optimized for mobile */}
         <div className="flex items-center justify-between mb-3">
@@ -88,7 +88,7 @@ export const AgentSelector: React.FC = () => {
             size="sm"
             onClick={() => setIsExpanded(!isExpanded)}
             className={cn(
-              "text-white/60 hover:text-white hover:bg-white/10",
+              "text-violet-300 hover:text-white hover:bg-violet-800/50",
               isMobile ? "p-1.5" : "p-2"
             )}
           >
@@ -134,8 +134,8 @@ export const AgentSelector: React.FC = () => {
                           : "flex-shrink-0 h-16 px-3 flex-col justify-center items-center gap-1"
                       ),
                       isActive 
-                        ? `bg-gradient-to-br ${agent.color} text-white shadow-lg border border-white/20` 
-                        : "bg-white/5 hover:bg-white/10 text-white/70 hover:text-white border border-transparent hover:border-white/10"
+                        ? `bg-gradient-to-br ${agent.color} text-white shadow-lg border border-violet-400/30` 
+                        : "bg-violet-950/30 hover:bg-violet-800/40 text-violet-100 hover:text-white border border-transparent hover:border-violet-600/40"
                     )}
                   >
                     {isExpanded ? (
@@ -157,21 +157,21 @@ export const AgentSelector: React.FC = () => {
                               {agent.actions.slice(0, isMobile ? 1 : 2).map((action) => (
                                 <span
                                   key={action.id}
-                                  className={cn(
-                                    "px-1.5 py-0.5 rounded bg-white/10 truncate",
-                                    isMobile ? "text-xs" : "text-xs"
-                                  )}
+                                   className={cn(
+                                     "px-1.5 py-0.5 rounded bg-violet-800/50 text-violet-200 truncate",
+                                     isMobile ? "text-xs" : "text-xs"
+                                   )}
                                 >
                                   {action.label}
                                 </span>
                               ))}
                               {agent.actions.length > (isMobile ? 1 : 2) && (
-                                <span className={cn(
-                                  "px-1.5 py-0.5 rounded bg-white/10",
-                                  isMobile ? "text-xs" : "text-xs"
-                                )}>
-                                  +{agent.actions.length - (isMobile ? 1 : 2)}
-                                </span>
+                                 <span className={cn(
+                                   "px-1.5 py-0.5 rounded bg-violet-700/50 text-violet-300",
+                                   isMobile ? "text-xs" : "text-xs"
+                                 )}>
+                                   +{agent.actions.length - (isMobile ? 1 : 2)}
+                                 </span>
                               )}
                             </div>
                           </div>
@@ -197,19 +197,19 @@ export const AgentSelector: React.FC = () => {
 
         {/* Capabilities Preview - Only show when expanded and agent has actions */}
         {isExpanded && activeAgent?.actions && !isMobile && (
-          <div className="mt-3 pt-3 border-t border-white/10">
-            <p className="text-xs text-white/60 mb-2">Available Actions</p>
+          <div className="mt-3 pt-3 border-t border-violet-800/30">
+            <p className="text-xs text-violet-300 mb-2">Available Actions</p>
             <div className="flex flex-wrap gap-1.5">
               {activeAgent.actions.slice(0, 4).map((action) => (
                 <span
                   key={action.id}
-                  className="text-xs px-2 py-1 rounded-lg bg-white/10 text-white/80 border border-white/10"
+                  className="text-xs px-2 py-1 rounded-lg bg-violet-800/40 text-violet-200 border border-violet-700/30"
                 >
                   {action.label}
                 </span>
               ))}
               {activeAgent.actions.length > 4 && (
-                <span className="text-xs px-2 py-1 rounded-lg bg-white/5 text-white/60">
+                <span className="text-xs px-2 py-1 rounded-lg bg-violet-900/30 text-violet-400">
                   +{activeAgent.actions.length - 4} more
                 </span>
               )}

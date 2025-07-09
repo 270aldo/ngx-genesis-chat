@@ -61,10 +61,10 @@ export const ChatLayout: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black grok-gradient relative overflow-hidden">
+    <div className="min-h-screen bg-black grok-gradient relative">
       {/* GROK-style background */}
       
-      <div className="h-screen flex relative z-10">
+      <div className="min-h-screen flex relative z-10 overflow-hidden">
         {/* Mobile Overlay for Sidebar */}
         {isMobile && sidebarOpen && (
           <div 
@@ -92,7 +92,7 @@ export const ChatLayout: React.FC = () => {
           />
           
           {/* Chat Content Area */}
-          <div className="flex-1 flex flex-col min-h-0">
+          <div className="flex-1 flex flex-col min-h-0 overflow-y-auto">
             <ChatMainContent showBiometrics={showBiometrics} />
             {!showBiometrics && <ChatFooter onSendMessage={onSendMessage} />}
           </div>

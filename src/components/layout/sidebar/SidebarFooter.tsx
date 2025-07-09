@@ -18,8 +18,8 @@ export const SidebarFooter: React.FC<SidebarFooterProps> = ({ showBiometrics, se
   const activeAgent = getActiveAgent();
 
   return (
-    <div className="border-t border-neutral-800 p-4">
-      <div className="flex w-full items-center justify-between rounded-md p-2 text-sm text-neutral-300 hover:bg-neutral-800 cursor-pointer">
+    <div className="border-t border-violet-800 p-4">
+      <div className="flex w-full items-center justify-between rounded-md p-2 text-sm text-neutral-300 hover:bg-violet-800/50 cursor-pointer">
         <div className="flex items-center gap-3">
           <div className="h-8 w-8 rounded-full bg-violet-900 flex items-center justify-center text-sm font-semibold text-violet-300">
             JD
