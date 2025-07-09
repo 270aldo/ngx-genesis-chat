@@ -2,7 +2,7 @@
 import React from 'react';
 import { useAgentStore } from '@/store/agentStore';
 import { AgentSelector } from '../agents/AgentSelector';
-import { Circle, Target, Leaf, BarChart3, Lightbulb, TrendingUp, RotateCcw, Zap, Users } from 'lucide-react';
+import { Circle, Target, Leaf, BarChart3, Lightbulb, TrendingUp, RotateCcw, Zap, Users, Heart, Dna } from 'lucide-react';
 
 const iconMap = {
   Circle,
@@ -13,7 +13,9 @@ const iconMap = {
   TrendingUp,
   RotateCcw,
   Zap,
-  Users
+  Users,
+  Heart,
+  Dna
 };
 
 const getGreeting = () => {

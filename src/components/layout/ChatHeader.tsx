@@ -1,6 +1,5 @@
 
 import React from 'react';
-import { AgentSelector } from '../agents/AgentSelector';
 import { BiometricsToggle } from './BiometricsToggle';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
@@ -16,14 +15,10 @@ export const ChatHeader: React.FC<ChatHeaderProps> = ({ showBiometrics, setShowB
   return (
     <div className="relative z-10 border-b border-violet-900/60 bg-black/50 backdrop-blur-sm">
       <div className={cn(
-        "flex items-center justify-between h-16",
+        "flex items-center justify-end h-16",
         isMobile ? "px-3" : "px-4 md:px-6"
       )}>
-        <div className="flex-1 min-w-0">
-          <AgentSelector />
-        </div>
-        
-        <div className="flex items-center gap-3 ml-4">
+        <div className="flex items-center gap-3">
           {setShowBiometrics && (
             <BiometricsToggle 
               showBiometrics={showBiometrics}

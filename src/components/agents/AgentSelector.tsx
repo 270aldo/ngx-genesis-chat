@@ -4,7 +4,7 @@ import { useAgentStore } from '@/store/agentStore';
 import { useAgentNavigation } from '@/hooks/useAgentNavigation';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
-import { Circle, Target, Leaf, BarChart3, Lightbulb, TrendingUp, RotateCcw, Zap, Users, ChevronDown } from 'lucide-react';
+import { Circle, Target, Leaf, BarChart3, Lightbulb, TrendingUp, RotateCcw, Zap, Users, ChevronDown, Heart, Dna } from 'lucide-react';
 
 const iconMap = {
   Circle,
@@ -15,7 +15,9 @@ const iconMap = {
   TrendingUp,
   RotateCcw,
   Zap,
-  Users
+  Users,
+  Heart,
+  Dna
 };
 
 export const AgentSelector: React.FC = () => {
@@ -134,7 +136,7 @@ export const AgentSelector: React.FC = () => {
                           : "flex-shrink-0 h-16 px-3 flex-col justify-center items-center gap-1"
                       ),
                       isActive 
-                        ? `bg-gradient-to-br ${agent.color} text-white shadow-lg border border-violet-400/30` 
+                        ? `bg-gradient-to-br ${agent.color} text-white shadow-lg border border-white/20` 
                         : "bg-violet-950/30 hover:bg-violet-800/40 text-violet-100 hover:text-white border border-transparent hover:border-violet-600/40"
                     )}
                   >
