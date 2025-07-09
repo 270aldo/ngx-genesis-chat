@@ -104,7 +104,7 @@ export const ChatArea = () => {
   if (!conversation) {
     return (
       <div className="flex-1 flex items-center justify-center">
-        <WelcomeState activeAgent={activeAgent} />
+        <WelcomeState />
       </div>
     );
   }
@@ -115,7 +115,7 @@ export const ChatArea = () => {
       <div className="flex-1 flex flex-col min-h-0">
         {conversation.messages.length === 0 ? (
           <div className="flex-1 flex items-center justify-center">
-            <WelcomeState activeAgent={activeAgent} />
+            <WelcomeState />
           </div>
         ) : (
           <MessageList

@@ -24,10 +24,20 @@ export const SidebarFooter: React.FC<SidebarFooterProps> = ({ showBiometrics, se
           <div className="w-8 h-8 flex items-center justify-center rounded-full bg-violet-900/50 text-sm font-semibold text-violet-300">
             JD
           </div>
-          {(sidebarOpen || isMobile) && <span className="text-sm font-medium text-white">John Doe</span>}
+          {(sidebarOpen || isMobile) && (
+            <div className="min-w-0">
+              <span className="text-sm font-medium text-white block">John Doe</span>
+              {activeAgent?.id === 'biometrics-engine' && (
+                <span className={`text-xs ${showBiometrics ? 'text-purple-400' : 'text-white/60'}`}>
+                  Biometrics {showBiometrics ? 'Active' : 'Available'}
+                </span>
+              )}
+            </div>
+          )}
         </div>
+        
         <div className="flex items-center gap-2">
-          {activeAgent?.id === 'biometrics-engine' && (
+          {activeAgent?.id === 'biometrics-engine' && (sidebarOpen || isMobile) && (
             <Button
               onClick={() => setShowBiometrics(!showBiometrics)}
               variant="ghost"
@@ -37,16 +47,18 @@ export const SidebarFooter: React.FC<SidebarFooterProps> = ({ showBiometrics, se
                   ? "bg-purple-500/20 text-purple-400" 
                   : "hover:bg-violet-900/50 text-gray-400 hover:text-white"
               }`}
+              title={showBiometrics ? 'Hide Biometrics' : 'Show Biometrics'}
             >
-              <Activity className="w-5 h-5" />
+              <Activity className="w-4 h-4" />
             </Button>
           )}
           <Button
             variant="ghost"
             size="icon"
             className="p-2 hover:bg-violet-900/50 rounded-lg transition-colors text-gray-400 hover:text-white"
+            title="Settings"
           >
-            <Settings className="w-5 h-5" />
+            <Settings className="w-4 h-4" />
           </Button>
         </div>
       </div>
