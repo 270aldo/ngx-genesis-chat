@@ -1,15 +1,16 @@
 
 import React from 'react';
 import { AgentSelector } from '../agents/AgentSelector';
+import { BiometricsToggle } from './BiometricsToggle';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 
 interface ChatHeaderProps {
   showBiometrics: boolean;
-  setShowBiometrics?: (show: boolean) => void;
+  setShowBiometrics: (show: boolean) => void;
 }
 
-export const ChatHeader: React.FC<ChatHeaderProps> = () => {
+export const ChatHeader: React.FC<ChatHeaderProps> = ({ showBiometrics, setShowBiometrics }) => {
   const isMobile = useIsMobile();
 
   return (
@@ -20,6 +21,15 @@ export const ChatHeader: React.FC<ChatHeaderProps> = () => {
       )}>
         <div className="flex-1 min-w-0">
           <AgentSelector />
+        </div>
+        
+        <div className="flex items-center gap-3">
+          {setShowBiometrics && (
+            <BiometricsToggle 
+              showBiometrics={showBiometrics}
+              setShowBiometrics={setShowBiometrics}
+            />
+          )}
         </div>
       </div>
     </div>
