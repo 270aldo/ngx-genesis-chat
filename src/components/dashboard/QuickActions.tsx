@@ -2,7 +2,7 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Plus, Settings, Download, HelpCircle, Coins, Utensils, Dumbbell } from 'lucide-react';
+import { Plus, Settings, Download, HelpCircle, Utensils, Dumbbell } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useChatStore } from '@/store/chatStore';
 import { TokenPurchase } from '@/components/tokens/TokenPurchase';

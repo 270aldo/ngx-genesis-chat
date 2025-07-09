@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAgentStore } from '@/store/agentStore';
 import { useChatStore } from '@/store/chatStore';
 import { useNavigate } from 'react-router-dom';
@@ -217,7 +217,7 @@ export const QuickActions: React.FC = () => {
     navigate(`/chat/${agentId}`);
   };
 
-  const categories = ['all', 'plan', 'assessment', 'analysis', 'guidance', 'tracking'];
+  
   
   const getAllActions = () => {
     return Object.entries(agentActions).flatMap(([agentId, agentData]) =>

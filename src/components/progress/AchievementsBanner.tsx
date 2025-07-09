@@ -2,7 +2,7 @@
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Trophy, Star, Calendar } from 'lucide-react';
+import { Trophy, Calendar } from 'lucide-react';
 import { Achievement } from '@/store/progressStore';
 import { format, parseISO } from 'date-fns';
 import { cn } from '@/lib/utils';

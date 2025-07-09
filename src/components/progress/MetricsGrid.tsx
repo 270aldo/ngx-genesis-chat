@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { TrendingUp, TrendingDown, Activity, Target, Zap, Scale } from 'lucide-react';
 import { useProgressStore } from '@/store/progressStore';
 import { cn } from '@/lib/utils';

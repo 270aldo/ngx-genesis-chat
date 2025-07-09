@@ -1,9 +1,8 @@
 
 import React from 'react';
-import { ArrowLeft, Calendar, Download, Share2, Trophy } from 'lucide-react';
+import { ArrowLeft, Download, Share2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { ProgressCharts } from '@/components/progress/ProgressCharts';
 import { MetricsGrid } from '@/components/progress/MetricsGrid';
 import { GoalTracker } from '@/components/progress/GoalTracker';
@@ -12,7 +11,7 @@ import { TimeframeSelector } from '@/components/progress/TimeframeSelector';
 import { useProgressStore } from '@/store/progressStore';
 
 const ProgressDashboard: React.FC = () => {
-  const { achievements, selectedTimeframe } = useProgressStore();
+  const { achievements } = useProgressStore();
   
   const recentAchievements = achievements.slice(-3);
 

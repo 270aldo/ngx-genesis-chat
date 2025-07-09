@@ -1,5 +1,4 @@
 
-import React from 'react';
 import { toast } from 'sonner';
 import { CheckCircle, AlertCircle, Info, XCircle, Sparkles } from 'lucide-react';
 
@@ -46,7 +45,7 @@ const getToastStyles = (type: ToastType) => {
 
 export const enhancedToast = ({ type, title, description, duration = 4000 }: EnhancedToastProps) => {
   return toast.custom(
-    (t) => (
+    () => (
       <div className={`${getToastStyles(type)} rounded-lg p-4 shadow-lg max-w-md`}>
         <div className="flex items-start gap-3">
           {getToastIcon(type)}

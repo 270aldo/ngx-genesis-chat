@@ -2,7 +2,7 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
-import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, AreaChart, Area } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, AreaChart, Area } from 'recharts';
 import { useProgressStore } from '@/store/progressStore';
 import { format, parseISO } from 'date-fns';
 

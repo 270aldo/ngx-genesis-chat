@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import { useStreamingResponse } from '@/hooks/useStreamingResponse';
 import { MarkdownRenderer } from './MarkdownRenderer';
-import { cn } from '@/lib/utils';
 import { Sparkles } from 'lucide-react';
 
 interface StreamingMessageProps {

@@ -1,13 +1,11 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { useAgentStore } from '@/store/agentStore';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { TrendingUp, AlertTriangle, CheckCircle, ArrowRight, Brain, Target, Zap } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export const AgentInsights: React.FC = () => {
-  const { agents } = useAgentStore();
 
   // Enhanced insights data for new NGX agents
   const insights = [

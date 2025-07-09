@@ -24,7 +24,7 @@ interface UIState {
   removeNotification: (id: string) => void;
 }
 
-export const useUIStore = create<UIState>((set, get) => ({
+export const useUIStore = create<UIState>((set) => ({
   isDarkMode: true,
   sidebarCollapsed: false,
   activeModal: null,

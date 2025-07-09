@@ -2,13 +2,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { useIsMobile } from '@/hooks/use-mobile';
 import { Menu, X } from 'lucide-react';
-import { cn } from '@/lib/utils';
 
 export const LandingHeader: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const isMobile = useIsMobile();
 
   return (
     <header className="absolute top-0 left-0 right-0 z-50 p-4 sm:p-6">

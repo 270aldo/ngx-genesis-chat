@@ -50,7 +50,7 @@ const defaultSettings: UserSettings = {
 
 export const useSettingsStore = create<SettingsState>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       settings: defaultSettings,
 
       updateSettings: (updates: Partial<UserSettings>) => {

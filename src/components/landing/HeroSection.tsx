@@ -1,8 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
-import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import { ArrowDown, Sparkles } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 import { EnergyLines } from './EnergyLines';
 import { useIsMobile } from '@/hooks/use-mobile';
 

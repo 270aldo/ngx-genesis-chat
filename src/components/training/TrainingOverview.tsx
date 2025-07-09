@@ -147,7 +147,7 @@ export const TrainingOverview: React.FC = () => {
                 
                 {/* Exercise Preview */}
                 <div className="mt-3 ml-11 space-y-1">
-                  {day.exercises.slice(0, 3).map((exercise, i) => (
+                  {day.exercises.slice(0, 3).map((exercise) => (
                     <div key={exercise.id} className="text-sm text-white/60">
                       {exercise.name} - {exercise.sets} sets × {exercise.reps}
                     </div>

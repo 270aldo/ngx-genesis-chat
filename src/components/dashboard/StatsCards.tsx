@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Progress } from '@/components/ui/progress';
 import { MessageSquare, BarChart3, Coins, TrendingUp } from 'lucide-react';
 import { useAuthStore } from '@/store/authStore';
 
@@ -17,7 +16,6 @@ interface StatsCardsProps {
 export const StatsCards: React.FC<StatsCardsProps> = ({ stats }) => {
   const { user } = useAuthStore();
   const currentTokens = user?.tokens ?? 0;
-  const tokensPercentage = (stats.tokensUsed / stats.tokensLimit) * 100;
 
   const cards = [
     {

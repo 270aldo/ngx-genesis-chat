@@ -63,7 +63,6 @@ export const TokenPurchase: React.FC = () => {
       toast({
         title: "Purchase Failed",
         description: "There was an error processing your payment. Please try again.",
-        variant: "destructive",
       });
     } finally {
       setIsProcessing(false);

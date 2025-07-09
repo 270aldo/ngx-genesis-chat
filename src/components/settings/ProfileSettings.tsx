@@ -47,7 +47,6 @@ export const ProfileSettings: React.FC = () => {
       toast({
         title: "Error",
         description: "Failed to save profile changes. Please try again.",
-        variant: "destructive",
       });
     } finally {
       setIsLoading(false);

@@ -2,7 +2,6 @@
 import React from 'react';
 import { useAuthStore } from '@/store/authStore';
 import { useChatStore } from '@/store/chatStore';
-import { useIsMobile } from '@/hooks/use-mobile';
 import { ProfileSection } from '@/components/dashboard/ProfileSection';
 import { StatsCards } from '@/components/dashboard/StatsCards';
 import { RecentActivity } from '@/components/dashboard/RecentActivity';
@@ -16,7 +15,6 @@ import { Link } from 'react-router-dom';
 const Dashboard: React.FC = () => {
   const { user } = useAuthStore();
   const { conversations } = useChatStore();
-  const isMobile = useIsMobile();
 
   // Mock stats for now - will be real data when Supabase is connected
   const stats = {
