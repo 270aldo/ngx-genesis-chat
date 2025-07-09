@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import { useChatStore } from '@/store/chatStore';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
@@ -28,47 +27,54 @@ export const SidebarConversationsList: React.FC = () => {
   };
 
   return (
-    <ScrollArea className="flex-1 p-4">
-      <div>
-        <h3 className="px-3 mb-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">Recent</h3>
-        <div className="space-y-1">
-          {conversations.map((conversation) => (
-            <div
-              key={conversation.id}
-              className={cn(
-                "group relative flex items-center gap-3 px-3 py-2 rounded-lg cursor-pointer transition-all",
-                "hover:bg-violet-900/50 hover:text-white",
-                conversation.id === currentConversationId 
-                  ? "bg-violet-900/50 text-white" 
-                  : "text-gray-300"
-              )}
-              onClick={() => handleSelectConversation(conversation.id)}
-            >
-              <MessageSquare className="h-5 w-5 flex-shrink-0" />
-              {(sidebarOpen || isMobile) && (
-                <>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium truncate">
-                      {conversation.title}
-                    </p>
-                  </div>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      deleteConversation(conversation.id);
-                    }}
-                    className="h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity text-gray-400 hover:text-red-400 flex-shrink-0"
-                  >
-                    <Trash2 className="h-3 w-3" />
-                  </Button>
-                </>
-              )}
-            </div>
-          ))}
-        </div>
+    <div className="flex-1 overflow-y-auto p-4">
+      <div className="mb-4">
+        <input 
+          type="text" 
+          placeholder="Search..." 
+          className="w-full rounded-md bg-neutral-900 px-3 py-2 text-sm text-neutral-200 placeholder-neutral-500 border border-neutral-700 focus:outline-none focus:ring-2 focus:ring-violet-500 transition-all"
+        />
       </div>
-    </ScrollArea>
+      <nav className="space-y-4">
+        <div>
+          <h3 className="mb-2 px-2 text-xs font-semibold uppercase tracking-wider text-neutral-500">History</h3>
+          <ul className="space-y-1">
+            {conversations.map((conversation) => (
+              <li key={conversation.id}>
+                <div
+                  className={cn(
+                    "group flex items-center justify-between rounded-md px-2 py-2 text-sm font-medium cursor-pointer transition-all",
+                    conversation.id === currentConversationId 
+                      ? "text-white bg-neutral-800" 
+                      : "text-neutral-300 hover:bg-neutral-900 hover:text-white"
+                  )}
+                  onClick={() => handleSelectConversation(conversation.id)}
+                >
+                  <span className="flex items-center gap-3 truncate">
+                    <MessageSquare className="h-4 w-4 text-neutral-400" />
+                    {(sidebarOpen || isMobile) && (
+                      <span className="truncate">{conversation.title}</span>
+                    )}
+                  </span>
+                  {(sidebarOpen || isMobile) && (
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        deleteConversation(conversation.id);
+                      }}
+                      className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity text-neutral-500 hover:text-red-400"
+                    >
+                      <Trash2 className="h-3 w-3" />
+                    </Button>
+                  )}
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </nav>
+    </div>
   );
 };

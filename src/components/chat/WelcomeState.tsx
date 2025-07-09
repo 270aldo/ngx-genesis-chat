@@ -49,58 +49,52 @@ export const WelcomeState: React.FC = () => {
   const Icon = getIcon(activeAgent.icon);
 
   return (
-    <div className="flex items-center justify-center min-h-full py-12">
-      <div className="text-center space-y-8 p-8 max-w-2xl mx-auto">
-        {/* Agent avatar with dynamic color */}
-        <div className="relative mx-auto w-20 h-20">
-          <div className={`absolute inset-0 rounded-full bg-gradient-to-br ${activeAgent.color} opacity-20 animate-pulse`}></div>
-          <div className={`relative w-20 h-20 rounded-full bg-gradient-to-br ${activeAgent.color} backdrop-blur-xl border border-white/20 flex items-center justify-center shadow-2xl`}>
-            <Icon className="w-8 h-8 text-white" />
-          </div>
-        </div>
+    <main className="flex-grow flex flex-col items-center justify-center p-4 overflow-y-auto" style={{backgroundImage: 'radial-gradient(circle at 50% 0%, rgba(91, 33, 182, 0.2) 0%, transparent 40%)'}}>
+      <div className="w-full max-w-3xl mx-auto flex flex-col items-center">
         
-        <div className="space-y-4">
-          <h1 className="text-3xl md:text-5xl font-semibold tracking-tight text-white">
+        <div className="text-center mb-8">
+          <h1 className="animate-fade-in text-3xl md:text-5xl font-semibold tracking-tight text-white" style={{animationDelay: '100ms'}}>
             {getGreeting()}.
           </h1>
-          <div className="space-y-2">
-            <h2 className="text-xl md:text-2xl font-medium text-white">
-              I'm {activeAgent.name}
-            </h2>
-            <p className="text-lg text-gray-300">
-              {activeAgent.description}
+          {activeAgent && (
+            <div className="space-y-2 mt-4">
+              <h2 className="animate-fade-in text-xl md:text-2xl font-medium text-white" style={{animationDelay: '150ms'}}>
+                I'm {activeAgent.name}
+              </h2>
+              <p className="animate-fade-in text-lg text-gray-300" style={{animationDelay: '200ms'}}>
+                {activeAgent.description}
+              </p>
+            </div>
+          )}
+          {!activeAgent && (
+            <p className="animate-fade-in text-lg md:text-xl text-gray-300 mt-2" style={{animationDelay: '200ms'}}>
+              How can I help you today?
             </p>
-            <p className="text-base text-gray-400">
-              Specialized in {activeAgent.specialty}
-            </p>
-          </div>
+          )}
         </div>
 
         {/* Quick Actions */}
-        {activeAgent.actions && activeAgent.actions.length > 0 && (
-          <div className="space-y-4">
-            <p className="text-sm text-gray-400">Quick actions to get started:</p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-w-lg mx-auto">
-              {activeAgent.actions.slice(0, 4).map((action) => (
-                <button
-                  key={action.id}
-                  className="flex items-center gap-2 p-3 rounded-lg border border-white/20 bg-white/5 hover:bg-white/10 text-white/80 hover:text-white transition-colors text-left"
-                  onClick={() => {
-                    // Trigger the action
-                    const textarea = document.querySelector('textarea');
-                    if (textarea) {
-                      textarea.value = action.label;
-                      textarea.focus();
-                    }
-                  }}
-                >
-                  <span className="text-sm font-medium">{action.label}</span>
-                </button>
-              ))}
-            </div>
+        {activeAgent?.actions && activeAgent.actions.length > 0 && (
+          <div className="animate-fade-in flex flex-wrap justify-center gap-3 mt-8 max-w-2xl" style={{animationDelay: '400ms'}}>
+            {activeAgent.actions.slice(0, 3).map((action) => (
+              <button
+                key={action.id}
+                className="group flex items-center gap-2 px-4 py-2 rounded-full border border-violet-800 bg-black/50 text-sm font-medium text-white hover:bg-violet-500 hover:border-violet-500 transition-colors"
+                onClick={() => {
+                  const textarea = document.querySelector('textarea');
+                  if (textarea) {
+                    textarea.value = action.label;
+                    textarea.focus();
+                  }
+                }}
+              >
+                <Icon className="w-4 h-4 text-violet-500 group-hover:text-white transition-colors" />
+                <span>{action.label}</span>
+              </button>
+            ))}
           </div>
         )}
       </div>
-    </div>
+    </main>
   );
 };

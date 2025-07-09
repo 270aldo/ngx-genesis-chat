@@ -18,47 +18,47 @@ export const SidebarFooter: React.FC<SidebarFooterProps> = ({ showBiometrics, se
   const activeAgent = getActiveAgent();
 
   return (
-    <div className="p-4 border-t border-violet-900/60">
-      <div className="flex items-center justify-between">
+    <div className="border-t border-neutral-800 p-4">
+      <div className="flex w-full items-center justify-between rounded-md p-2 text-sm text-neutral-300 hover:bg-neutral-800 cursor-pointer">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 flex items-center justify-center rounded-full bg-violet-900/50 text-sm font-semibold text-violet-300">
+          <div className="h-8 w-8 rounded-full bg-violet-900 flex items-center justify-center text-sm font-semibold text-violet-300">
             JD
           </div>
           {(sidebarOpen || isMobile) && (
             <div className="min-w-0">
-              <span className="text-sm font-medium text-white block">John Doe</span>
+              <span className="font-medium text-white">John Doe</span>
               {activeAgent?.id === 'biometrics-engine' && (
-                <span className={`text-xs ${showBiometrics ? 'text-purple-400' : 'text-white/60'}`}>
+                <div className={`text-xs ${showBiometrics ? 'text-purple-400' : 'text-white/60'}`}>
                   Biometrics {showBiometrics ? 'Active' : 'Available'}
-                </span>
+                </div>
               )}
             </div>
           )}
         </div>
         
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1">
           {activeAgent?.id === 'biometrics-engine' && (sidebarOpen || isMobile) && (
             <Button
               onClick={() => setShowBiometrics(!showBiometrics)}
               variant="ghost"
               size="icon"
-              className={`p-2 rounded-lg transition-colors ${
+              className={`h-4 w-4 rounded transition-colors ${
                 showBiometrics 
-                  ? "bg-purple-500/20 text-purple-400" 
-                  : "hover:bg-violet-900/50 text-gray-400 hover:text-white"
+                  ? "text-purple-400" 
+                  : "text-neutral-400 hover:text-white"
               }`}
               title={showBiometrics ? 'Hide Biometrics' : 'Show Biometrics'}
             >
-              <Activity className="w-4 h-4" />
+              <Activity className="h-4 w-4" />
             </Button>
           )}
           <Button
             variant="ghost"
             size="icon"
-            className="p-2 hover:bg-violet-900/50 rounded-lg transition-colors text-gray-400 hover:text-white"
+            className="h-4 w-4 text-neutral-400 hover:text-white transition-colors"
             title="Settings"
           >
-            <Settings className="w-4 h-4" />
+            <Settings className="h-4 w-4" />
           </Button>
         </div>
       </div>
