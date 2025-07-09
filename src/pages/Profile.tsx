@@ -13,7 +13,7 @@ const Profile: React.FC = () => {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-black via-purple-900/30 to-black flex items-center justify-center">
+      <div className="min-h-screen bg-black grok-gradient flex items-center justify-center">
         <div className="text-white text-center">
           <h1 className="text-2xl font-light mb-4">No user found</h1>
           <Link to="/dashboard">
@@ -27,11 +27,10 @@ const Profile: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-purple-900/30 to-black relative overflow-hidden">
-      {/* Background Effects */}
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-600/8 via-transparent to-violet-600/5 pointer-events-none"></div>
-      <div className="absolute inset-0 bg-gradient-to-t from-purple-900/5 via-transparent to-transparent pointer-events-none"></div>
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,_rgba(168,85,247,0.1)_1px,_transparent_0)] [background-size:20px_20px] opacity-20"></div>
+    <div className="min-h-screen bg-black grok-gradient relative overflow-hidden">
+      {/* Floating orbs */}
+      <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
+      <div className="absolute top-3/4 right-1/4 w-96 h-96 bg-violet-700/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
 
       <div className="relative z-10 p-4 sm:p-6 lg:p-8 max-w-4xl mx-auto">
         {/* Header */}
