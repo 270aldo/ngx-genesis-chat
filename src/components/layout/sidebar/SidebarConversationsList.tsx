@@ -28,44 +28,46 @@ export const SidebarConversationsList: React.FC = () => {
   };
 
   return (
-    <ScrollArea className="flex-1 px-3">
-      <div className="space-y-1">
-        {conversations.map((conversation) => (
-          <div
-            key={conversation.id}
-            className={cn(
-              "group relative flex items-center gap-2 p-2 rounded-lg cursor-pointer transition-colors",
-              "hover:bg-sidebar-accent",
-              conversation.id === currentConversationId && "bg-sidebar-accent"
-            )}
-            onClick={() => handleSelectConversation(conversation.id)}
-          >
-            <MessageSquare className="h-4 w-4 flex-shrink-0 text-sidebar-foreground/60" />
-            {(sidebarOpen || isMobile) && (
-              <>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm truncate text-sidebar-foreground">
-                    {conversation.title}
-                  </p>
-                  <p className="text-xs text-sidebar-foreground/60">
-                    {conversation.messages.length} messages
-                  </p>
-                </div>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    deleteConversation(conversation.id);
-                  }}
-                  className="h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity text-sidebar-foreground/60 hover:text-red-400 flex-shrink-0"
-                >
-                  <Trash2 className="h-3 w-3" />
-                </Button>
-              </>
-            )}
-          </div>
-        ))}
+    <ScrollArea className="flex-1 p-4">
+      <div>
+        <h3 className="px-3 mb-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">Recent</h3>
+        <div className="space-y-1">
+          {conversations.map((conversation) => (
+            <div
+              key={conversation.id}
+              className={cn(
+                "group relative flex items-center gap-3 px-3 py-2 rounded-lg cursor-pointer transition-all",
+                "hover:bg-violet-900/50 hover:text-white",
+                conversation.id === currentConversationId 
+                  ? "bg-violet-900/50 text-white" 
+                  : "text-gray-300"
+              )}
+              onClick={() => handleSelectConversation(conversation.id)}
+            >
+              <MessageSquare className="h-5 w-5 flex-shrink-0" />
+              {(sidebarOpen || isMobile) && (
+                <>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium truncate">
+                      {conversation.title}
+                    </p>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      deleteConversation(conversation.id);
+                    }}
+                    className="h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity text-gray-400 hover:text-red-400 flex-shrink-0"
+                  >
+                    <Trash2 className="h-3 w-3" />
+                  </Button>
+                </>
+              )}
+            </div>
+          ))}
+        </div>
       </div>
     </ScrollArea>
   );

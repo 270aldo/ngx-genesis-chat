@@ -18,15 +18,12 @@ export const WelcomeState: React.FC<WelcomeStateProps> = ({ activeAgent }) => {
           </div>
         </div>
         
-        <h3 className="text-2xl font-light text-white/80 bg-gradient-to-r from-white via-purple-100 to-violet-100 bg-clip-text text-transparent">
-          Ready to begin with {activeAgent?.name}
-        </h3>
-        <p className="text-sm text-muted-foreground/60 font-light max-w-md mx-auto">
-          {activeAgent?.specialty || 'Start a conversation and explore endless possibilities'}
+        <h1 className="text-3xl md:text-5xl font-semibold tracking-tight text-white animate-slide-up" style={{ animationDelay: '100ms' }}>
+          Good morning.
+        </h1>
+        <p className="text-lg md:text-xl text-gray-300 mt-2 animate-slide-up" style={{ animationDelay: '200ms' }}>
+          How can I help you today?
         </p>
-        <div className="text-xs text-white/30 font-light mt-4">
-          Press Ctrl+F to search conversations
-        </div>
       </div>
     </div>
   );

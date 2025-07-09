@@ -32,11 +32,11 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
 
   return (
     <div
-      className={cn(
-        'flex gap-3 sm:gap-6 group message-fade-in px-4 sm:px-0',
-        isUser && 'flex-row-reverse',
-        'hover:bg-white/[0.02] transition-all duration-300 rounded-xl sm:rounded-2xl p-2 sm:p-4 -mx-2 sm:-mx-4'
-      )}
+        className={cn(
+          'flex gap-3 sm:gap-6 group message-fade-in px-4 sm:px-0',
+          isUser && 'flex-row-reverse',
+          'hover:bg-violet-900/10 transition-all duration-300 rounded-xl sm:rounded-2xl p-2 sm:p-4 -mx-2 sm:-mx-4'
+        )}
     >
       {/* Avatar */}
       <div
@@ -72,8 +72,8 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
           className={cn(
             'inline-block max-w-full rounded-xl sm:rounded-2xl relative overflow-hidden',
             isUser
-              ? 'glass-premium border border-white/10 px-3 py-2 sm:px-6 sm:py-4'
-              : `glass-ultra border border-purple-500/10 px-3 py-2 sm:px-6 sm:py-4 bg-gradient-to-br ${agentColor}/10`,
+              ? 'bg-black/50 border border-violet-800 px-3 py-2 sm:px-6 sm:py-4'
+              : 'bg-black/20 border border-violet-900/60 px-3 py-2 sm:px-6 sm:py-4',
             'backdrop-blur-xl'
           )}
         >

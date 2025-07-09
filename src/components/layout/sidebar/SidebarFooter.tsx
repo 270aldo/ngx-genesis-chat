@@ -3,127 +3,33 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { useChatStore } from '@/store/chatStore';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { useAgentNavigation } from '@/hooks/useAgentNavigation';
-import { cn } from '@/lib/utils';
-import { Link } from 'react-router-dom';
-import { Settings, User, TrendingUp, Activity, Utensils, Dumbbell, Zap } from 'lucide-react';
+import { Settings } from 'lucide-react';
 
 interface SidebarFooterProps {
   showBiometrics: boolean;
   setShowBiometrics: (show: boolean) => void;
 }
 
-export const SidebarFooter: React.FC<SidebarFooterProps> = ({ 
-  showBiometrics, 
-  setShowBiometrics 
-}) => {
-  const { sidebarOpen, toggleSidebar } = useChatStore();
+export const SidebarFooter: React.FC<SidebarFooterProps> = () => {
+  const { sidebarOpen } = useChatStore();
   const isMobile = useIsMobile();
-  const { navigateToAgent } = useAgentNavigation();
-
-  const handleBiometricsClick = () => {
-    navigateToAgent('biometrics-engine');
-    setShowBiometrics(true);
-    // Auto-close sidebar on mobile after navigating
-    if (isMobile) {
-      toggleSidebar();
-    }
-  };
-
-  const handleNavigation = () => {
-    // Auto-close sidebar on mobile after navigating
-    if (isMobile) {
-      toggleSidebar();
-    }
-  };
 
   return (
-    <div className="p-3 border-t border-sidebar-border">
-      <div className="space-y-1">
-        <Link to="/quick-actions" onClick={handleNavigation}>
-          <Button
-            variant="ghost"
-            className={cn(
-              "w-full text-sidebar-foreground/60 hover:text-sidebar-foreground hover:bg-sidebar-accent",
-              (sidebarOpen || isMobile) ? "justify-start gap-2" : "justify-center px-2"
-            )}
-          >
-            <Zap className="h-4 w-4 flex-shrink-0" />
-            {(sidebarOpen || isMobile) && <span>Quick Actions</span>}
-          </Button>
-        </Link>
-        <Link to="/dashboard/progress" onClick={handleNavigation}>
-          <Button
-            variant="ghost"
-            className={cn(
-              "w-full text-sidebar-foreground/60 hover:text-sidebar-foreground hover:bg-sidebar-accent",
-              (sidebarOpen || isMobile) ? "justify-start gap-2" : "justify-center px-2"
-            )}
-          >
-            <TrendingUp className="h-4 w-4 flex-shrink-0" />
-            {(sidebarOpen || isMobile) && <span>Progress Dashboard</span>}
-          </Button>
-        </Link>
-        <Link to="/dashboard/nutrition" onClick={handleNavigation}>
-          <Button
-            variant="ghost"
-            className={cn(
-              "w-full text-sidebar-foreground/60 hover:text-sidebar-foreground hover:bg-sidebar-accent",
-              (sidebarOpen || isMobile) ? "justify-start gap-2" : "justify-center px-2"
-            )}
-          >
-            <Utensils className="h-4 w-4 flex-shrink-0" />
-            {(sidebarOpen || isMobile) && <span>Nutrition</span>}
-          </Button>
-        </Link>
-        <Link to="/dashboard/training" onClick={handleNavigation}>
-          <Button
-            variant="ghost"
-            className={cn(
-              "w-full text-sidebar-foreground/60 hover:text-sidebar-foreground hover:bg-sidebar-accent",
-              (sidebarOpen || isMobile) ? "justify-start gap-2" : "justify-center px-2"
-            )}
-          >
-            <Dumbbell className="h-4 w-4 flex-shrink-0" />
-            {(sidebarOpen || isMobile) && <span>Training</span>}
-          </Button>
-        </Link>
+    <div className="p-4 border-t border-violet-900/60">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 flex items-center justify-center rounded-full bg-violet-900/50 text-sm font-semibold text-violet-300">
+            JD
+          </div>
+          {(sidebarOpen || isMobile) && <span className="text-sm font-medium text-white">John Doe</span>}
+        </div>
         <Button
           variant="ghost"
-          onClick={handleBiometricsClick}
-          className={cn(
-            "w-full text-sidebar-foreground/60 hover:text-sidebar-foreground hover:bg-sidebar-accent",
-            (sidebarOpen || isMobile) ? "justify-start gap-2" : "justify-center px-2",
-            showBiometrics && "bg-sidebar-accent text-sidebar-accent-foreground"
-          )}
+          size="icon"
+          className="p-2 hover:bg-violet-900/50 rounded-lg transition-colors text-gray-400 hover:text-white"
         >
-          <Activity className="h-4 w-4 flex-shrink-0" />
-          {(sidebarOpen || isMobile) && <span>Biometrics</span>}
+          <Settings className="w-5 h-5" />
         </Button>
-        <Link to="/settings" onClick={handleNavigation}>
-          <Button
-            variant="ghost"
-            className={cn(
-              "w-full text-sidebar-foreground/60 hover:text-sidebar-foreground hover:bg-sidebar-accent",
-              (sidebarOpen || isMobile) ? "justify-start gap-2" : "justify-center px-2"
-            )}
-          >
-            <Settings className="h-4 w-4 flex-shrink-0" />
-            {(sidebarOpen || isMobile) && <span>Settings</span>}
-          </Button>
-        </Link>
-        <Link to="/profile" onClick={handleNavigation}>
-          <Button
-            variant="ghost"
-            className={cn(
-              "w-full text-sidebar-foreground/60 hover:text-sidebar-foreground hover:bg-sidebar-accent",
-              (sidebarOpen || isMobile) ? "justify-start gap-2" : "justify-center px-2"
-            )}
-          >
-            <User className="h-4 w-4 flex-shrink-0" />
-            {(sidebarOpen || isMobile) && <span>Profile</span>}
-          </Button>
-        </Link>
       </div>
     </div>
   );

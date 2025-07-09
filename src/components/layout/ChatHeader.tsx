@@ -13,10 +13,10 @@ export const ChatHeader: React.FC<ChatHeaderProps> = () => {
   const isMobile = useIsMobile();
 
   return (
-    <div className="relative z-10 border-b border-white/5 bg-black/20 backdrop-blur-xl">
+    <div className="relative z-10 border-b border-violet-900/60 bg-black/50 backdrop-blur-sm animate-fade-in">
       <div className={cn(
-        "flex items-center justify-between py-3",
-        isMobile ? "px-3" : "px-4 sm:px-6"
+        "flex items-center justify-between h-16",
+        isMobile ? "px-3" : "px-4 md:px-6"
       )}>
         <div className="flex-1 min-w-0">
           <AgentSelector />

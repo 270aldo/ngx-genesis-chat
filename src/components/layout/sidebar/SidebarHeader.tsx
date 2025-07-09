@@ -11,32 +11,27 @@ export const SidebarHeader: React.FC = () => {
   const isMobile = useIsMobile();
 
   return (
-    <div className="p-4 border-b border-sidebar-border">
-      <div className="flex items-center justify-between">
-        {(sidebarOpen || !isMobile) && (
-          <div className={cn("flex items-center gap-3", !sidebarOpen && !isMobile && "hidden")}>
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-600 to-navy-600 flex items-center justify-center">
-              <Brain className="w-4 h-4 text-white" />
-            </div>
-            <div>
-              <h1 className="font-semibold text-sm">NGX Agents</h1>
-              <p className="text-xs text-sidebar-foreground/60">Advanced AI Interface</p>
-            </div>
+    <div className="p-4 h-16 border-b border-violet-900/60 flex items-center justify-between">
+      {(sidebarOpen || !isMobile) && (
+        <div className={cn("flex items-center gap-3", !sidebarOpen && !isMobile && "hidden")}>
+          <div className="w-7 h-7 rounded-lg bg-violet-600 flex items-center justify-center">
+            <Brain className="w-4 h-4 text-white" />
           </div>
+          <span className="text-lg font-semibold text-white">Assistant</span>
+        </div>
+      )}
+      <Button
+        variant="ghost"
+        size="icon"
+        onClick={toggleSidebar}
+        className="h-8 w-8 p-1.5 hover:bg-violet-900/50 rounded-lg transition-colors text-gray-400 hover:text-white flex-shrink-0"
+      >
+        {isMobile ? (
+          <Menu className="h-5 w-5" />
+        ) : (
+          <ChevronLeft className={cn("h-5 w-5 transition-transform", !sidebarOpen && "rotate-180")} />
         )}
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={toggleSidebar}
-          className="h-8 w-8 text-sidebar-foreground/60 hover:text-sidebar-foreground flex-shrink-0"
-        >
-          {isMobile ? (
-            <Menu className="h-4 w-4" />
-          ) : (
-            <ChevronLeft className={cn("h-4 w-4 transition-transform", !sidebarOpen && "rotate-180")} />
-          )}
-        </Button>
-      </div>
+      </Button>
     </div>
   );
 };

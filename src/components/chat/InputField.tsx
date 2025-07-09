@@ -38,10 +38,10 @@ export const InputField: React.FC<InputFieldProps> = ({
         placeholder={isTyping ? "NGX Agent is thinking..." : "Ask me anything..."}
         disabled={disabled || isTyping}
         className={cn(
-          "resize-none border-0 bg-transparent shadow-none focus-visible:ring-0 focus-visible:ring-offset-0 px-0 text-white placeholder:text-white/50",
+          "resize-none border-0 bg-transparent shadow-none focus-visible:ring-0 focus-visible:ring-offset-0 px-2 text-white placeholder:text-gray-500",
           isMobile 
             ? "min-h-[44px] max-h-[100px] py-2.5 text-base" 
-            : "min-h-[48px] max-h-[120px] py-2 text-sm"
+            : "min-h-[48px] max-h-[120px] py-2 text-lg"
         )}
         rows={1}
         style={{

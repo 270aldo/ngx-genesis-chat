@@ -39,8 +39,8 @@ export const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, disabled })
     <div className={cn("p-4", isMobile && "p-3 pb-safe")}>
       <div className="max-w-4xl mx-auto">
         <div className={cn(
-          "flex items-end gap-3 bg-black/40 backdrop-blur-sm rounded-2xl border border-white/20",
-          isMobile ? "p-2.5" : "p-3"
+          "flex items-end gap-3 bg-black border border-violet-800 rounded-2xl shadow-lg shadow-violet-900/20",
+          isMobile ? "p-2.5" : "p-4"
         )}>
           <InputField
             input={input}
