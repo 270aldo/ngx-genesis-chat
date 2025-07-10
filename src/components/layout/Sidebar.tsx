@@ -7,7 +7,6 @@ import { SidebarHeader } from './sidebar/SidebarHeader';
 import { NewConversationButton } from './sidebar/NewConversationButton';
 import { SidebarConversationsList } from './sidebar/SidebarConversationsList';
 import { SidebarFooter } from './sidebar/SidebarFooter';
-import { AgentSelector } from '../agents/AgentSelector';
 
 interface SidebarProps {
   showBiometrics: boolean;
@@ -31,7 +30,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ showBiometrics, setShowBiometr
     >
       <SidebarHeader />
       <NewConversationButton />
-      <AgentSelector />
       <SidebarConversationsList />
       <SidebarFooter 
         showBiometrics={showBiometrics}
