@@ -46,8 +46,7 @@ export const FileAttachmentComponent: React.FC<FileAttachmentProps> = ({
   }, [onFilesAdded]);
   const {
     getRootProps,
-    getInputProps,
-    open
+    getInputProps
   } = useDropzone({
     onDrop: processFiles,
     onDragEnter: () => setIsDragOver(true),
