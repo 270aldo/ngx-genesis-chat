@@ -32,9 +32,9 @@ import {
 } from 'lucide-react';
 
 const agentActions = {
-  'training-strategist': {
-    name: 'Training Strategist',
-    color: 'from-orange-500 to-red-600',
+  'blaze': {
+    name: 'BLAZE',
+    color: 'from-red-500 to-orange-600',
     actions: [{
       label: 'Create Workout Plan',
       icon: Dumbbell,
@@ -52,9 +52,9 @@ const agentActions = {
       category: 'assessment'
     }]
   },
-  'nutrition-architect': {
-    name: 'Nutrition Architect',
-    color: 'from-green-500 to-emerald-600',
+  'sage': {
+    name: 'SAGE',
+    color: 'from-emerald-500 to-green-600',
     actions: [{
       label: 'Meal Plan',
       icon: Utensils,
@@ -72,9 +72,9 @@ const agentActions = {
       category: 'analysis'
     }]
   },
-  'biometrics-engine': {
-    name: 'Biometrics Engine',
-    color: 'from-blue-500 to-cyan-600',
+  'wave': {
+    name: 'WAVE',
+    color: 'from-cyan-500 to-blue-600',
     actions: [{
       label: 'Analyze Sleep',
       icon: Moon,
@@ -92,9 +92,9 @@ const agentActions = {
       category: 'assessment'
     }]
   },
-  'recovery-corrective': {
-    name: 'Recovery & Corrective',
-    color: 'from-purple-500 to-violet-600',
+  'spark': {
+    name: 'SPARK',
+    color: 'from-yellow-500 to-amber-600',
     actions: [{
       label: 'Recovery Assessment',
       icon: Activity,
@@ -122,9 +122,9 @@ const agentActions = {
       category: 'guidance'
     }]
   },
-  'biohacking-innovator': {
-    name: 'Biohacking Innovator',
-    color: 'from-teal-500 to-cyan-600',
+  'nova': {
+    name: 'NOVA',
+    color: 'from-indigo-500 to-cyan-600',
     actions: [{
       label: 'Cold Therapy',
       icon: Snowflake,
@@ -152,9 +152,9 @@ const agentActions = {
       category: 'guidance'
     }]
   },
-  'success-liaison': {
-    name: 'Success Liaison',
-    color: 'from-pink-500 to-rose-600',
+  'nexus': {
+    name: 'NEXUS',
+    color: 'from-purple-500 to-indigo-600',
     actions: [{
       label: 'Weekly Check-in',
       icon: Calendar,
@@ -181,10 +181,70 @@ const agentActions = {
       prompt: 'Help me track and optimize my daily wellness habits',
       category: 'tracking'
     }, {
-      label: 'Celebrate Wins',
+      label: 'Success Planning',
       icon: Trophy,
-      prompt: 'Let\'s acknowledge my achievements and plan some rewards',
+      prompt: 'Create comprehensive roadmap for achieving my fitness goals',
       category: 'guidance'
+    }]
+  },
+  'stella': {
+    name: 'STELLA',
+    color: 'from-violet-500 to-purple-600',
+    actions: [{
+      label: 'Progress Analytics',
+      icon: BarChart3,
+      prompt: 'Analyze my progress data and KPIs',
+      category: 'analysis'
+    }, {
+      label: 'Performance Tests',
+      icon: Target,
+      prompt: 'Design functional movement and performance tests',
+      category: 'assessment'
+    }, {
+      label: 'Data Visualization',
+      icon: Trophy,
+      prompt: 'Create custom dashboards and reports',
+      category: 'tracking'
+    }]
+  },
+  'luna': {
+    name: 'LUNA',
+    color: 'from-pink-500 to-rose-600',
+    actions: [{
+      label: 'Hormonal Cycles',
+      icon: Calendar,
+      prompt: 'Adapt training to my menstrual cycle phases',
+      category: 'plan'
+    }, {
+      label: 'Pelvic Health',
+      icon: Activity,
+      prompt: 'Create pelvic floor strengthening program',
+      category: 'plan'
+    }, {
+      label: 'Menopause Support',
+      icon: Shield,
+      prompt: 'Help with perimenopause and menopause strategies',
+      category: 'guidance'
+    }]
+  },
+  'codex': {
+    name: 'CODEX.072',
+    color: 'from-teal-500 to-emerald-600',
+    actions: [{
+      label: 'DNA Analysis',
+      icon: Target,
+      prompt: 'Interpret my genetic test results for personalization',
+      category: 'analysis'
+    }, {
+      label: 'Nutrigenomics',
+      icon: Apple,
+      prompt: 'Create nutrition plan based on my genetics',
+      category: 'plan'
+    }, {
+      label: 'Longevity Genetics',
+      icon: Shield,
+      prompt: 'Assess genetic risks and prevention strategies',
+      category: 'assessment'
     }]
   }
 };
