@@ -5,7 +5,7 @@ export const FITNESS_AGENTS: Agent[] = [
   {
     id: 'nexus',
     name: 'NEXUS',
-    title: 'AI Coordinator & Success',
+    title: 'NEXUS - Coordinador IA & Éxito',
     specialty: 'Orquestador & Éxito del Cliente',
     description: 'Tu coordinador inteligente que orquesta conversaciones y garantiza tu éxito con filosofía NGX',
     avatar: '🧠',
@@ -48,7 +48,7 @@ export const FITNESS_AGENTS: Agent[] = [
   {
     id: 'blaze',
     name: 'BLAZE',
-    title: 'Workout Design Expert',
+    title: 'BLAZE - Especialista en Entrenamiento',
     specialty: 'Entrenamiento Físico',
     description: 'Especialista en ciencia de la hipertrofia y programación de entrenamiento individualizado',
     avatar: '🔥',
@@ -91,7 +91,7 @@ export const FITNESS_AGENTS: Agent[] = [
   {
     id: 'sage',
     name: 'SAGE',
-    title: 'Nutrition Specialist',
+    title: 'SAGE - Especialista en Nutrición',
     specialty: 'Nutrición & Nutrigenómica',
     description: 'Experto en nutrición de precisión y personalización según fenotipo y genética',
     avatar: '🌿',
@@ -134,7 +134,7 @@ export const FITNESS_AGENTS: Agent[] = [
   {
     id: 'wave',
     name: 'WAVE',
-    title: 'Recovery & Biometrics',
+    title: 'WAVE - Recuperación & Biométricos',
     specialty: 'Recuperación & Biométricos',
     description: 'Fusión de análisis biométrico y estrategias de recuperación para optimización completa',
     avatar: '🌊',
@@ -177,7 +177,7 @@ export const FITNESS_AGENTS: Agent[] = [
   {
     id: 'luna',
     name: 'LUNA',
-    title: 'Women\'s Health Specialist',
+    title: 'LUNA - Especialista en Salud Femenina',
     specialty: 'Salud Femenina',
     description: 'Especialista en ciclos hormonales, salud reproductiva y entrenamiento específico femenino',
     avatar: '🌙',
@@ -220,7 +220,7 @@ export const FITNESS_AGENTS: Agent[] = [
   {
     id: 'spark',
     name: 'SPARK',
-    title: 'Mindset Specialist',
+    title: 'SPARK - Especialista en Motivación',
     specialty: 'Motivación & Comportamiento',
     description: 'Experto en psicología del cambio de hábitos y neurociencia del comportamiento',
     avatar: '⚡',
@@ -263,7 +263,7 @@ export const FITNESS_AGENTS: Agent[] = [
   {
     id: 'stella',
     name: 'STELLA',
-    title: 'Analytics Specialist',
+    title: 'STELLA - Especialista en Análisis',
     specialty: 'Progreso & Evaluación',
     description: 'Especialista en KPIs fisiológicos, análisis de datos y toma de decisiones basada en evidencia',
     avatar: '⭐',
@@ -306,7 +306,7 @@ export const FITNESS_AGENTS: Agent[] = [
   {
     id: 'nova',
     name: 'NOVA',
-    title: 'Optimization Expert',
+    title: 'NOVA - Especialista en Optimización',
     specialty: 'Biohacking & Optimización',
     description: 'Especialista en biohacking cognitivo, nootrópicos y tecnologías de optimización avanzada',
     avatar: '✨',
@@ -349,7 +349,7 @@ export const FITNESS_AGENTS: Agent[] = [
   {
     id: 'codex',
     name: 'CODEX.072',
-    title: 'Genetics Specialist',
+    title: 'CODEX.072 - Especialista en Genética',
     specialty: 'Genética & Datos Personales',
     description: 'Especialista en interpretación de ADN, polimorfismos y personalización genética',
     avatar: '🧬',
