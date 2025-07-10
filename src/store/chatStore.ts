@@ -2,6 +2,15 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
+export interface FileAttachment {
+  id: string;
+  name: string;
+  type: string;
+  size: number;
+  url: string;
+  preview?: string;
+}
+
 export interface Message {
   id: string;
   content: string;
@@ -9,6 +18,7 @@ export interface Message {
   timestamp: Date;
   agentId?: string;
   isTyping?: boolean;
+  attachments?: FileAttachment[];
   metadata?: {
     confidence?: number;
     processingTime?: number;
