@@ -12,13 +12,18 @@ interface CameraCaptureProps {
 export const CameraCapture: React.FC<CameraCaptureProps> = ({ onCapture, disabled }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isCameraActive, setIsCameraActive] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
   const [facingMode, setFacingMode] = useState<'user' | 'environment'>('environment');
+  const [error, setError] = useState<string | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
 
   const startCamera = useCallback(async () => {
+    setIsLoading(true);
+    setError(null);
+    
     try {
       const constraints = {
         video: {
@@ -33,11 +38,13 @@ export const CameraCapture: React.FC<CameraCaptureProps> = ({ onCapture, disable
       
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
-        videoRef.current.play();
+        await videoRef.current.play();
         setIsCameraActive(true);
       }
     } catch (error) {
       console.error('Error accessing camera:', error);
+      setError('Camera access denied or unavailable');
+      
       // Fallback to file input
       const input = document.createElement('input');
       input.type = 'file';
@@ -49,6 +56,8 @@ export const CameraCapture: React.FC<CameraCaptureProps> = ({ onCapture, disable
         }
       };
       input.click();
+    } finally {
+      setIsLoading(false);
     }
   }, [facingMode]);
 
@@ -126,6 +135,8 @@ export const CameraCapture: React.FC<CameraCaptureProps> = ({ onCapture, disable
     setIsOpen(false);
     stopCamera();
     setCapturedImage(null);
+    setError(null);
+    setIsLoading(false);
   }, [stopCamera]);
 
   return (
@@ -140,8 +151,10 @@ export const CameraCapture: React.FC<CameraCaptureProps> = ({ onCapture, disable
           variant="ghost"
           size="icon"
           disabled={disabled}
-          className="p-2 hover:bg-violet-900/50 rounded-lg transition-colors"
+          className="p-2 hover:bg-violet-900/50 rounded-lg transition-all duration-200 touch-manipulation min-h-[44px] min-w-[44px]"
           onClick={() => setIsOpen(true)}
+          aria-label="Open camera to capture photo"
+          tabIndex={0}
         >
           <Camera className="w-5 h-5 text-violet-500" />
         </Button>
@@ -153,13 +166,34 @@ export const CameraCapture: React.FC<CameraCaptureProps> = ({ onCapture, disable
         </DialogHeader>
         
         <div className="space-y-4">
-          {!isCameraActive && !capturedImage && (
+          {!isCameraActive && !capturedImage && !isLoading && (
             <div className="text-center py-8">
               <Camera className="w-12 h-12 text-violet-400 mx-auto mb-4" />
               <p className="text-gray-400 mb-4">Ready to capture a photo?</p>
-              <Button onClick={startCamera} className="bg-violet-600 hover:bg-violet-700">
+              {error && (
+                <p className="text-red-400 text-sm mb-4" role="alert">{error}</p>
+              )}
+              <Button 
+                onClick={startCamera} 
+                className="bg-violet-600 hover:bg-violet-700 touch-manipulation"
+                aria-label="Start camera"
+              >
                 Start Camera
               </Button>
+            </div>
+          )}
+
+          {isLoading && (
+            <div className="text-center py-8">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-violet-600/20 rounded-full mb-4 animate-[camera-loading_2s_infinite]">
+                <Camera className="w-8 h-8 text-violet-400" />
+              </div>
+              <p className="text-violet-300 mb-2">Starting camera...</p>
+              <div className="flex justify-center space-x-1">
+                <div className="w-2 h-2 bg-violet-400 rounded-full animate-[loading-dots_1.4s_infinite] [animation-delay:0ms]"></div>
+                <div className="w-2 h-2 bg-violet-400 rounded-full animate-[loading-dots_1.4s_infinite] [animation-delay:160ms]"></div>
+                <div className="w-2 h-2 bg-violet-400 rounded-full animate-[loading-dots_1.4s_infinite] [animation-delay:320ms]"></div>
+              </div>
             </div>
           )}
           
@@ -177,13 +211,15 @@ export const CameraCapture: React.FC<CameraCaptureProps> = ({ onCapture, disable
                   onClick={switchCamera}
                   variant="secondary"
                   size="icon"
-                  className="bg-black/50 hover:bg-black/70 text-white"
+                  className="bg-black/50 hover:bg-black/70 text-white touch-manipulation min-h-[44px] min-w-[44px]"
+                  aria-label="Switch camera"
                 >
                   <RotateCcw className="w-4 h-4" />
                 </Button>
                 <Button
                   onClick={capturePhoto}
-                  className="bg-violet-600 hover:bg-violet-700 px-6"
+                  className="bg-violet-600 hover:bg-violet-700 px-6 touch-manipulation active:scale-95 transition-transform"
+                  aria-label="Capture photo"
                 >
                   <Camera className="w-4 h-4 mr-2" />
                   Capture
@@ -203,13 +239,16 @@ export const CameraCapture: React.FC<CameraCaptureProps> = ({ onCapture, disable
                 <Button
                   onClick={() => setCapturedImage(null)}
                   variant="secondary"
+                  className="touch-manipulation"
+                  aria-label="Retake photo"
                 >
                   <X className="w-4 h-4 mr-2" />
                   Retake
                 </Button>
                 <Button
                   onClick={saveCapture}
-                  className="bg-green-600 hover:bg-green-700"
+                  className="bg-green-600 hover:bg-green-700 touch-manipulation active:scale-95 transition-transform"
+                  aria-label="Use captured photo"
                 >
                   <Check className="w-4 h-4 mr-2" />
                   Use Photo

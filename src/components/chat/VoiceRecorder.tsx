@@ -90,11 +90,13 @@ export const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
         onClick={isRecording ? stopRecording : startRecording}
         disabled={disabled}
         className={cn(
-          "p-2 rounded-lg transition-all duration-200",
+          "p-2 rounded-lg transition-all duration-200 touch-manipulation min-h-[44px] min-w-[44px]",
           isRecording 
-            ? "bg-red-500/20 hover:bg-red-500/30 text-red-400 animate-pulse" 
-            : "hover:bg-violet-900/50 text-violet-500"
+            ? "bg-red-500/20 hover:bg-red-500/30 text-red-400 animate-pulse active:scale-95" 
+            : "hover:bg-violet-900/50 text-violet-500 active:scale-95"
         )}
+        aria-label={isRecording ? "Stop recording" : "Start voice recording"}
+        tabIndex={0}
       >
         {isRecording ? (
           <Square className="w-5 h-5" />
@@ -104,7 +106,12 @@ export const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
       </Button>
       
       {isRecording && (
-        <div className="flex items-center gap-2 px-2 py-1 bg-red-500/10 border border-red-500/20 rounded-lg">
+        <div 
+          className="flex items-center gap-2 px-2 py-1 bg-red-500/10 border border-red-500/20 rounded-lg animate-fade-in"
+          role="status"
+          aria-live="polite"
+          aria-label={`Recording for ${formatTime(recordingTime)}`}
+        >
           <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
           <span className="text-xs text-red-400 font-mono">
             {formatTime(recordingTime)}

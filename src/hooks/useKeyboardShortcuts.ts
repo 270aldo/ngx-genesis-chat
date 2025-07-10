@@ -1,88 +1,59 @@
+import { useEffect } from 'react';
+import { useChatStore } from '@/store/chatStore';
 
-import { useEffect, useCallback } from 'react';
-
-interface Shortcut {
-  key: string;
-  ctrlKey?: boolean;
-  shiftKey?: boolean;
-  metaKey?: boolean;
-  action: () => void;
-  description: string;
+interface ShortcutCallbacks {
+  onUploadFiles?: () => void;
+  onOpenCamera?: () => void;
+  onStartRecording?: () => void;
+  onToggleSidebar?: () => void;
 }
 
-interface UseKeyboardShortcutsProps {
-  shortcuts: Shortcut[];
-  enabled?: boolean;
-}
-
-export const useKeyboardShortcuts = ({ shortcuts, enabled = true }: UseKeyboardShortcutsProps) => {
-  const handleKeyDown = useCallback((event: KeyboardEvent) => {
-    if (!enabled) return;
-
-    // Don't trigger shortcuts when typing in inputs, textareas, or contenteditable elements
-    const target = event.target as HTMLElement;
-    if (
-      target.tagName === 'INPUT' ||
-      target.tagName === 'TEXTAREA' ||
-      target.contentEditable === 'true'
-    ) {
-      return;
-    }
-
-    shortcuts.forEach(shortcut => {
-      const keyMatch = event.key.toLowerCase() === shortcut.key.toLowerCase();
-      const ctrlMatch = !!shortcut.ctrlKey === (event.ctrlKey || event.metaKey);
-      const shiftMatch = !!shortcut.shiftKey === event.shiftKey;
-
-      if (keyMatch && ctrlMatch && shiftMatch) {
-        event.preventDefault();
-        shortcut.action();
-      }
-    });
-  }, [shortcuts, enabled]);
+export const useKeyboardShortcuts = (callbacks: ShortcutCallbacks) => {
+  const { toggleSidebar } = useChatStore();
 
   useEffect(() => {
-    if (enabled) {
-      document.addEventListener('keydown', handleKeyDown);
-      return () => document.removeEventListener('keydown', handleKeyDown);
-    }
-  }, [handleKeyDown, enabled]);
+    const handleKeyDown = (event: KeyboardEvent) => {
+      // Check for modifier keys
+      const isCtrl = event.ctrlKey || event.metaKey;
+      
+      if (isCtrl) {
+        switch (event.key.toLowerCase()) {
+          case 'u':
+            if (event.shiftKey && callbacks.onUploadFiles) {
+              event.preventDefault();
+              callbacks.onUploadFiles();
+            }
+            break;
+          case 'c':
+            if (event.shiftKey && callbacks.onOpenCamera) {
+              event.preventDefault();
+              callbacks.onOpenCamera();
+            }
+            break;
+          case 'm':
+            if (event.shiftKey && callbacks.onStartRecording) {
+              event.preventDefault();
+              callbacks.onStartRecording();
+            }
+            break;
+          case 'b':
+            event.preventDefault();
+            if (callbacks.onToggleSidebar) {
+              callbacks.onToggleSidebar();
+            } else {
+              toggleSidebar();
+            }
+            break;
+        }
+      }
 
-  return { shortcuts };
-};
+      // ESC key for closing modals
+      if (event.key === 'Escape') {
+        // This will be handled by individual components
+      }
+    };
 
-// Common shortcuts hook
-export const useChatShortcuts = (actions: {
-  onSearch?: () => void;
-  onNewChat?: () => void;
-  onToggleSidebar?: () => void;
-  onFocusInput?: () => void;
-}) => {
-  const shortcuts: Shortcut[] = [
-    {
-      key: 'f',
-      ctrlKey: true,
-      action: actions.onSearch || (() => {}),
-      description: 'Search conversations'
-    },
-    {
-      key: 'n',
-      ctrlKey: true,
-      action: actions.onNewChat || (() => {}),
-      description: 'New conversation'
-    },
-    {
-      key: 'b',
-      ctrlKey: true,
-      action: actions.onToggleSidebar || (() => {}),
-      description: 'Toggle sidebar'
-    },
-    {
-      key: '/',
-      action: actions.onFocusInput || (() => {}),
-      description: 'Focus message input'
-    }
-  ];
-
-  return useKeyboardShortcuts({ shortcuts });
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [callbacks, toggleSidebar]);
 };

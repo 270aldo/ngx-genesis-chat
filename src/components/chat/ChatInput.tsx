@@ -14,6 +14,7 @@ import { VoiceRecorder } from './VoiceRecorder';
 import { useVoiceConversation } from '@/hooks/useVoiceConversation';
 import { VoiceInterface } from '../voice/VoiceInterface';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
 
 interface ChatInputProps {
   onSendMessage: (content: string, attachments?: FileAttachment[]) => void;
@@ -30,10 +31,18 @@ export const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, disabled })
   const { isVoiceActive } = useVoiceConversation();
   const isMobile = useIsMobile();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   
   const activeAgent = getActiveAgent();
 
   useQuickMessageListener(onSendMessage);
+
+  // Keyboard shortcuts
+  useKeyboardShortcuts({
+    onUploadFiles: () => fileInputRef.current?.click(),
+    onOpenCamera: () => {}, // Camera has its own trigger
+    onStartRecording: () => setShowVoiceDialog(true),
+  });
 
   useEffect(() => {
     if (textareaRef.current) {
@@ -115,9 +124,11 @@ export const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, disabled })
             <Button
               variant="ghost"
               size="icon"
-              className="p-2 hover:bg-violet-900/50 rounded-lg transition-colors"
+              className="p-2 hover:bg-violet-900/50 rounded-lg transition-all duration-200 touch-manipulation min-h-[44px] min-w-[44px]"
               disabled={disabled}
-              onClick={() => (document.querySelector('input[type="file"]') as HTMLInputElement)?.click()}
+              onClick={() => fileInputRef.current?.click()}
+              aria-label="Upload files (Ctrl+U)"
+              title="Upload files (Ctrl+U)"
             >
               <Paperclip className="w-5 h-5 text-violet-500" />
             </Button>
@@ -141,12 +152,14 @@ export const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, disabled })
                   variant="ghost"
                   size="icon"
                   className={cn(
-                    "p-2 rounded-lg transition-colors",
+                    "p-2 rounded-lg transition-all duration-200 touch-manipulation min-h-[44px] min-w-[44px]",
                     isVoiceActive 
                       ? "bg-violet-500/20 hover:bg-violet-500/30 text-violet-400" 
                       : "hover:bg-violet-900/50 text-violet-500"
                   )}
                   disabled={disabled}
+                  aria-label="Start voice conversation (Ctrl+Shift+M)"
+                  title="Start voice conversation (Ctrl+Shift+M)"
                 >
                   <Bot className="w-5 h-5" />
                 </Button>
@@ -211,13 +224,38 @@ export const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, disabled })
             <Button
               onClick={handleSubmit}
               disabled={((!input.trim() && attachments.length === 0) && !isTyping) || disabled}
-              className="p-2.5 rounded-lg bg-violet-500 text-white hover:bg-violet-600 transition-colors disabled:opacity-50"
+              className="p-2.5 rounded-lg bg-violet-500 text-white hover:bg-violet-600 transition-all duration-200 disabled:opacity-50 touch-manipulation min-h-[44px] min-w-[44px] active:scale-95"
+              aria-label="Send message"
             >
               <ArrowUp className="w-5 h-5" />
             </Button>
           </div>
         </div>
       </div>
+
+      {/* Hidden file input for keyboard shortcut */}
+      <input
+        type="file"
+        ref={fileInputRef}
+        onChange={(e) => {
+          const files = Array.from(e.target.files || []);
+          if (files.length > 0) {
+            const fileAttachments = files.map(file => ({
+              id: Date.now().toString() + Math.random(),
+              name: file.name,
+              type: file.type,
+              size: file.size,
+              url: URL.createObjectURL(file),
+              preview: file.type.startsWith('image/') ? URL.createObjectURL(file) : undefined
+            }));
+            handleFilesAdded(fileAttachments);
+          }
+        }}
+        multiple
+        accept="image/*,.pdf,.doc,.docx,.txt"
+        className="hidden"
+        disabled={disabled}
+      />
     </div>
   );
 };

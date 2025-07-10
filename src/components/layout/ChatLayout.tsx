@@ -9,13 +9,11 @@ import { useChatMessageHandlers } from './ChatMessageHandlers';
 import { useChatStore } from '@/store/chatStore';
 import { useAgentStore } from '@/store/agentStore';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { useChatShortcuts } from '@/hooks/useKeyboardShortcuts';
-import { toastSuccess } from '@/components/ui/enhanced-toast';
+import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
 import { cn } from '@/lib/utils';
 
 export const ChatLayout: React.FC = () => {
   const {
-    createConversation,
     sidebarOpen,
     toggleSidebar,
   } = useChatStore();
@@ -33,17 +31,8 @@ export const ChatLayout: React.FC = () => {
   }, [activeAgentId]);
 
   // Keyboard shortcuts
-  useChatShortcuts({
-    onSearch: () => {},
-    onNewChat: () => {
-      createConversation();
-      toastSuccess('New conversation created');
-    },
-    onToggleSidebar: () => toggleSidebar(),
-    onFocusInput: () => {
-      const input = document.querySelector('textarea');
-      input?.focus();
-    }
+  useKeyboardShortcuts({
+    onToggleSidebar: () => toggleSidebar()
   });
 
   // Auto-collapse sidebar on mobile

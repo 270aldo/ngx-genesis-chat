@@ -3,10 +3,12 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { Input } from '@/components/ui/input';
 import { useChatStore } from '@/store/chatStore';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
-import { MessageSquare, Trash2, BookOpen, TrendingUp, Apple, LayoutDashboard, Settings, Zap, ChevronDown, ChevronUp } from 'lucide-react';
+import { MessageSquare, Trash2, BookOpen, TrendingUp, Apple, LayoutDashboard, Settings, Zap, ChevronDown, ChevronUp, Search } from 'lucide-react';
+import { useDebounce } from '@/hooks/useDebounce';
 
 export const SidebarConversationsList: React.FC = () => {
   const {
@@ -19,13 +21,23 @@ export const SidebarConversationsList: React.FC = () => {
   } = useChatStore();
   
   const [conversationsExpanded, setConversationsExpanded] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
   const isMobile = useIsMobile();
   const location = useLocation();
+  const debouncedSearchQuery = useDebounce(searchQuery, 300);
+
+  // Filter conversations based on search
+  const filteredConversations = conversations.filter(conversation =>
+    conversation.title.toLowerCase().includes(debouncedSearchQuery.toLowerCase()) ||
+    conversation.messages.some(msg => 
+      msg.content.toLowerCase().includes(debouncedSearchQuery.toLowerCase())
+    )
+  );
 
   const COLLAPSED_LIMIT = 3;
   const displayedConversations = conversationsExpanded 
-    ? conversations 
-    : conversations.slice(0, COLLAPSED_LIMIT);
+    ? filteredConversations 
+    : filteredConversations.slice(0, COLLAPSED_LIMIT);
 
   const isActiveRoute = (path: string) => location.pathname === path;
 
@@ -90,11 +102,17 @@ export const SidebarConversationsList: React.FC = () => {
         {/* Search - only show when expanded */}
         {(sidebarOpen || isMobile) && (
           <div className="mb-4">
-            <input 
-              type="text" 
-              placeholder="Search..." 
-              className="w-full rounded-md bg-neutral-900 px-3 py-2 text-sm text-neutral-200 placeholder-neutral-500 border border-violet-800 focus:outline-none focus:ring-2 focus:ring-violet-500 transition-all"
-            />
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <Input
+                type="text"
+                placeholder="Search conversations..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-10 bg-neutral-900 border-violet-800 text-white placeholder:text-gray-400 focus:border-violet-500"
+                aria-label="Search conversations"
+              />
+            </div>
           </div>
         )}
 
@@ -141,35 +159,51 @@ export const SidebarConversationsList: React.FC = () => {
                 )}
               </div>
               <ul className="space-y-1">
-                {displayedConversations.map((conversation) => (
-                  <li key={conversation.id}>
-                    <div
-                      className={cn(
-                        "group flex items-center justify-between rounded-md px-2 py-2 text-sm font-medium cursor-pointer transition-all duration-200",
-                        conversation.id === currentConversationId 
-                          ? "text-white bg-violet-800/50" 
-                          : "text-neutral-300 hover:bg-violet-900/30 hover:text-white"
-                      )}
-                      onClick={() => handleSelectConversation(conversation.id)}
-                    >
-                      <span className="flex items-center gap-3 truncate">
-                        <MessageSquare className="h-4 w-4 text-violet-400 flex-shrink-0" />
-                        <span className="truncate">{conversation.title}</span>
-                      </span>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          deleteConversation(conversation.id);
-                        }}
-                        className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity text-neutral-500 hover:text-red-400"
-                      >
-                        <Trash2 className="h-3 w-3" />
-                      </Button>
-                    </div>
+                {displayedConversations.length === 0 && debouncedSearchQuery ? (
+                  <li className="text-center py-4">
+                    <p className="text-sm text-gray-400">No conversations found</p>
                   </li>
-                ))}
+                ) : (
+                  displayedConversations.map((conversation, index) => (
+                    <li key={conversation.id}>
+                      <div
+                        className={cn(
+                          "group flex items-center justify-between rounded-md px-2 py-2 text-sm font-medium cursor-pointer transition-all duration-200 animate-[stagger-fade-in_0.3s_ease-out] touch-manipulation",
+                          conversation.id === currentConversationId 
+                            ? "text-white bg-violet-800/50" 
+                            : "text-neutral-300 hover:bg-violet-900/30 hover:text-white"
+                        )}
+                        style={{ animationDelay: `${index * 50}ms` }}
+                        onClick={() => handleSelectConversation(conversation.id)}
+                        role="button"
+                        aria-label={`Select conversation: ${conversation.title}`}
+                        tabIndex={0}
+                        onKeyPress={(e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            handleSelectConversation(conversation.id);
+                          }
+                        }}
+                      >
+                        <span className="flex items-center gap-3 truncate">
+                          <MessageSquare className="h-4 w-4 text-violet-400 flex-shrink-0" />
+                          <span className="truncate">{conversation.title}</span>
+                        </span>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            deleteConversation(conversation.id);
+                          }}
+                          className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-all duration-200 text-neutral-500 hover:text-red-400 touch-manipulation"
+                          aria-label={`Delete conversation: ${conversation.title}`}
+                        >
+                          <Trash2 className="h-3 w-3" />
+                        </Button>
+                      </div>
+                    </li>
+                  ))
+                )}
               </ul>
             </div>
 
