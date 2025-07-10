@@ -1,11 +1,11 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useChatStore } from '@/store/chatStore';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
-import { MessageSquare, Trash2, BookOpen, TrendingUp, Apple, LayoutDashboard, Settings, Zap } from 'lucide-react';
+import { MessageSquare, Trash2, BookOpen, TrendingUp, Apple, LayoutDashboard, Settings, Zap, ChevronDown, ChevronUp } from 'lucide-react';
 
 export const SidebarConversationsList: React.FC = () => {
   const {
@@ -17,8 +17,14 @@ export const SidebarConversationsList: React.FC = () => {
     toggleSidebar,
   } = useChatStore();
   
+  const [conversationsExpanded, setConversationsExpanded] = useState(true);
   const isMobile = useIsMobile();
   const location = useLocation();
+
+  const COLLAPSED_LIMIT = 3;
+  const displayedConversations = conversationsExpanded 
+    ? conversations 
+    : conversations.slice(0, COLLAPSED_LIMIT);
 
   const isActiveRoute = (path: string) => location.pathname === path;
 
@@ -42,9 +48,25 @@ export const SidebarConversationsList: React.FC = () => {
       <nav className="space-y-6">
         {/* Conversations */}
         <div>
-          <h3 className="mb-2 px-2 text-xs font-semibold uppercase tracking-wider text-violet-300">Conversations</h3>
+          <div className="flex items-center justify-between mb-2 px-2">
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-violet-300">Conversations</h3>
+            {conversations.length > COLLAPSED_LIMIT && (
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setConversationsExpanded(!conversationsExpanded)}
+                className="h-4 w-4 text-violet-400 hover:text-violet-300"
+              >
+                {conversationsExpanded ? (
+                  <ChevronUp className="h-3 w-3" />
+                ) : (
+                  <ChevronDown className="h-3 w-3" />
+                )}
+              </Button>
+            )}
+          </div>
           <ul className="space-y-1">
-            {conversations.map((conversation) => (
+            {displayedConversations.map((conversation) => (
               <li key={conversation.id}>
                 <div
                   className={cn(
