@@ -22,5 +22,27 @@ export const ProfileSection: React.FC<ProfileSectionProps> = ({
         return <Badge variant="secondary">Free</Badge>;
     }
   };
-  return;
+  return (
+    <div className="flex items-center gap-4 p-4 bg-card rounded-lg border">
+      <Avatar className="h-16 w-16">
+        <AvatarImage src={user.avatar} alt={user.name} />
+        <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
+      </Avatar>
+      
+      <div className="flex-1">
+        <h3 className="font-semibold text-lg">{user.name}</h3>
+        <p className="text-muted-foreground">{user.email}</p>
+        <div className="mt-2">
+          {getSubscriptionBadge()}
+        </div>
+      </div>
+      
+      <Button asChild variant="outline" size="sm">
+        <Link to="/settings">
+          <Edit3 className="h-4 w-4 mr-2" />
+          Edit Profile
+        </Link>
+      </Button>
+    </div>
+  );
 };
